@@ -1,50 +1,39 @@
 # Jiangnan Trip Planner
 
-A shared wishlist-to-itinerary planner for a small group travelling Hangzhou → Nanjing → Suzhou → Shanghai, 15–22 Nov 2026.
+A shared, interactive version of the *China Itinerary HZ · NJ · SZ 15–22 Nov* workbook — Hangzhou → Nanjing → Suzhou → Shanghai, 15–22 Nov 2026.
 
 **Live:** https://lotzehaw-coder.github.io/jiangnan-trip-planner/
 
-One file (`index.html`), no backend, no build. Everything you add is kept in your own browser. To plan together, you swap export files — see below.
+One file (`index.html`), no backend, no build, no API keys. Everything lives in your own browser; to plan together you swap export files (below).
 
-## First open
+## What's in it
 
-1. Enter your display name.
-2. Paste your Amap key and security code — or skip and add them later in **Settings**. Without a key you can still add places by hand, vote, build the itinerary and share the plan; only search and the map are off.
+- **Itinerary** — all eight days from the workbook, every stop with its time, duration, notes and address. Tap a stop to vote ♥, add your own note, change its start time, nudge it earlier/later, move it to another day, or take it off the plan (it goes to the wishlist, nothing is lost). Flights, trains and hotel check-ins sit inline as travel blocks — tap **Edit** to fill in a train number or booking ref.
+- **Map ↗** on every stop, card and hotel — opens the place in **高德地图 (Amap)** on your phone, already searched, so you tap 路线 for directions. No account or key needed; it's a plain deep link. Falls back to the Amap web map if the app isn't installed.
+- **Browse** — the workbook's other tabs: Dining & cafés, the ranked meal picks for every lunch and dinner, Shop · street food · explore, and Events & foliage. Filter by city, search by name or dish, then **Add to wishlist** or **Put on <day>** in one tap. "Add a place that isn't in the list" covers recommendations from elsewhere.
+- **Wishlist** — the plan's optional and alternative picks plus anything anyone adds. Vote, then pick a day.
+- **Copy as text for WhatsApp** — the whole plan, formatted, on the clipboard.
 
-## Getting an Amap key
-
-1. Sign in at https://console.amap.com (a Chinese mobile number or email works for registration).
-2. **应用管理 → 我的应用 → 创建新应用**, then **添加 Key**.
-3. Service platform: **Web端 (JS API)**.
-4. Copy both the **Key** and the **安全密钥 (security JS code)** the console shows.
-5. In the key's settings, add the site to the **域名白名单** (domain whitelist):
-   ```
-   lotzehaw-coder.github.io
-   ```
-   Searches from a domain that isn't whitelisted are refused — the app will tell you in Settings, and **Test key** there runs a one-word search so you can confirm it works.
-
-Keys are stored in your browser's local storage only. They are never written into the repo and never included in an export file.
-
-## Planning together — the export → send → import loop
+## Planning together — export → send → import
 
 Import **merges**; it never overwrites.
 
-1. **Settings → Export plan** downloads `jiangnan-plan-<name>-<date>.json`.
+1. **Share → Export plan** downloads `jiangnan-plan-<name>-<date>.json`.
 2. Send it to a companion on WhatsApp.
-3. They open the site, **Settings → Import & merge**, pick the file.
-4. Their copy now has both sets of places. Places you both added (same Amap result) are combined — votes from both, each person's note kept under their own name. Scheduling (which day, what time) takes whichever side changed it most recently.
+3. They open the site, **Share → Import & merge**, pick the file.
+4. Their copy now has both sets of votes, notes and additions. Each person's note stays under their own name; scheduling changes take whichever side edited most recently.
 5. They export and send it back. Repeat until the plan is final.
 
-**Copy summary as text** on the Itinerary tab puts the whole plan on the clipboard, formatted for pasting straight into a WhatsApp group.
+## Sources and what's confirmed
 
-## What's pre-filled
+- Flights are the confirmed Trip.com booking: **MH388** KUL T1 09:10 → PVG T2 14:30 on 15 Nov; **MH389** PVG T2 16:05 → KUL T1 21:50 on 22 Nov. (The workbook shows older times — the booking wins.)
+- Hotels per the workbook: Conrad Hangzhou 15–18, Ritz-Carlton Nanjing 18–20, Ritz-Carlton Suzhou 20–22.
+- Trains are **not booked** and are marked *tentative* with the workbook's suggested departures.
 
-- MH388 KUL → PVG on Sun 15 Nov, MH389 PVG → KUL on Sun 22 Nov
-- Hotel check-in/out blocks: Conrad Hangzhou, Ritz-Carlton Nanjing, Suzhou (TBC) — all marked *tentative* — and JW Marriott Pudong
-- Four empty train blocks for the inter-city legs
+## Updating from the workbook
 
-Tap **Edit** on any block in the Itinerary to fill in numbers, times and names.
+The app is generated from the spreadsheet; edit the workbook, re-run the generator, commit `index.html`. Stops nobody has touched follow the workbook; anything someone has voted on, noted or moved is left alone.
 
 ## Hosting
 
-GitHub Pages serves `main` from the repo root. Push `index.html` and it's live within a minute or two. Nothing else to configure.
+GitHub Pages serves `main` from the repo root. Push `index.html` and it's live within a minute or two.

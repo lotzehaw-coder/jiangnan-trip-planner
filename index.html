@@ -22,7 +22,6 @@ a{color:var(--canal)}
 :focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* layout */
 .app{min-height:100vh;display:flex;flex-direction:column}
 header.top{padding:14px 18px 0;background:var(--wash)}
 header.top h1{margin:0;font-size:22px;font-weight:600;letter-spacing:.2px}
@@ -31,10 +30,10 @@ header.top h1 span{font-weight:400;color:var(--ink-3);font-size:15px;margin-left
 main{flex:1;padding:12px 14px calc(var(--nav) + 20px);max-width:820px;width:100%;margin:0 auto}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;height:var(--nav);background:var(--card);
   border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
-nav.tabs button{flex:1;border:0;background:none;color:var(--ink-3);font-size:12.5px;padding:8px 0 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav.tabs button{flex:1;border:0;background:none;color:var(--ink-3);font-size:12.5px;padding:8px 0 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
 nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs button[aria-current="page"]{color:var(--canal-deep);font-weight:600}
-nav.tabs button .badge{position:absolute;margin-left:26px;margin-top:-2px;background:var(--vermilion);color:#fff;font-size:10px;line-height:16px;min-width:16px;padding:0 4px;border-radius:8px;text-align:center}
+nav.tabs button .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--vermilion);color:#fff;font-size:10px;line-height:16px;min-width:16px;padding:0 4px;border-radius:8px;text-align:center}
 @media (min-width:900px){
   .app{flex-direction:row}
   header.top{display:none}
@@ -43,7 +42,7 @@ nav.tabs button .badge{position:absolute;margin-left:26px;margin-top:-2px;backgr
   nav.tabs .brand small{display:block;font-weight:400;color:var(--ink-3);font-size:13px;margin-top:2px}
   nav.tabs button{flex:0 0 auto;flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px;padding:10px 12px;border-radius:8px}
   nav.tabs button[aria-current="page"]{background:var(--canal-soft)}
-  nav.tabs button .badge{position:static;margin:0 0 0 auto}
+  nav.tabs button .badge{position:static;margin-left:auto}
   main{padding:26px 32px 40px}
 }
 .brand{display:none}
@@ -52,14 +51,13 @@ nav.tabs button .badge{position:absolute;margin-left:26px;margin-top:-2px;backgr
 section.view{display:none}
 section.view.on{display:block}
 h2{font-size:18px;font-weight:600;margin:6px 0 12px}
-h3{font-size:14px;font-weight:600;color:var(--ink-2);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.6px}
+h3{font-size:13px;font-weight:600;color:var(--ink-2);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.6px}
 p.muted{color:var(--ink-3);font-size:14px;margin:6px 0}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .row > *{min-width:0}
 .grow{flex:1}
 
-/* controls */
-input[type=text],input[type=search],input[type=time],input[type=number],input[type=password],select,textarea{
+input[type=text],input[type=search],input[type=time],input[type=password],select,textarea{
   width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:42px}
 textarea{min-height:64px;resize:vertical}
 label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
@@ -71,58 +69,60 @@ label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
 .btn.ghost{border-color:transparent;background:transparent;color:var(--canal)}
 .btn.danger{color:var(--vermilion)}
 .btn:disabled{opacity:.45;cursor:default}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
-.seg button{border:0;background:none;padding:8px 12px;cursor:pointer;color:var(--ink-2);min-height:40px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);max-width:100%}
+.seg button{border:0;background:none;padding:8px 12px;cursor:pointer;color:var(--ink-2);min-height:40px;white-space:nowrap}
 .seg button[aria-pressed="true"]{background:var(--canal);color:#fff}
-.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--wash-2);color:var(--ink-2);margin-right:4px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.pill{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer;min-height:32px}
+.pill[aria-pressed="true"]{background:var(--canal-soft);border-color:var(--canal);color:var(--canal-deep);font-weight:600}
+.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--wash-2);color:var(--ink-2);margin:0 4px 2px 0;vertical-align:middle}
 .chip.city{background:var(--canal-soft);color:var(--canal-deep)}
 .chip.tent{background:#f3e3d0;color:#8a5a1e}
+.chip.opt{background:#ece6f3;color:#5b4a7a}
+.chip.must{background:#fbeeeb;color:var(--vermilion)}
 .chip.drop{background:#eee;color:#888;text-decoration:line-through}
+.chip.rate{background:#fff3cf;color:#7a5a00}
 
-/* cards */
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px}
-.card.hi{box-shadow:0 0 0 2px var(--canal)}
 .item .name{font-weight:600;font-size:16px}
 .item .addr{color:var(--ink-3);font-size:13.5px;margin-top:2px}
+.item .info{color:var(--ink-2);font-size:13.5px;margin-top:4px}
 .item .meta{margin-top:6px;font-size:13px;color:var(--ink-2)}
 .item .acts{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.item .acts select{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px;max-width:100%}
 .vote{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--card);cursor:pointer;min-height:32px;font-size:13.5px}
 .vote[aria-pressed="true"]{border-color:var(--vermilion);color:var(--vermilion);background:#fbeeeb}
 .notes{margin-top:6px;font-size:13.5px}
 .notes div{padding:2px 0}
 .notes b{color:var(--ink-2);font-weight:600}
 .empty{padding:26px 14px;text-align:center;color:var(--ink-3);border:1px dashed var(--line);border-radius:var(--r);font-size:14.5px}
+.group{font-size:14px;font-weight:600;color:var(--canal-deep);margin:16px 0 6px}
+.count{color:var(--ink-3);font-size:13px;margin:4px 0 8px}
 
-/* map */
-#map{width:100%;height:240px;border-radius:var(--r);background:var(--canal-soft);margin:10px 0;overflow:hidden}
-@media (min-width:900px){#map{height:320px}}
-.mapnote{font-size:13px;color:var(--ink-3);text-align:center;padding:100px 12px 0}
-
-/* itinerary — the canal */
 .day{margin-bottom:22px}
-.day .dh{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.day .dh{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .day .dh b{font-size:17px}
 .day .dh span{color:var(--ink-3);font-size:14px}
 .canal{position:relative;padding-left:22px}
-.canal::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:3px;border-radius:2px;
-  background:linear-gradient(var(--canal) 0 0) padding-box;opacity:.55}
+.canal::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:3px;border-radius:2px;background:var(--canal);opacity:.55}
 .stop{position:relative;margin-bottom:8px}
 .stop::before{content:"";position:absolute;left:-19px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--card);border:2px solid var(--canal)}
 .stop.block::before{border-radius:2px;background:var(--canal)}
-.stop .card{margin:0}
+.stop.opt::before{border-style:dashed}
+.stop .card{margin:0;padding:10px 12px}
 .stop .t{font-variant-numeric:tabular-nums;color:var(--canal-deep);font-weight:600;font-size:13.5px;margin-right:8px}
 .stop .kind{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
 .stop .name{font-weight:600}
 .stop .sub{color:var(--ink-3);font-size:13.5px}
-.stop .acts{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.stop .acts select{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
-.stop .acts input{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
-.stop.editing .edit{display:block}
+.stop .info{color:var(--ink-2);font-size:13.5px;margin-top:2px}
+.stop .acts{margin-top:8px;display:none;gap:6px;flex-wrap:wrap;align-items:center}
+.stop.open .acts{display:flex}
+.stop .acts select,.stop .acts input{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
+.stop .more{position:absolute;right:8px;top:8px}
 .edit{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-.edit .row input{flex:1}
+.stop.editing .edit{display:block}
 
-/* overlay setup */
-.overlay{position:fixed;inset:0;background:rgba(30,39,43,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:0}
+.overlay{position:fixed;inset:0;background:rgba(30,39,43,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50}
 @media (min-width:600px){.overlay{align-items:center;padding:20px}}
 .sheet{background:var(--card);width:100%;max-width:460px;border-radius:16px 16px 0 0;padding:20px 18px 26px;max-height:92vh;overflow:auto}
 @media (min-width:600px){.sheet{border-radius:14px}}
@@ -131,7 +131,7 @@ label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
 .status{font-size:13.5px;padding:8px 10px;border-radius:8px;background:var(--wash-2);margin-top:8px}
 .status.ok{background:var(--canal-soft);color:var(--canal-deep)}
 .status.bad{background:#fbeeeb;color:var(--vermilion)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav) + 14px);background:var(--ink);color:#fff;padding:9px 14px;border-radius:8px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav) + 14px);background:var(--ink);color:#fff;padding:9px 14px;border-radius:8px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
 .toast.on{opacity:1}
 @media (min-width:900px){.toast{bottom:24px}}
 details summary{cursor:pointer;color:var(--canal);font-size:14.5px;padding:6px 0}
@@ -142,10 +142,10 @@ code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
 <div class="app">
   <nav class="tabs" aria-label="Sections">
     <div class="brand">Jiangnan<small>15–22 Nov 2026</small></div>
-    <button data-tab="search" aria-current="page"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
-    <button data-tab="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Wishlist<span class="badge hidden" id="wishCount"></span></button>
     <button data-tab="itin"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Itinerary</button>
-    <button data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+    <button data-tab="browse"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Browse</button>
+    <button data-tab="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Wishlist<span class="badge hidden" id="wishCount"></span></button>
+    <button data-tab="settings"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12m0 0-4-4m4 4 4-4"/></svg>Share</button>
   </nav>
 
   <div class="grow">
@@ -155,31 +155,37 @@ code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
     </header>
 
     <main>
-      <!-- SEARCH -->
-      <section class="view on" id="v-search">
+      <!-- ITINERARY -->
+      <section class="view on" id="v-itin">
+        <div class="row" style="margin-bottom:6px">
+          <div class="seg" id="daySeg" role="group" aria-label="Jump to day"></div>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn small" id="copySummary">Copy as text for WhatsApp</button>
+          <span class="muted" id="itinHint" style="font-size:13px"></span>
+        </div>
+        <p class="muted" style="font-size:13px;margin:0 0 10px">Tap a stop to vote, add a note, change its time, move it to another day, or take it off the plan.</p>
+        <div id="itin"></div>
+      </section>
+
+      <!-- BROWSE -->
+      <section class="view" id="v-browse">
         <div class="row">
           <div class="seg" id="citySeg" role="group" aria-label="City"></div>
         </div>
-        <form class="row" id="searchForm" style="margin-top:10px">
-          <input type="search" id="q" class="grow" placeholder="Search places in Hangzhou…" autocomplete="off">
-          <button class="btn primary" type="submit" id="searchBtn">Search</button>
-        </form>
-        <div id="searchStatus"></div>
-        <div id="map"><div class="mapnote" id="mapNote">Add your Amap key in Settings to search and see the map.</div></div>
-        <div id="results"></div>
+        <div class="pills" id="secPills" role="group" aria-label="Section"></div>
+        <input type="search" id="q" placeholder="Filter by name, dish, address…" autocomplete="off">
+        <div class="count" id="browseCount"></div>
+        <div id="browseList"></div>
         <details style="margin-top:16px">
-          <summary>Add a place by hand</summary>
+          <summary>Add a place that isn't in the list</summary>
           <form id="manualForm" class="card" style="margin-top:8px">
             <label class="f" for="mName">Name</label><input type="text" id="mName" required>
             <label class="f" for="mAddr">Address</label><input type="text" id="mAddr">
             <div class="row">
               <div class="grow"><label class="f" for="mCity">City</label><select id="mCity"></select></div>
               <div class="grow"><label class="f" for="mCat">Category</label><select id="mCat">
-                <option>Food</option><option>Sight</option><option>Cafe</option><option>Shopping</option><option>Night</option><option>Other</option></select></div>
-            </div>
-            <div class="row">
-              <div class="grow"><label class="f" for="mLat">Latitude (optional)</label><input type="text" id="mLat" inputmode="decimal" placeholder="30.25"></div>
-              <div class="grow"><label class="f" for="mLng">Longitude (optional)</label><input type="text" id="mLng" inputmode="decimal" placeholder="120.15"></div>
+                <option>Food</option><option>Sight</option><option>Café</option><option>Shop</option><option>Night</option><option>Other</option></select></div>
             </div>
             <label class="f" for="mNote">Note</label><input type="text" id="mNote" placeholder="Where you heard about it, what to order…">
             <div style="margin-top:12px"><button class="btn primary" type="submit">Add to wishlist</button></div>
@@ -191,49 +197,34 @@ code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
       <section class="view" id="v-wish">
         <div class="row">
           <select id="wCity" style="width:auto"><option value="">All cities</option></select>
+          <select id="wCat" style="width:auto"><option value="">All types</option></select>
           <select id="wWho" style="width:auto"><option value="">Everyone</option></select>
-          <label style="font-size:14px;margin-left:auto"><input type="checkbox" id="wDropped"> show dropped</label>
+          <label style="font-size:14px"><input type="checkbox" id="wDropped"> show dropped</label>
         </div>
-        <div id="wishList" style="margin-top:12px"></div>
+        <p class="muted" style="font-size:13px">Ideas not yet on a day — the optional and alternative picks from the plan, plus anything anyone adds. Vote, then pick a day.</p>
+        <div id="wishList" style="margin-top:8px"></div>
       </section>
 
-      <!-- ITINERARY -->
-      <section class="view" id="v-itin">
-        <div class="row" style="margin-bottom:10px">
-          <button class="btn small" id="copySummary">Copy summary as text</button>
-          <span class="muted" id="itinHint" style="font-size:13px"></span>
-        </div>
-        <div id="itin"></div>
-      </section>
-
-      <!-- SETTINGS -->
+      <!-- SHARE / SETTINGS -->
       <section class="view" id="v-settings">
-        <h2>You</h2>
-        <label class="f" for="sName">Display name</label>
-        <input type="text" id="sName" placeholder="Tze">
-        <p class="muted">Shown on the places you add and your votes. Stored only on this device.</p>
-
-        <h2 style="margin-top:22px">Amap</h2>
-        <label class="f" for="sKey">JS API key</label>
-        <input type="password" id="sKey" autocomplete="off">
-        <label class="f" for="sSec">Security JS code</label>
-        <input type="password" id="sSec" autocomplete="off">
-        <p class="muted">Both come from <a href="https://console.amap.com/dev/key/app" target="_blank" rel="noopener">console.amap.com</a> — create a Web (JS API) key. Whitelist this site's domain (<code id="hostShow"></code>) in the key's settings or searches will be refused. Keys stay in this browser only; they are never included in an export.</p>
-        <div id="amapStatus" class="status">No key set — search and map are off. Wishlist and itinerary still work.</div>
-        <div class="row" style="margin-top:12px"><button class="btn primary" id="saveSettings">Save</button><button class="btn" id="testKey">Test key</button></div>
-
-        <h2 style="margin-top:26px">Share the plan</h2>
-        <p class="muted">Export a file, send it on WhatsApp, and your companion imports it. Import <b>merges</b> — everyone's places, votes and notes are kept, nothing is overwritten. Repeat in both directions until the plan is final.</p>
+        <h2>Share the plan</h2>
+        <p class="muted">Export a file, send it on WhatsApp, and your companion imports it. Import <b>merges</b> — everyone's votes, notes and additions are kept, nothing is overwritten. Repeat in both directions until the plan is final.</p>
         <div class="row">
           <button class="btn primary" id="exportBtn">Export plan (.json)</button>
           <label class="btn" for="importFile" style="display:inline-flex;align-items:center">Import &amp; merge<input type="file" id="importFile" accept=".json,application/json" class="hidden"></label>
         </div>
         <div id="shareStatus"></div>
 
-        <h2 style="margin-top:26px">Trip</h2>
-        <p class="muted">Flights, trains and hotels are edited in the Itinerary tab. Tap a block to change its number, time or name.</p>
-        <details><summary>Reset everything on this device</summary>
-          <p class="muted">Clears the plan, your name and the key from this browser. Export first if you want to keep anything.</p>
+        <h2 style="margin-top:26px">You</h2>
+        <label class="f" for="sName">Display name</label>
+        <input type="text" id="sName" placeholder="Tze">
+        <p class="muted">Shown on your votes, notes and the places you add. Stored only on this device.</p>
+        <div class="row" style="margin-top:8px"><button class="btn primary" id="saveSettings">Save</button></div>
+
+        <h2 style="margin-top:26px">About</h2>
+        <p class="muted">Built from the <i>China Itinerary HZ·NJ·SZ 15–22 Nov</i> workbook. Flights are the confirmed Trip.com booking. Trains are not booked yet and are marked <span class="chip tent">tentative</span>. Everything lives in this browser — no account, no server.</p>
+        <details><summary>Reset this device</summary>
+          <p class="muted">Puts the plan back to the original workbook and clears your name. Export first if you want to keep anything.</p>
           <button class="btn danger" id="resetAll">Reset</button></details>
       </section>
     </main>
@@ -243,15 +234,10 @@ code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
 <div class="overlay hidden" id="setup">
   <form class="sheet" id="setupForm">
     <h2>Welcome to the Jiangnan planner</h2>
-    <p class="muted">One screen and you're in.</p>
+    <p class="muted">The whole 8-day plan is already in here. Add your name so your votes and notes carry it.</p>
     <label class="f" for="suName">Your name</label>
     <input type="text" id="suName" required placeholder="Tze" autocomplete="off">
-    <label class="f" for="suKey">Amap JS API key <span style="color:var(--ink-3)">(optional, add later in Settings)</span></label>
-    <input type="password" id="suKey" autocomplete="off">
-    <label class="f" for="suSec">Amap security JS code</label>
-    <input type="password" id="suSec" autocomplete="off">
-    <p class="muted">Remember to whitelist <code class="hostShow"></code> in the Amap console for the key.</p>
-    <div style="margin-top:14px"><button class="btn primary" type="submit" style="width:100%">Start planning</button></div>
+    <div style="margin-top:14px"><button class="btn primary" type="submit" style="width:100%">Open the plan</button></div>
   </form>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -259,69 +245,50 @@ code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
 <script>
 (() => {
 'use strict';
-// ---------- constants ----------
+const SEED = {"days":[{"d":"2026-11-15","city":"Hangzhou","label":"Arrive · Shanghai → Hangzhou"},{"d":"2026-11-16","city":"Hangzhou","label":"West Lake, tea & foliage"},{"d":"2026-11-17","city":"Hangzhou","label":"Lingyin, old town & Grand Canal"},{"d":"2026-11-18","city":"Nanjing","label":"Hangzhou → Nanjing · Confucius Temple"},{"d":"2026-11-19","city":"Nanjing","label":"Purple Mountain & Xuanwu"},{"d":"2026-11-20","city":"Suzhou","label":"Nanjing → Suzhou · gardens & Pingjiang"},{"d":"2026-11-21","city":"Suzhou","label":"Gardens, canals & Kunqu"},{"d":"2026-11-22","city":"Shanghai","label":"Suzhou → PVG → home"}],"blocks":[{"id":"seed:mh388","day":"2026-11-15","type":"flight","title":"Fly to Shanghai Pudong","time":"09:10","number":"MH388","from":"KUL T1","to":"PVG T2","tentative":false,"note":"lands 14:30 · Business · A330-300 · confirmed (Trip.com)","updatedAt":0},{"id":"seed:t1","day":"2026-11-15","type":"train","title":"G-train to Hangzhou East 杭州东","time":"17:00","number":"","from":"Shanghai Hongqiao 虹桥","to":"Hangzhou East 杭州东","tentative":true,"note":"~1h · not booked yet · sit on the right for river views","updatedAt":0},{"id":"seed:h1in","day":"2026-11-15","type":"hotel","title":"Check in — Conrad Hangzhou 康莱德","time":"19:10","number":"","from":"","to":"","tentative":false,"note":"上城区新业路228号 · Qianjiang CBD, connected to Raffles City · ask for a river-view room","updatedAt":0},{"id":"seed:h1out","day":"2026-11-18","type":"hotel","title":"Check out — Conrad Hangzhou 康莱德","time":"08:00","number":"","from":"","to":"","tentative":false,"note":"store bags or take to the station","updatedAt":0},{"id":"seed:t2","day":"2026-11-18","type":"train","title":"G-train to Nanjing South 南京南","time":"10:30","number":"","from":"Hangzhou East 杭州东","to":"Nanjing South 南京南","tentative":true,"note":"~1h30 · not booked yet","updatedAt":0},{"id":"seed:h2in","day":"2026-11-18","type":"hotel","title":"Check in — Ritz-Carlton Nanjing 丽思卡尔顿","time":"12:15","number":"","from":"","to":"","tentative":false,"note":"玄武区中山路18号 · floors 38–62 of Deji Plaza 德基, Xinjiekou · FLAIR bar 62F","updatedAt":0},{"id":"seed:h2out","day":"2026-11-20","type":"hotel","title":"Check out — Ritz-Carlton Nanjing 丽思卡尔顿","time":"08:00","number":"","from":"","to":"","tentative":false,"note":"","updatedAt":0},{"id":"seed:t3","day":"2026-11-20","type":"train","title":"G-train to Suzhou 苏州","time":"10:30","number":"","from":"Nanjing South 南京南","to":"Suzhou 苏州","tentative":true,"note":"~1h30 · not booked yet","updatedAt":0},{"id":"seed:h3in","day":"2026-11-20","type":"hotel","title":"Check in — Ritz-Carlton Suzhou 丽思卡尔顿","time":"12:15","number":"","from":"","to":"","tentative":false,"note":"姑苏区广济南路369号 · Gusu west · <1km Lingering Garden, near Shantang St","updatedAt":0},{"id":"seed:h3out","day":"2026-11-22","type":"hotel","title":"Check out — Ritz-Carlton Suzhou 丽思卡尔顿","time":"07:30","number":"","from":"","to":"","tentative":false,"note":"passport + train ticket handy","updatedAt":0},{"id":"seed:t4","day":"2026-11-22","type":"train","title":"G-train to Shanghai Pudong 上海浦东","time":"09:30","number":"","from":"Suzhou 苏州","to":"Shanghai Pudong PVG","tentative":true,"note":"~1h45 direct, or via Hongqiao + Metro L2 · book the night before","updatedAt":0},{"id":"seed:mh389","day":"2026-11-22","type":"flight","title":"Fly home to Kuala Lumpur","time":"16:05","number":"MH389","from":"PVG T2","to":"KUL T1","tentative":false,"note":"lands 21:50 · Business · A330-300 · confirmed (Trip.com)","updatedAt":0}],"items":[{"id":"p:d1-01","name":"Immigration & baggage claim","address":"PVG T2 入境大厅","city":"Hangzhou","category":"Travel","info":"Fingerprint immigration; collect checked bags. · ~60 min","tags":[],"suggestedDay":"2026-11-15","time":"14:15","end":"15:15","duration":"1h","day":"2026-11-15","status":"scheduled","order":1},{"id":"p:d1-02","name":"SIM/eSIM & mobile pay setup","address":"PVG T2 到达层","city":"Hangzhou","category":"Travel","info":"China SIM/eSIM; top up Alipay/WeChat; add foreign card. · ~20 min","tags":[],"suggestedDay":"2026-11-15","time":"15:15","end":"15:35","duration":"20m","day":"2026-11-15","status":"scheduled","order":2},{"id":"p:d1-03","name":"PVG → Hongqiao Station 虹桥站","address":"上海市闵行区申贵路1500号","city":"Hangzhou","category":"Travel","info":"Metro L2 (~60–75 min) or DiDi (~50–70 min). · Metro L2","tags":[],"suggestedDay":"2026-11-15","time":"15:35","end":"16:40","duration":"1h05","day":"2026-11-15","status":"scheduled","order":3},{"id":"p:d1-04","name":"Hangzhou East → Conrad Hangzhou 康莱德","address":"上城区新业路228号","city":"Hangzhou","category":"Travel","info":"DiDi ~15 min (or Metro L1→L4 to Citizen Center 市民中心). · DiDi/Metro","tags":[],"suggestedDay":"2026-11-15","time":"18:30","end":"19:10","duration":"40m","day":"2026-11-15","status":"scheduled","order":4},{"id":"p:d1-05","name":"Dinner + shop at Raffles City 来福士 (at hotel)","address":"上城区钱江新城 来福士","city":"Hangzhou","category":"Food","info":"Conrad connects directly to the mall — easy first-night dinner. · 来福士","tags":["dinner"],"suggestedDay":"2026-11-15","time":"20:00","end":"21:00","duration":"1h","day":"2026-11-15","status":"scheduled","order":5},{"id":"p:d1-06","name":"Qianjiang New City Light Show 钱江新城灯光秀","address":"江干区民心路 (近康莱德)","city":"Hangzhou","category":"Sight","info":"~0.5km / 5-min walk — riverside skyscraper LED show. Perfect low-effort arrival. · 江边 · 5 min","tags":[],"suggestedDay":"2026-11-15","time":"21:00","end":"21:45","duration":"45m","day":"2026-11-15","status":"scheduled","order":6},{"id":"p:d2-01","name":"Beishan Street 北山街 ginkgo avenue","address":"西湖区北山街","city":"Hangzhou","category":"Foliage","info":"Golden ginkgo 银杏 with Baochu Pagoda 保俶塔 backdrop. · Walk","tags":[],"suggestedDay":"2026-11-16","time":"08:15","end":"09:00","duration":"45m","day":"2026-11-16","status":"scheduled","order":1},{"id":"p:d2-02","name":"Broken Bridge 断桥 & Bai Causeway 白堤","address":"西湖区白堤","city":"Hangzhou","category":"Sight","info":"Walk to Pinghu Qiuyue 平湖秋月 toward Gushan. · Walk","tags":["must-see"],"suggestedDay":"2026-11-16","time":"09:00","end":"09:45","duration":"45m","day":"2026-11-16","status":"scheduled","order":2},{"id":"p:d2-03","name":"Gushan 孤山 & Xiling Seal Society 西泠印社","address":"西湖区孤山路","city":"Hangzhou","category":"Foliage","info":"Red-leaf corner; Zhejiang Museum 浙博 if time. · Walk","tags":[],"suggestedDay":"2026-11-16","time":"09:45","end":"10:30","duration":"45m","day":"2026-11-16","status":"scheduled","order":3},{"id":"p:d2-04","name":"Su Causeway 苏堤 (north)","address":"西湖区苏堤","city":"Hangzhou","category":"Sight","info":"Willow-and-bridge dyke; walk or bike. · Walk/bike","tags":["must-see"],"suggestedDay":"2026-11-16","time":"10:30","end":"11:15","duration":"45m","day":"2026-11-16","status":"scheduled","order":4},{"id":"p:d2-05","name":"Three Pools 三潭印月 (boat)","address":"西湖三潭印月 (小瀛洲)","city":"Hangzhou","category":"Sight","info":"Ferry from Huagang 花港码头 to the ¥1-note island. · Ferry ~¥55","tags":["must-see"],"suggestedDay":"2026-11-16","time":"11:15","end":"12:15","duration":"1h","day":"2026-11-16","status":"scheduled","order":5},{"id":"p:d2-06","name":"Coffee — % Arabica lakeside","address":"上城区湖滨路","city":"Hangzhou","category":"Café","info":"Espresso or matcha latte before lunch. · % Arabica","tags":[],"suggestedDay":"2026-11-16","time":"12:15","end":"12:45","duration":"30m","day":"2026-11-16","status":"scheduled","order":6},{"id":"p:d2-07","name":"Lunch — Lou Wai Lou 楼外楼","address":"西湖孤山路30号","city":"Hangzhou","category":"Food","info":"West Lake vinegar fish 西湖醋鱼, Dongpo pork 东坡肉. · ¥150–250","tags":["lunch"],"suggestedDay":"2026-11-16","time":"12:45","end":"14:00","duration":"1h15","day":"2026-11-16","status":"scheduled","order":7},{"id":"p:d2-08","name":"Huagang Guanyu 花港观鱼","address":"西湖区杨公堤","city":"Hangzhou","category":"Sight","info":"Peony garden & red-carp ponds; autumn colour. · Free","tags":["must-see"],"suggestedDay":"2026-11-16","time":"14:15","end":"15:00","duration":"45m","day":"2026-11-16","status":"scheduled","order":8},{"id":"p:d2-09","name":"Leifeng Pagoda 雷峰塔","address":"西湖区南山路15号","city":"Hangzhou","category":"Sight","info":"Escalators up; golden-hour lake views. · Entry ¥40","tags":["must-see"],"suggestedDay":"2026-11-16","time":"15:00","end":"16:00","duration":"1h","day":"2026-11-16","status":"scheduled","order":9},{"id":"p:d2-10","name":"Longjing Tea Village 龙井茶村","address":"西湖区龙井村","city":"Hangzhou","category":"Sight","info":"Tasting with a local family; buy fresh 龙井. · DiDi ~20 min","tags":["must-see"],"suggestedDay":"2026-11-16","time":"16:15","end":"17:45","duration":"1h30","day":"2026-11-16","status":"scheduled","order":10},{"id":"p:d2-11","name":"Dinner — Grandma's Kitchen 外婆家 OR ★宫宴 banquet","address":"上城区河坊街 / 西湖区曙光路122号","city":"Hangzhou","category":"Food","info":"Home-style near Hefang; OR the 宫宴 Song banquet (~2–3h, Hanfu, 5.0★, ¥300+, book ahead, 曙光路122号). · ¥60–100 / ¥300+","tags":["dinner"],"suggestedDay":"2026-11-16","time":"18:15","end":"19:15","duration":"1h","day":"2026-11-16","status":"scheduled","order":11},{"id":"p:d2-12","name":"Hefang St 河坊街 & Qinghefang 清河坊","address":"上城区河坊街","city":"Hangzhou","category":"Shop","info":"Silk, tea, fans, scissors, snacks. · Hefang 河坊街","tags":[],"suggestedDay":"2026-11-16","time":"19:15","end":"20:00","duration":"45m","day":"2026-11-16","status":"scheduled","order":12},{"id":"p:d2-13","name":"Wushan Night Market 吴山夜市","address":"上城区仁和路 (近龙翔桥)","city":"Hangzhou","category":"Food","info":"Skewers, jianbing, osmanthus cake, stinky tofu. · Wushan 吴山","tags":[],"suggestedDay":"2026-11-16","time":"20:00","end":"21:00","duration":"1h","day":"2026-11-16","status":"scheduled","order":13},{"id":"p:d3-01","name":"Lingyin Temple 灵隐寺","address":"西湖区法云弄1号","city":"Hangzhou","category":"Sight","info":"① NW hills first. Great Hall, halls & incense. · Entry ¥45","tags":["must-see"],"suggestedDay":"2026-11-17","time":"09:00","end":"10:15","duration":"1h15","day":"2026-11-17","status":"scheduled","order":1},{"id":"p:d3-02","name":"Feilai Feng 飞来峰 grottoes","address":"西湖区飞来峰","city":"Hangzhou","category":"Sight","info":"Carved stone Buddhas beside the temple. · Entry ¥30","tags":["must-see"],"suggestedDay":"2026-11-17","time":"10:15","end":"11:00","duration":"45m","day":"2026-11-17","status":"scheduled","order":2},{"id":"p:d3-03","name":"Yongfu Temple 永福寺","address":"西湖区法云弄","city":"Hangzhou","category":"Foliage","info":"Same hillside — gilded ginkgo & red maple. · Walk","tags":[],"suggestedDay":"2026-11-17","time":"11:00","end":"11:45","duration":"45m","day":"2026-11-17","status":"scheduled","order":3},{"id":"p:d3-04","name":"Lunch — near Lingyin 灵隐 (Faxi veg 法喜寺)","address":"西湖区灵隐路","city":"Hangzhou","category":"Food","info":"Eat by the temple — no southward detour. · ¥60–100","tags":["lunch"],"suggestedDay":"2026-11-17","time":"11:45","end":"12:45","duration":"1h","day":"2026-11-17","status":"scheduled","order":4},{"id":"p:d3-05","name":"Wushan Hill 吴山 & City God Pavilion 城隍阁","address":"上城区吴山3号","city":"Hangzhou","category":"Sight","info":"② City centre. Panoramic city + lake view. · Entry ¥30","tags":["must-see"],"suggestedDay":"2026-11-17","time":"13:00","end":"13:45","duration":"45m","day":"2026-11-17","status":"scheduled","order":5},{"id":"p:d3-06","name":"Huqingyutang TCM Museum 胡庆余堂","address":"上城区大井巷95号","city":"Hangzhou","category":"Sight","info":"Qing pharmacy — herbs, remedies. · Entry ¥10","tags":[],"suggestedDay":"2026-11-17","time":"13:45","end":"14:15","duration":"30m","day":"2026-11-17","status":"scheduled","order":6},{"id":"p:d3-07","name":"Deshou Palace Museum 德寿宫遗址博物馆","address":"上城区中河中路","city":"Hangzhou","category":"Sight","info":"Southern-Song imperial palace ruins — striking red 复原 hall. Hangzhou's standout new attraction. (《德寿夜宴》 night show is Fri–Sun only — does not fit this trip.) · ~30 min · 近清河坊","tags":[],"suggestedDay":"2026-11-17","time":"14:15","end":"14:45","duration":"30m","day":"2026-11-17","status":"scheduled","order":7},{"id":"p:d3-08","name":"Qinghefang 清河坊 & Dajing Lane 大井巷","address":"上城区清河坊","city":"Hangzhou","category":"Shop","info":"Silk, tea, fans, snack stalls. · 步行街","tags":[],"suggestedDay":"2026-11-17","time":"14:45","end":"15:30","duration":"45m","day":"2026-11-17","status":"scheduled","order":8},{"id":"p:d3-09","name":"Coffee — Brew in Corner / Parking Coffee","address":"老城区/海儿巷","city":"Hangzhou","category":"Café","info":"Old-city roaster before the metro north. · Roaster","tags":[],"suggestedDay":"2026-11-17","time":"15:30","end":"15:55","duration":"25m","day":"2026-11-17","status":"scheduled","order":9},{"id":"p:d3-10","name":"Grand Canal 京杭大运河 — Gongchen Bridge 拱宸桥","address":"拱墅区桥弄街 (拱宸桥)","city":"Hangzhou","category":"Sight","info":"③ Metro L5 north. Canal museum & Xiaohe Direct St 小河直街. · Metro L5","tags":["must-see"],"suggestedDay":"2026-11-17","time":"16:15","end":"17:45","duration":"1h30","day":"2026-11-17","status":"scheduled","order":10},{"id":"p:d3-11","name":"Grand Canal night boat 运河夜游","address":"拱墅区运河码头","city":"Hangzhou","category":"Sight","info":"Short cruise past illuminated bridges. · Optional","tags":["optional"],"suggestedDay":"2026-11-17","time":"17:45","end":"18:30","duration":"45m","day":"2026-11-17","status":"scheduled","order":11},{"id":"p:d3-12","name":"Dinner — canal-side 小河直街","address":"拱墅区小河直街","city":"Hangzhou","category":"Food","info":"Restored canal-warehouse district; cafés & bars. · Dinner","tags":["dinner"],"suggestedDay":"2026-11-17","time":"18:30","end":"19:45","duration":"1h15","day":"2026-11-17","status":"scheduled","order":12},{"id":"p:d3-13","name":"Tianmuli 天目里","address":"西湖区天目山路398号","city":"Hangzhou","category":"Trendy","info":"Renzo Piano — Tsutaya 茑屋, B1OCK, cafés. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-17","time":"","end":"","duration":"","day":"","status":"wishlist","order":13},{"id":"p:d3-14","name":"Xixi Wetland 西溪湿地","address":"西湖区天目山路518号","city":"Hangzhou","category":"Sight","info":"Slow half-day reed-marsh boat tour. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-17","time":"","end":"","duration":"","day":"","status":"wishlist","order":14},{"id":"p:d4-01","name":"Conrad → Hangzhou East 杭州东 Station","address":"上城区天城路1号","city":"Nanjing","category":"Travel","info":"Metro L4→L1 or DiDi (~25–35 min). · Metro/DiDi","tags":[],"suggestedDay":"2026-11-18","time":"09:15","end":"09:45","duration":"30m","day":"2026-11-18","status":"scheduled","order":1},{"id":"p:d4-02","name":"Nanjing South → Ritz-Carlton 丽思 (Deji/Xinjiekou)","address":"玄武区中山路18号 (丽思·德基)","city":"Nanjing","category":"Travel","info":"DiDi/Metro L1 (~20 min). Hotel is floors 38–62 of Deji Plaza. · DiDi/Metro","tags":[],"suggestedDay":"2026-11-18","time":"12:15","end":"13:00","duration":"45m","day":"2026-11-18","status":"scheduled","order":2},{"id":"p:d4-03","name":"Lunch — first Nanjing duck","address":"秦淮区中山南路18号","city":"Nanjing","category":"Food","info":"盐水鸭 & 鸭血粉丝汤 (Nanjing Da Pai Dang downstairs in Deji). · ¥40–80","tags":["lunch"],"suggestedDay":"2026-11-18","time":"13:00","end":"14:00","duration":"1h","day":"2026-11-18","status":"scheduled","order":3},{"id":"p:d4-04","name":"Confucius Temple 夫子庙 (hall)","address":"秦淮区夫子庙","city":"Nanjing","category":"Sight","info":"Metro L3 ~2km south. Dacheng Hall 大成殿. · Entry ¥30","tags":["must-see"],"suggestedDay":"2026-11-18","time":"14:30","end":"15:15","duration":"45m","day":"2026-11-18","status":"scheduled","order":4},{"id":"p:d4-05","name":"Jiangnan Examination Hall 江南贡院","address":"秦淮区金陵路1号","city":"Nanjing","category":"Sight","info":"China's largest imperial-exam museum. · Entry ¥50","tags":["must-see"],"suggestedDay":"2026-11-18","time":"15:15","end":"16:00","duration":"45m","day":"2026-11-18","status":"scheduled","order":5},{"id":"p:d4-06","name":"Coffee — Ink Coffee 新街口","address":"秦淮区新街口","city":"Nanjing","category":"Café","info":"Nanjing's best-rated specialty spot. · Ink Coffee","tags":[],"suggestedDay":"2026-11-18","time":"16:00","end":"16:30","duration":"30m","day":"2026-11-18","status":"scheduled","order":6},{"id":"p:d4-07","name":"Zhonghua Gate 中华门 (Ming wall 明城墙)","address":"秦淮区中华门瓮城","city":"Nanjing","category":"Sight","info":"World's largest fortified city-gate complex. · Entry ¥50","tags":["must-see"],"suggestedDay":"2026-11-18","time":"16:45","end":"17:45","duration":"1h","day":"2026-11-18","status":"scheduled","order":7},{"id":"p:d4-08","name":"Great Bao'en Temple 大报恩寺遗址公园 (night 夜场)","address":"秦淮区中华门外雨花路1号","city":"Nanjing","category":"Sight","info":"打卡 highlight — the illuminated glazed pagoda 琉璃塔 & ruins light show 光影秀. ~1.2km from 中华门. Night session is better value & less crowded. · Entry ~¥72 · 夜场","tags":["must-see"],"suggestedDay":"2026-11-18","time":"17:45","end":"18:45","duration":"1h","day":"2026-11-18","status":"scheduled","order":8},{"id":"p:d4-09","name":"Qinhuai River 秦淮河 night cruise 画舫","address":"秦淮区夫子庙码头","city":"Nanjing","category":"Sight","info":"'桨声灯影' painted-boat cruise past illuminated 夫子庙. · Cruise ~¥80","tags":["must-see"],"suggestedDay":"2026-11-18","time":"19:00","end":"20:00","duration":"1h","day":"2026-11-18","status":"scheduled","order":9},{"id":"p:d4-10","name":"Fuzimiao 夫子庙小吃 + 牛肉锅贴 蒋有记","address":"秦淮区贡院街 / 老门东","city":"Nanjing","category":"Food","info":"Qinhuai Eight Delicacies; Jiang You Ji 蒋有记 beef potstickers. · Food","tags":[],"suggestedDay":"2026-11-18","time":"20:00","end":"20:50","duration":"50m","day":"2026-11-18","status":"scheduled","order":10},{"id":"p:d4-11","name":"Laomendong 老门东 / Xiaoxihu 小西湖","address":"秦淮区中华门内 / 马道街21号","city":"Nanjing","category":"Trendy","info":"青砖黛瓦 old street — indie shops, coffee, Hanfu 汉服 studios. · Trendy","tags":[],"suggestedDay":"2026-11-18","time":"20:50","end":"21:30","duration":"40m","day":"2026-11-18","status":"scheduled","order":11},{"id":"p:d5-01","name":"Sun Yat-sen Mausoleum 中山陵","address":"玄武区石象路7号","city":"Nanjing","category":"Sight","info":"① 钟山风景区 east cluster. The 392-step stairway. · Free · book","tags":["must-see"],"suggestedDay":"2026-11-19","time":"09:00","end":"10:00","duration":"1h","day":"2026-11-19","status":"scheduled","order":1},{"id":"p:d5-02","name":"Meiling Palace 美龄宫","address":"玄武区石象路7号 (钟山)","city":"Nanjing","category":"Sight","info":"On the 钟山 combo ticket you already hold — the '梧桐项链' plane-tree necklace view; Republic-era villa. Between 中山陵 and 石象路. · Opt · (incl. 联票)","tags":["optional"],"suggestedDay":"2026-11-19","time":"10:00","end":"10:30","duration":"30m","day":"2026-11-19","status":"scheduled","order":2},{"id":"p:d5-03","name":"Music Platform 音乐台","address":"玄武区中山陵音乐台","city":"Nanjing","category":"Sight","info":"Beside 中山陵 — semicircular stage where white pigeons 白鸽 gather & swirl. Iconic photo. · Opt · ¥10","tags":["optional"],"suggestedDay":"2026-11-19","time":"10:35","end":"11:10","duration":"35m","day":"2026-11-19","status":"scheduled","order":3},{"id":"p:d5-04","name":"Ming Xiaoling Sacred Way 石象路","address":"玄武区紫金山明孝陵","city":"Nanjing","category":"Sight","info":"Same hill — '600m most beautiful autumn avenue'. Peak foliage! · Entry ¥70","tags":["must-see"],"suggestedDay":"2026-11-19","time":"11:15","end":"12:15","duration":"1h","day":"2026-11-19","status":"scheduled","order":4},{"id":"p:d5-05","name":"Ming Xiaoling tomb 明孝陵","address":"玄武区明孝陵","city":"Nanjing","category":"Sight","info":"UNESCO Ming founding-emperor tomb. · (incl.)","tags":["must-see"],"suggestedDay":"2026-11-19","time":"11:45","end":"12:15","duration":"30m","day":"2026-11-19","status":"scheduled","order":5},{"id":"p:d5-06","name":"Lunch — Purple Mtn foot / 玄武 area","address":"玄武区","city":"Nanjing","category":"Food","info":"Casual lunch heading west off the mountain. · ¥50–90","tags":["lunch"],"suggestedDay":"2026-11-19","time":"12:15","end":"13:15","duration":"1h","day":"2026-11-19","status":"scheduled","order":6},{"id":"p:d5-07","name":"Nanjing Museum 南京博物院 (民国馆)","address":"玄武区中山东路321号","city":"Nanjing","category":"Sight","info":"Top-3 China museum near Zhongshan Gate; immersive Republic-era 民国馆. ⚠ Book ~1 week ahead. · Opt · Free","tags":["optional"],"suggestedDay":"2026-11-19","time":"13:30","end":"14:30","duration":"1h","day":"2026-11-19","status":"scheduled","order":7},{"id":"p:d5-08","name":"Jiming Temple 鸡鸣寺 & Taicheng wall 台城","address":"玄武区鸡鸣寺路1号","city":"Nanjing","category":"Sight","info":"Iconic yellow temple (求姻缘); climb 台城 明城墙 overlooking Xuanwu Lake. · Opt · ¥10+¥30","tags":["optional"],"suggestedDay":"2026-11-19","time":"14:45","end":"15:30","duration":"45m","day":"2026-11-19","status":"scheduled","order":8},{"id":"p:d5-09","name":"Xuanwu Lake 玄武湖 十里长堤","address":"玄武区玄武巷1号","city":"Nanjing","category":"Sight","info":"Jiangnan's largest royal lake park; the 十里长堤 causeway is a stunning sunset spot. · Opt · Free","tags":["optional"],"suggestedDay":"2026-11-19","time":"15:30","end":"16:45","duration":"1h15","day":"2026-11-19","status":"scheduled","order":9},{"id":"p:d5-10","name":"Coffee — Sculpting in Time 雕刻时光 (Gulou 鼓楼)","address":"鼓楼区","city":"Nanjing","category":"Café","info":"Wind-down latte on the way back. · Café","tags":[],"suggestedDay":"2026-11-19","time":"16:45","end":"17:15","duration":"30m","day":"2026-11-19","status":"scheduled","order":10},{"id":"p:d5-11","name":"Xinjiekou 新街口 & Deji Plaza 德基广场 (at hotel)","address":"玄武区中山路18号","city":"Nanjing","category":"Shop","info":"② Back to CENTRE — your hotel. Flagships; Deji Art Museum; themed washrooms. · Xinjiekou 新街口","tags":[],"suggestedDay":"2026-11-19","time":"17:15","end":"18:15","duration":"1h","day":"2026-11-19","status":"scheduled","order":11},{"id":"p:d5-12","name":"Dinner — Nanjing Impressions 南京大牌档 (Shiziqiao 狮子桥)","address":"鼓楼区湖南路狮子桥","city":"Nanjing","category":"Food","info":"Duck feast + folk music, north of Xinjiekou. · ¥80–120","tags":["dinner"],"suggestedDay":"2026-11-19","time":"18:30","end":"19:45","duration":"1h15","day":"2026-11-19","status":"scheduled","order":12},{"id":"p:d5-13","name":"Nightcap: FLAIR 62F (Ritz) / 紫峰大厦 / 王府大街","address":"玄武区中山路18号","city":"Nanjing","category":"Night","info":"Skyline drinks at your hotel's 62F, OR 紫峰 deck, OR café-hop 王府大街. · Optional","tags":[],"suggestedDay":"2026-11-19","time":"19:45","end":"20:45","duration":"1h","day":"2026-11-19","status":"scheduled","order":13},{"id":"p:d5-14","name":"Niushou Mtn 牛首山 佛顶宫","address":"江宁区宁丹大道","city":"Nanjing","category":"Sight","info":"Viral opulent modern Buddhist palace, far south (江宁). Needs ~half day — swap the 玄武/鸡鸣寺 block. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-19","time":"","end":"","duration":"","day":"","status":"wishlist","order":14},{"id":"p:d5-15","name":"Hongshan Forest Zoo 红山森林动物园","address":"玄武区和燕路168号","city":"Nanjing","category":"Sight","info":"No-cage native-habitat zoo (north) — capybara 水豚 & red panda. Half-day, family-friendly. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-19","time":"","end":"","duration":"","day":"","status":"wishlist","order":15},{"id":"p:d5-16","name":"Yihe Road 颐和路","address":"鼓楼区颐和路","city":"Nanjing","category":"Sight","info":"1930s plane-tree villa streets near Gulou — atmospheric photo walk if time allows. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-19","time":"","end":"","duration":"","day":"","status":"wishlist","order":16},{"id":"p:d5-17","name":"Librairie Avant-Garde 先锋书店 (五台山总店)","address":"鼓楼区广州路173号","city":"Nanjing","category":"Sight","info":"One of the world's most beautiful bookstores' — built in an underground car park. Major 打卡 spot; pairs with 颐和路 (both on 广州路/鼓楼). Go before noon at weekends. · Optional alt · Free","tags":["optional"],"suggestedDay":"2026-11-19","time":"","end":"","duration":"","day":"","status":"wishlist","order":17},{"id":"p:d6-01","name":"Ritz → Nanjing South 南京南 Station","address":"雨花台区玉兰路98号","city":"Suzhou","category":"Travel","info":"DiDi/Metro L1 (~20–30 min). · Metro/DiDi","tags":[],"suggestedDay":"2026-11-20","time":"09:15","end":"09:45","duration":"30m","day":"2026-11-20","status":"scheduled","order":1},{"id":"p:d6-02","name":"Station → Ritz-Carlton Suzhou 丽思 (广济南路), drop bags","address":"姑苏区广济南路369号 (丽思)","city":"Suzhou","category":"Travel","info":"DiDi ~15 min. West old-town — <1km Liuyuan 留园, near Shantang 山塘街. · DiDi","tags":[],"suggestedDay":"2026-11-20","time":"12:15","end":"13:00","duration":"45m","day":"2026-11-20","status":"scheduled","order":2},{"id":"p:d6-03","name":"Lunch — Suzhou sweet cuisine","address":"姑苏区","city":"Suzhou","category":"Food","info":"Squirrel mandarin fish 松鼠桂鱼, biluochun 碧螺春. · ¥60–120","tags":["lunch"],"suggestedDay":"2026-11-20","time":"13:00","end":"14:00","duration":"1h","day":"2026-11-20","status":"scheduled","order":3},{"id":"p:d6-04","name":"Humble Administrator's Garden 拙政园","address":"姑苏区东北街178号","city":"Suzhou","category":"Sight","info":"NE old town (~15 min DiDi). Suzhou's largest UNESCO garden. · Entry ¥70–90","tags":["must-see"],"suggestedDay":"2026-11-20","time":"14:15","end":"16:00","duration":"1h45","day":"2026-11-20","status":"scheduled","order":4},{"id":"p:d6-05","name":"Suzhou Museum 苏州博物馆 (I.M. Pei 贝聿铭)","address":"姑苏区东北街204号","city":"Suzhou","category":"Sight","info":"Next door — modern architecture + antiquities. Free (book). · Free · book","tags":["must-see"],"suggestedDay":"2026-11-20","time":"16:00","end":"17:00","duration":"1h","day":"2026-11-20","status":"scheduled","order":5},{"id":"p:d6-06","name":"Lion Grove Garden 狮子林","address":"姑苏区园林路23号","city":"Suzhou","category":"Sight","info":"Labyrinthine rockery nearby — if energy allows. · Optional ¥40","tags":["optional"],"suggestedDay":"2026-11-20","time":"17:00","end":"17:30","duration":"30m","day":"2026-11-20","status":"scheduled","order":6},{"id":"p:d6-07","name":"Coffee — Momicafe (Pingjiang Rd 平江路)","address":"姑苏区平江路","city":"Suzhou","category":"Café","info":"Canal-front drip coffee — golden hour. · Momicafe","tags":[],"suggestedDay":"2026-11-20","time":"17:30","end":"18:00","duration":"30m","day":"2026-11-20","status":"scheduled","order":7},{"id":"p:d6-08","name":"Pingjiang Road 平江路 canal district (+ 手摇船)","address":"姑苏区平江路","city":"Suzhou","category":"Sight","info":"Dinner at Wumen Renjia 吴门人家; Pingtan 评弹. Optional hand-rowed boat 手摇船 along the canal (~¥100). · ¥100–180","tags":["must-see"],"suggestedDay":"2026-11-20","time":"18:00","end":"19:15","duration":"1h15","day":"2026-11-20","status":"scheduled","order":8},{"id":"p:d6-09","name":"Shuangta Market 双塔市集","address":"姑苏区吴殿直街2号 (石匠弄)","city":"Suzhou","category":"Trendy","info":"Design-award wet market — 糕团/馄饨/海棠糕 stalls & cafés. · Shuangta 双塔","tags":[],"suggestedDay":"2026-11-20","time":"19:15","end":"20:15","duration":"1h","day":"2026-11-20","status":"scheduled","order":9},{"id":"p:d6-10","name":"Shantang Street 山塘街 night market","address":"姑苏区山塘街","city":"Suzhou","category":"Food","info":"Promoted from Alt — TOP-7 Suzhou sight, free, and walkable from the Ritz. Canal food under red lanterns; 姑苏20:30 keeps it open late. · 山塘街 · walkable","tags":[],"suggestedDay":"2026-11-20","time":"20:30","end":"21:30","duration":"1h","day":"2026-11-20","status":"scheduled","order":10},{"id":"p:d6-11","name":"Renheng Cang Street 仁恒仓街 & 相门城墙","address":"姑苏区仓街 (相门)","city":"Suzhou","category":"Shop","info":"Modern high-end shopping fused with the Ming 相门 city-wall relics — very photogenic. Eastern old town, near Pingjiang/Shuangta. · Optional","tags":["optional"],"suggestedDay":"2026-11-20","time":"","end":"","duration":"","day":"","status":"wishlist","order":11},{"id":"p:d6-12","name":"Eslite 诚品书店","address":"工业园区月廊街8号","city":"Suzhou","category":"Sight","info":"If detouring to Jinji Lake 金鸡湖 — the landmark Eslite bookstore. · Optional","tags":["optional"],"suggestedDay":"2026-11-20","time":"","end":"","duration":"","day":"","status":"wishlist","order":12},{"id":"p:d7-01","name":"Lingering Garden 留园","address":"姑苏区留园路338号","city":"Suzhou","category":"Sight","info":"① WEST — beside your hotel. Rockeries & 银杏 courtyard. · Entry ¥45","tags":["must-see"],"suggestedDay":"2026-11-21","time":"09:00","end":"10:15","duration":"1h15","day":"2026-11-21","status":"scheduled","order":1},{"id":"p:d7-02","name":"Tiger Hill 虎丘","address":"姑苏区虎丘山门内8号","city":"Suzhou","category":"Sight","info":"② NW (5 min from hotel). Pagoda 虎丘塔, Sword Pool 剑池. 🍁 · Entry ¥60","tags":["must-see"],"suggestedDay":"2026-11-21","time":"10:30","end":"11:45","duration":"1h15","day":"2026-11-21","status":"scheduled","order":2},{"id":"p:d7-03","name":"Hanshan Temple 寒山寺 & Fengqiao 枫桥","address":"姑苏区寒山寺弄24号","city":"Suzhou","category":"Sight","info":"'枫桥夜泊' poem temple — bell-ringing & 福签; 枫桥 bridge nearby. Just SW of Tiger Hill, on the way to lunch. · Opt · ¥20","tags":["optional"],"suggestedDay":"2026-11-21","time":"11:45","end":"12:15","duration":"30m","day":"2026-11-21","status":"scheduled","order":3},{"id":"p:d7-04","name":"Lunch — Songhelou 松鹤楼 / Aozao 奥灶面 (Guanqian 观前街)","address":"姑苏区观前街太监弄","city":"Suzhou","category":"Food","info":"③ CENTRE. Squirrel fish or crispy-eel noodles. · ¥25–120","tags":["lunch"],"suggestedDay":"2026-11-21","time":"12:15","end":"13:30","duration":"1h15","day":"2026-11-21","status":"scheduled","order":4},{"id":"p:d7-05","name":"Guanqian Street 观前街 & Silk Museum 丝绸博物馆","address":"姑苏区观前街","city":"Suzhou","category":"Shop","info":"Consolidated (once) — Xuanmiao Temple 玄妙观, silk. · Guanqian 观前街","tags":[],"suggestedDay":"2026-11-21","time":"13:30","end":"14:30","duration":"1h","day":"2026-11-21","status":"scheduled","order":5},{"id":"p:d7-06","name":"Master of the Nets Garden 网师园","address":"姑苏区阔家头巷11号","city":"Suzhou","category":"Sight","info":"④ SOUTH old town. The most exquisite small garden. · Entry ¥40","tags":["must-see"],"suggestedDay":"2026-11-21","time":"14:45","end":"16:00","duration":"1h15","day":"2026-11-21","status":"scheduled","order":6},{"id":"p:d7-07","name":"Coffee — Title 标题咖啡 / Sparrow 麻雀 (Shiquan 十全街)","address":"姑苏区十全街","city":"Suzhou","category":"Café","info":"Single-origin pour-over. · Roaster","tags":[],"suggestedDay":"2026-11-21","time":"16:00","end":"16:45","duration":"45m","day":"2026-11-21","status":"scheduled","order":7},{"id":"p:d7-08","name":"Shiquan Street 十全街","address":"姑苏区十全街","city":"Suzhou","category":"Shop","info":"Vintage boutiques, jade & silk studios. · Shiquan 十全街","tags":[],"suggestedDay":"2026-11-21","time":"16:45","end":"17:45","duration":"1h","day":"2026-11-21","status":"scheduled","order":8},{"id":"p:d7-09","name":"Farewell dinner — south old town","address":"姑苏区","city":"Suzhou","category":"Food","info":"Canal-side dinner near Shiquan/Pingjiang. · Dinner","tags":["dinner"],"suggestedDay":"2026-11-21","time":"18:00","end":"19:45","duration":"1h45","day":"2026-11-21","status":"scheduled","order":9},{"id":"p:d7-10","name":"Master-of-Nets night Kunqu 网师园夜昆曲","address":"姑苏区阔家头巷11号","city":"Suzhou","category":"Sight","info":"Same garden (2-min walk) — Kunqu & Pingtan (book). · Wangshi 网师园","tags":[],"suggestedDay":"2026-11-21","time":"20:00","end":"21:15","duration":"1h15","day":"2026-11-21","status":"scheduled","order":10},{"id":"p:d7-11","name":"Jinji Lake 金鸡湖 (SIP)","address":"工业园区星港街199号","city":"Suzhou","category":"Sight","info":"Gate of Orient 东方之门 ('大裤衩'), Suzhou Center 苏州中心, Eslite 诚品书店, lakeside sunset dinner. (Skip Kunqu.) · Optional alt","tags":["optional"],"suggestedDay":"2026-11-21","time":"","end":"","duration":"","day":"","status":"wishlist","order":11},{"id":"p:d7-12","name":"Tongli 同里 / Zhouzhuang 周庄 water town","address":"吴江区同里镇 / 昆山周庄镇","city":"Suzhou","category":"Sight","info":"Classic 江南水乡 — 白墙黛瓦, 小桥流水. ~40–60 min out; needs a half/full day (best swapped in for a full day if you extend). · Optional alt","tags":["optional"],"suggestedDay":"2026-11-21","time":"","end":"","duration":"","day":"","status":"wishlist","order":12},{"id":"p:d7-13","name":"Tianping Mountain 天平山红枫节","address":"吴中区木渎镇天平山","city":"Suzhou","category":"Foliage","info":"Half-day to Mudu 木渎 for PEAK red maples. ¥30. · Optional alt","tags":["optional"],"suggestedDay":"2026-11-21","time":"","end":"","duration":"","day":"","status":"wishlist","order":13},{"id":"p:d8-01","name":"Ritz → Suzhou 苏州 Station","address":"姑苏区苏州站","city":"Shanghai","category":"Travel","info":"DiDi (~15–20 min). · DiDi","tags":[],"suggestedDay":"2026-11-22","time":"08:15","end":"08:45","duration":"30m","day":"2026-11-22","status":"scheduled","order":1},{"id":"p:d8-02","name":"Arrive PVG / transfer to Terminal 2","address":"上海浦东机场 T2","city":"Shanghai","category":"Travel","info":"If via Hongqiao, allow extra Metro L2 time. · PVG T2","tags":[],"suggestedDay":"2026-11-22","time":"11:15","end":"11:45","duration":"30m","day":"2026-11-22","status":"scheduled","order":2},{"id":"p:d8-03","name":"Check-in & bag drop — MH389","address":"上海浦东机场 T2","city":"Shanghai","category":"Travel","info":"Malaysia Airlines counters, PVG T2. Airside ~2h before. · Terminal 2","tags":[],"suggestedDay":"2026-11-22","time":"11:45","end":"12:30","duration":"45m","day":"2026-11-22","status":"scheduled","order":3},{"id":"p:d8-04","name":"Immigration, security & lunch","address":"PVG T2","city":"Shanghai","category":"Travel","info":"Clear departure; lunch / duty-free. · Airside 候机","tags":[],"suggestedDay":"2026-11-22","time":"12:30","end":"13:30","duration":"1h","day":"2026-11-22","status":"scheduled","order":4},{"id":"p:d8-05","name":"Relax at gate","address":"PVG T2","city":"Shanghai","category":"Travel","info":"Boarding ~14:45. · Gate 登机口","tags":[],"suggestedDay":"2026-11-22","time":"13:30","end":"15:00","duration":"1h30","day":"2026-11-22","status":"scheduled","order":5}],"browse":[{"id":"b:dining:001","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Li'An 丽轩 (Conrad 50F) / Blue Willow","address":"上城区新业路228号","notes":"Conrad's 50F fine Chinese & all-day dining — great arrival-night option.","price":"¥200–400","category":"In-hotel","suggestedDay":""},{"id":"b:dining:002","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Lou Wai Lou 楼外楼 (Day 2)","address":"西湖孤山路30号","notes":"West Lake vinegar fish, Dongpo pork, Beggar's chicken.","price":"¥150–250","category":"Restaurant","suggestedDay":"2026-11-16"},{"id":"b:dining:003","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Grandma's Kitchen 外婆家 (Day 2)","address":"湖滨/多店","notes":"Affordable home-style dishes; queue early.","price":"¥60–100","category":"Restaurant","suggestedDay":"2026-11-16"},{"id":"b:dining:004","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"宫宴 Gongyan Palace Banquet (Day 2)","address":"西湖区曙光路122号","notes":"Song-Dynasty immersive imperial banquet + live show; Hanfu 汉服. 5.0★.","price":"¥300–500","category":"Experience","suggestedDay":"2026-11-16"},{"id":"b:dining:005","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Faxi Temple vegetarian 法喜寺素斋 (Day 3)","address":"西湖区法云弄 / 灵隐路","notes":"Famous temple vegetarian lunch beside Lingyin 灵隐 — no southward detour.","price":"¥30–60","category":"Restaurant","suggestedDay":"2026-11-17"},{"id":"b:dining:006","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Xiaohe Direct St 小河直街 canal-side dining (Day 3)","address":"拱墅区小河直街","notes":"Restored canal-warehouse district — Xin Bai Lu 新白鹿 / 炉鱼 grilled fish, cafés & bars.","price":"¥60–100","category":"Restaurant","suggestedDay":"2026-11-17"},{"id":"b:dining:007","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"% Arabica (Day 2)","address":"上城区湖滨路","notes":"Lakeside; matcha latte & espresso.","price":"¥30–45","category":"Café","suggestedDay":"2026-11-16"},{"id":"b:dining:008","section":"dining","city":"Hangzhou","group":"","rank":"","rating":"","name":"Brew in Corner / Parking Coffee (Day 3)","address":"老城区/海儿巷","notes":"Veteran roasters; Yunnan beans.","price":"¥30–55","category":"Café","suggestedDay":"2026-11-17"},{"id":"b:dining:009","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Ritz Nanjing dining (38–62F)","address":"玄武区中山路18号","notes":"Pin Ning Fu 品宁府 & Dai Yuet Heen 帝粤轩 (both Michelin 1★ 2026); FLAIR rooftop 62F.","price":"¥300–600","category":"In-hotel","suggestedDay":""},{"id":"b:dining:010","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Nanjing Impressions 南京大牌档 / 梅苑 (Day 5)","address":"玄武区狮子桥 / 汉中路2号","notes":"Salted duck 盐水鸭, roast duck 烤鸭; folk music.","price":"¥80–300","category":"Duck","suggestedDay":"2026-11-19"},{"id":"b:dining:011","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Nanhu Zhonghua Noodles 南湖中华面馆","address":"建邺区南湖","notes":"Old-Nanjing 皮肚面 — hearty pork-crackling noodles.","price":"¥15–30","category":"Noodles","suggestedDay":""},{"id":"b:dining:012","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Fuzimiao 夫子庙 / Laomendong 老门东 (Day 4)","address":"秦淮区贡院街","notes":"鸭血粉丝汤 (小潘记/叶新), 牛肉锅贴 (蒋有记), 汤包.","price":"¥10–35","category":"Snacks","suggestedDay":"2026-11-18"},{"id":"b:dining:013","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Fangpo Cake Shop 芳婆糕团店","address":"秦淮区","notes":"Queue for 乌饭团, 卤蛋, 桂花糖芋苗 — beloved Jinling sweets.","price":"¥8–25","category":"Dessert","suggestedDay":""},{"id":"b:dining:014","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Ji Ming Tang Bao 鸡鸣汤包 (Day 5)","address":"玄武区太平北路 (近鸡鸣寺)","notes":"60-yr-old soup dumplings beside Jiming Temple 鸡鸣寺 — Day 5 Purple Mtn/Xuanwu lunch.","price":"¥16–30","category":"Snacks","suggestedDay":"2026-11-19"},{"id":"b:dining:015","section":"dining","city":"Nanjing","group":"","rank":"","rating":"","name":"Ink Coffee (Day 4) / Sculpting in Time 雕刻时光","address":"新街口 / 鼓楼区","notes":"Nanjing's best-rated coffee; also 王府大街 café strip.","price":"¥30–50","category":"Café","suggestedDay":"2026-11-18"},{"id":"b:dining:016","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Biao Xia 标霞 (Ritz Suzhou)","address":"姑苏区广济南路369号","notes":"In-hotel Huaiyang Chinese restaurant; refined Su cuisine.","price":"¥250–450","category":"In-hotel","suggestedDay":""},{"id":"b:dining:017","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Wumen Renjia 吴门人家 (Day 6)","address":"姑苏区平江路潘儒巷32号","notes":"Classic Suzhou cuisine in a garden courtyard.","price":"¥100–180","category":"Restaurant","suggestedDay":"2026-11-20"},{"id":"b:dining:018","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Songhelou 松鹤楼 (Day 7)","address":"姑苏区观前街太监弄","notes":"Birthplace of squirrel mandarin fish.","price":"¥120–220","category":"Restaurant","suggestedDay":"2026-11-21"},{"id":"b:dining:019","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Aozao 奥灶馆 (Day 7)","address":"姑苏区老城","notes":"苏式面: 红汤/爆鱼/三虾面 — clear broth, fine noodles.","price":"¥25–50","category":"Noodles","suggestedDay":"2026-11-21"},{"id":"b:dining:020","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"YaBa Shengjian 哑巴生煎 / 大阿二生煎","address":"姑苏区临顿路","notes":"Golden crispy-bottom 生煎馒头 & 锅贴.","price":"¥15–35","category":"Snacks","suggestedDay":""},{"id":"b:dining:021","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Fresh-pork mooncake 苏式鲜肉月饼","address":"观前街 (长发/胥城)","notes":"Flaky just-baked 鲜肉月饼 — the local obsession.","price":"¥6–12","category":"Bakery","suggestedDay":""},{"id":"b:dining:022","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Wanfuxing 万福兴 糕团","address":"姑苏区","notes":"桂花糖粥, 赤豆小圆子, 梅花糕/海棠糕 — Suzhou sweets.","price":"¥8–25","category":"Sweets","suggestedDay":""},{"id":"b:dining:023","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"响油鳝糊 / 碧螺虾仁 (order at 松鹤楼/得月楼)","address":"观前街","notes":"Classic Su-bang dishes — sizzling eel; biluochun shrimp.","price":"(à la carte)","category":"Dish","suggestedDay":""},{"id":"b:dining:024","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Momicafe (Day 6)","address":"姑苏区平江路","notes":"Canal-front drip coffee on Pingjiang Rd 平江路 — golden hour.","price":"¥30–50","category":"Café","suggestedDay":"2026-11-20"},{"id":"b:dining:025","section":"dining","city":"Suzhou","group":"","rank":"","rating":"","name":"Title 标题咖啡 / Sparrow 麻雀 (Day 7)","address":"姑苏区十全街/凤凰街","notes":"Suzhou's best specialty coffee.","price":"¥30–50","category":"Café","suggestedDay":"2026-11-21"},{"id":"b:meals:026","section":"meals","city":"Hangzhou","group":"Day 1 · Dinner (🏨 Conrad / Raffles City 来福士)","rank":"①","rating":"🏨","name":"Raffles City 来福士 restaurants (at hotel)","address":"上城区钱江新城 来福士","notes":"Connected to the Conrad — easiest tired-arrival dinner","price":"¥80–200","category":"Dinner","suggestedDay":"2026-11-15"},{"id":"b:meals:027","section":"meals","city":"Hangzhou","group":"Day 1 · Dinner (🏨 Conrad / Raffles City 来福士)","rank":"②","rating":"4.6","name":"Li'An 丽轩 (Conrad 50F Chinese)","address":"上城区新业路228号","notes":"In-hotel refined Hangzhou/Cantonese, 50F views","price":"¥200–400","category":"Dinner","suggestedDay":"2026-11-15"},{"id":"b:meals:028","section":"meals","city":"Hangzhou","group":"Day 1 · Dinner (🏨 Conrad / Raffles City 来福士)","rank":"③","rating":"4.5","name":"Blue Willow (Conrad all-day dining)","address":"上城区新业路228号","notes":"In-hotel international; no travel needed","price":"¥150–300","category":"Dinner","suggestedDay":"2026-11-15"},{"id":"b:meals:029","section":"meals","city":"Hangzhou","group":"Day 1 · Dinner (🏨 Conrad / Raffles City 来福士)","rank":"④","rating":"4.5","name":"Haidilao Hot Pot 海底捞 (Raffles City 来福士)","address":"上城区钱江新城 来福士","notes":"Famous service hot-pot inside the connected mall — open late for a delayed arrival","price":"¥120–180","category":"Dinner","suggestedDay":"2026-11-15"},{"id":"b:meals:030","section":"meals","city":"Hangzhou","group":"Day 1 · Dinner (🏨 Conrad / Raffles City 来福士)","rank":"⑤","rating":"4.5","name":"Xin Rong Ji 新荣记 (Raffles City 来福士)","address":"上城区钱江新城 来福士","notes":"Taizhou-style seafood, nationally acclaimed — in the connected mall","price":"¥250–450","category":"Dinner","suggestedDay":"2026-11-15"},{"id":"b:meals:031","section":"meals","city":"Hangzhou","group":"Day 2 · Lunch (West Lake 西湖)","rank":"①","rating":"4.6","name":"Lou Wai Lou 楼外楼","address":"西湖孤山路30号","notes":"1848 lakeside icon; vinegar fish, Dongpo pork","price":"¥150–250","category":"Lunch","suggestedDay":"2026-11-16"},{"id":"b:meals:032","section":"meals","city":"Hangzhou","group":"Day 2 · Lunch (West Lake 西湖)","rank":"②","rating":"4.5","name":"Zhiweiguan 知味观 (Hubin)","address":"上城区仁和路83号","notes":"Faster classic; xiaolongbao & snacks","price":"¥40–80","category":"Lunch","suggestedDay":"2026-11-16"},{"id":"b:meals:033","section":"meals","city":"Hangzhou","group":"Day 2 · Lunch (West Lake 西湖)","rank":"③","rating":"4.6","name":"Green Tea 绿茶餐厅","address":"西湖区龙井路83号","notes":"Trendy value; Xi Shi tofu hot-pot","price":"¥60–90","category":"Lunch","suggestedDay":"2026-11-16"},{"id":"b:meals:034","section":"meals","city":"Hangzhou","group":"Day 2 · Lunch (West Lake 西湖)","rank":"④","rating":"4.8","name":"28 Hubin Road 湖滨28 (Hyatt Regency)","address":"上城区湖滨路28号","notes":"Top-rated lakeside Hangzhou fine dining (4.8, 600+ reviews); famous Dongpo pork","price":"¥300–500","category":"Lunch","suggestedDay":"2026-11-16"},{"id":"b:meals:035","section":"meals","city":"Hangzhou","group":"Day 2 · Lunch (West Lake 西湖)","rank":"⑤","rating":"4.6","name":"Zhang Sheng Ji 张生记 (Hubin 湖滨)","address":"上城区延安路","notes":"Hangzhou institution — old-duck soup 老鸭煲; near Broken Bridge 断桥","price":"¥100–180","category":"Lunch","suggestedDay":"2026-11-16"},{"id":"b:meals:036","section":"meals","city":"Hangzhou","group":"Day 2 · Dinner (★ banquet OR Hefang 河坊街)","rank":"★","rating":"5.0","name":"宫宴 Gongyan — Song Palace Banquet","address":"西湖区曙光路122号","notes":"Imperial banquet + live show; Hanfu 汉服. Book ahead.","price":"¥300–500","category":"Dinner","suggestedDay":"2026-11-16"},{"id":"b:meals:037","section":"meals","city":"Hangzhou","group":"Day 2 · Dinner (★ banquet OR Hefang 河坊街)","rank":"①","rating":"4.5","name":"Grandma's Kitchen 外婆家","address":"上城区体育场路","notes":"Popular home-style; queue early","price":"¥60–100","category":"Dinner","suggestedDay":"2026-11-16"},{"id":"b:meals:038","section":"meals","city":"Hangzhou","group":"Day 2 · Dinner (★ banquet OR Hefang 河坊街)","rank":"②","rating":"4.4","name":"Kuiyuanguan 奎元馆 (noodles)","address":"上城区解放路154号","notes":"150-yr-old; crossing-bridge noodles","price":"¥30–60","category":"Dinner","suggestedDay":"2026-11-16"},{"id":"b:meals:039","section":"meals","city":"Hangzhou","group":"Day 2 · Dinner (★ banquet OR Hefang 河坊街)","rank":"③","rating":"4.4","name":"Kuiyuan Wangzhuang / Hefang snack lanes 河坊街小吃","address":"上城区河坊街","notes":"Graze the Qinghefang 清河坊 stalls — 定胜糕, 葱包桧, 龙须糖","price":"¥20–50","category":"Dinner","suggestedDay":"2026-11-16"},{"id":"b:meals:040","section":"meals","city":"Hangzhou","group":"Day 2 · Dinner (★ banquet OR Hefang 河坊街)","rank":"④","rating":"4.3","name":"Wushan Night Market food stalls 吴山夜市","address":"上城区仁和路 (近龙翔桥)","notes":"Graze instead of a sit-down: skewers, jianbing, stinky tofu, osmanthus cake","price":"¥20–50","category":"Dinner","suggestedDay":"2026-11-16"},{"id":"b:meals:041","section":"meals","city":"Hangzhou","group":"Day 3 · Lunch (near Lingyin 灵隐)","rank":"①","rating":"4.6","name":"Charencun Teahouse 茶人村","address":"西湖区龙井路","notes":"Classical courtyard; 100-yr heritage","price":"¥80–150","category":"Lunch","suggestedDay":"2026-11-17"},{"id":"b:meals:042","section":"meals","city":"Hangzhou","group":"Day 3 · Lunch (near Lingyin 灵隐)","rank":"②","rating":"4.6","name":"Jin Sha 金沙厅 (Four Seasons)","address":"西湖区灵隐路5号","notes":"Michelin ⭐⭐; the ceiling (splurge)","price":"¥700+","category":"Lunch","suggestedDay":"2026-11-17"},{"id":"b:meals:043","section":"meals","city":"Hangzhou","group":"Day 3 · Lunch (near Lingyin 灵隐)","rank":"③","rating":"4.2","name":"Faxi Temple veg 法喜寺素斋","address":"西湖区法云弄","notes":"Famous temple vegetarian","price":"¥30–60","category":"Lunch","suggestedDay":"2026-11-17"},{"id":"b:meals:044","section":"meals","city":"Hangzhou","group":"Day 3 · Lunch (near Lingyin 灵隐)","rank":"④","rating":"4.4","name":"Longjing Caotang 龙井草堂","address":"西湖区龙井路399号","notes":"Slow-food courtyard in the tea village — pairs with the Longjing 龙井 stop","price":"¥150–300","category":"Lunch","suggestedDay":"2026-11-17"},{"id":"b:meals:045","section":"meals","city":"Hangzhou","group":"Day 3 · Lunch (near Lingyin 灵隐)","rank":"⑤","rating":"4.4","name":"Longjing Manjuelong 满觉陇 farmhouse teahouses","address":"西湖区满觉陇路","notes":"Village kitchens between Lingyin 灵隐 and the tea terraces — osmanthus 桂花 setting","price":"¥60–120","category":"Lunch","suggestedDay":"2026-11-17"},{"id":"b:meals:046","section":"meals","city":"Hangzhou","group":"Day 3 · Dinner (Grand Canal 运河)","rank":"①","rating":"4.5","name":"Xin Bai Lu 新白鹿 (Canal)","address":"拱墅区丽水路","notes":"Great-value Zhejiang classics","price":"¥60–90","category":"Dinner","suggestedDay":"2026-11-17"},{"id":"b:meals:047","section":"meals","city":"Hangzhou","group":"Day 3 · Dinner (Grand Canal 运河)","rank":"②","rating":"4.4","name":"Lu Yu Fang 炉鱼 canal-side","address":"拱墅区小河直街","notes":"Trendy grilled fish","price":"¥60–100","category":"Dinner","suggestedDay":"2026-11-17"},{"id":"b:meals:048","section":"meals","city":"Hangzhou","group":"Day 3 · Dinner (Grand Canal 运河)","rank":"③","rating":"4.3","name":"Zhuangyuan Guan 状元馆 (Canal 运河)","address":"拱墅区大兜路","notes":"Old Hangzhou noodle house — 虾爆鳝面; canal-side alternative","price":"¥30–70","category":"Dinner","suggestedDay":"2026-11-17"},{"id":"b:meals:049","section":"meals","city":"Hangzhou","group":"Day 3 · Dinner (Grand Canal 运河)","rank":"④","rating":"4.4","name":"Xiaohe Direct St 小河直街 canal eateries","address":"拱墅区小河直街","notes":"Restored warehouse lanes right at Gongchen Bridge 拱宸桥 — walk-and-choose","price":"¥40–80","category":"Dinner","suggestedDay":"2026-11-17"},{"id":"b:meals:050","section":"meals","city":"Hangzhou","group":"Day 3 · Dinner (Grand Canal 运河)","rank":"⑤","rating":"4.4","name":"Jiangnan Yi 江南驿 (Canal 运河店)","address":"拱墅区大兜路","notes":"Beloved Hangzhou home-style by the canal — 片儿川 & 雪菜; 4.4 on 12+ reviews","price":"¥60–100","category":"Dinner","suggestedDay":"2026-11-17"},{"id":"b:meals:051","section":"meals","city":"Nanjing","group":"Day 4 · Lunch (arrival, near 夫子庙)","rank":"①","rating":"4.5","name":"Qinhuai Renjia 秦淮人家 (夫子庙)","address":"秦淮区夫子庙贡院街","notes":"Qinhuai-style Nanjing set menus & 秦淮八绝 snacks on arrival","price":"¥60–120","category":"Lunch","suggestedDay":"2026-11-18"},{"id":"b:meals:052","section":"meals","city":"Nanjing","group":"Day 4 · Lunch (arrival, near 夫子庙)","rank":"②","rating":"4.5","name":"Li Ji 李记清真 (Dading Lane)","address":"秦淮区大顶巷","notes":"90-yr-old; beef potstickers 牛肉锅贴 (Halal)","price":"¥30–60","category":"Lunch","suggestedDay":"2026-11-18"},{"id":"b:meals:053","section":"meals","city":"Nanjing","group":"Day 4 · Lunch (arrival, near 夫子庙)","rank":"③","rating":"4.7","name":"Wang Jia Huntun 汪家馄饨 / 汪家汤包","address":"秦淮区贡院街","notes":"Beloved wontons & soup dumplings; 4.7","price":"¥20–40","category":"Lunch","suggestedDay":"2026-11-18"},{"id":"b:meals:054","section":"meals","city":"Nanjing","group":"Day 4 · Lunch (arrival, near 夫子庙)","rank":"④","rating":"4.4","name":"Yin Shi Ji 尹氏鸡汁汤包","address":"秦淮区贡院街","notes":"Fuzimiao institution — chicken-broth soup dumplings; fast on an arrival day","price":"¥20–40","category":"Lunch","suggestedDay":"2026-11-18"},{"id":"b:meals:055","section":"meals","city":"Nanjing","group":"Day 4 · Lunch (arrival, near 夫子庙)","rank":"⑤","rating":"4.3","name":"Qi Fang Ge 奇芳阁 (Fuzimiao 夫子庙)","address":"秦淮区贡院街","notes":"Century-old Qinhuai teahouse — 鸭油酥烧饼 & 什锦菜包; right on the walk","price":"¥20–45","category":"Lunch","suggestedDay":"2026-11-18"},{"id":"b:meals:056","section":"meals","city":"Nanjing","group":"Day 4 · Dinner (Fuzimiao 夫子庙 / Laomendong 老门东)","rank":"①","rating":"4.6","name":"Li Bai Xie Crab-Roe Noodles 李白蟹","address":"秦淮区夫子庙","notes":"Qinhuai river-view; crab-roe noodles","price":"¥60–120","category":"Dinner","suggestedDay":"2026-11-18"},{"id":"b:meals:057","section":"meals","city":"Nanjing","group":"Day 4 · Dinner (Fuzimiao 夫子庙 / Laomendong 老门东)","rank":"②","rating":"4.4","name":"Jiang You Ji 蒋有记 (Laomendong)","address":"秦淮区老门东","notes":"Famous 牛肉锅贴 beef potstickers — right where you walk","price":"¥20–45","category":"Dinner","suggestedDay":"2026-11-18"},{"id":"b:meals:058","section":"meals","city":"Nanjing","group":"Day 4 · Dinner (Fuzimiao 夫子庙 / Laomendong 老门东)","rank":"③","rating":"🏨","name":"Ritz — Dai Yuet Heen 帝粤轩 (Michelin 1★)","address":"玄武区中山路18号","notes":"In-hotel Cantonese, starred; skyline views (splurge)","price":"¥400+","category":"Dinner","suggestedDay":"2026-11-18"},{"id":"b:meals:059","section":"meals","city":"Nanjing","group":"Day 4 · Dinner (Fuzimiao 夫子庙 / Laomendong 老门东)","rank":"④","rating":"4.5","name":"Xiao Pan Ji 小潘记 鸭血粉丝汤","address":"秦淮区老门东","notes":"Nanjing's signature duck-blood vermicelli soup — steps from Laomendong 老门东","price":"¥15–30","category":"Dinner","suggestedDay":"2026-11-18"},{"id":"b:meals:060","section":"meals","city":"Nanjing","group":"Day 4 · Dinner (Fuzimiao 夫子庙 / Laomendong 老门东)","rank":"⑤","rating":"4.4","name":"Lan Jia Shan 蓝家山 (Laomendong)","address":"秦淮区老门东箍桶巷","notes":"Sit-down Huaiyang in the Ming-Qing lanes; good if street snacks aren’t enough","price":"¥60–110","category":"Dinner","suggestedDay":"2026-11-18"},{"id":"b:meals:061","section":"meals","city":"Nanjing","group":"Day 5 · Lunch (Purple Mtn 紫金山 / Xuanwu 玄武)","rank":"①","rating":"4.7","name":"Jiangnan Wok 江南灶 (Shangri-La)","address":"鼓楼区中央路329号","notes":"Rated Nanjing's best Chinese; Huaiyang (splurge)","price":"¥150–300","category":"Lunch","suggestedDay":"2026-11-19"},{"id":"b:meals:062","section":"meals","city":"Nanjing","group":"Day 5 · Lunch (Purple Mtn 紫金山 / Xuanwu 玄武)","rank":"②","rating":"4.6","name":"Ji Ming Tang Bao 鸡鸣汤包","address":"玄武区太平北路","notes":"60-yr soup dumplings — beside Jiming Temple 鸡鸣寺","price":"¥16–30","category":"Lunch","suggestedDay":"2026-11-19"},{"id":"b:meals:063","section":"meals","city":"Nanjing","group":"Day 5 · Lunch (Purple Mtn 紫金山 / Xuanwu 玄武)","rank":"③","rating":"4.5","name":"Ma Xiang Xing 马祥兴菜馆 (Halal, Gulou 鼓楼)","address":"鼓楼区云南北路","notes":"180-yr-old Jinling institution — 美人肝, 松鼠鱼; west off the mountain","price":"¥60–120","category":"Lunch","suggestedDay":"2026-11-19"},{"id":"b:meals:064","section":"meals","city":"Nanjing","group":"Day 5 · Lunch (Purple Mtn 紫金山 / Xuanwu 玄武)","rank":"④","rating":"4.7","name":"Wan Li 万里 (Nanjing)","address":"玄武区中山东路","notes":"One of the city’s highest-rated Chinese rooms (4.7) — splurge alternative","price":"¥300–500","category":"Lunch","suggestedDay":"2026-11-19"},{"id":"b:meals:065","section":"meals","city":"Nanjing","group":"Day 5 · Lunch (Purple Mtn 紫金山 / Xuanwu 玄武)","rank":"⑤","rating":"4.4","name":"Xuanwu Lake 玄武湖 lakeside cafés & noodle shops","address":"玄武区玄武巷1号","notes":"Casual stop if you exit via 台城/玄武湖 rather than heading west","price":"¥30–70","category":"Lunch","suggestedDay":"2026-11-19"},{"id":"b:meals:066","section":"meals","city":"Nanjing","group":"Day 5 · Dinner (🏨 Xinjiekou 新街口 — at your hotel)","rank":"①","rating":"4.5","name":"Nanjing Impressions 南京大牌档 (Shiziqiao)","address":"鼓楼区湖南路狮子桥","notes":"Duck feast + folk music; near hotel","price":"¥80–120","category":"Dinner","suggestedDay":"2026-11-19"},{"id":"b:meals:067","section":"meals","city":"Nanjing","group":"Day 5 · Dinner (🏨 Xinjiekou 新街口 — at your hotel)","rank":"②","rating":"🏨","name":"Ritz — Pin Ning Fu 品宁府 (Michelin 1★)","address":"玄武区中山路18号","notes":"In-hotel Chinese, starred; easy luxury","price":"¥400+","category":"Dinner","suggestedDay":"2026-11-19"},{"id":"b:meals:068","section":"meals","city":"Nanjing","group":"Day 5 · Dinner (🏨 Xinjiekou 新街口 — at your hotel)","rank":"③","rating":"4.5","name":"梅苑 Plum Garden (Jinling Hotel)","address":"秦淮区汉中路2号","notes":"Rated top 盐水鸭/烤鸭; refined","price":"¥150–300","category":"Dinner","suggestedDay":"2026-11-19"},{"id":"b:meals:069","section":"meals","city":"Nanjing","group":"Day 5 · Dinner (🏨 Xinjiekou 新街口 — at your hotel)","rank":"④","rating":"4.4","name":"Lu Ming Ju 绿柳居 (Xinjiekou 新街口)","address":"秦淮区太平南路248号","notes":"Century-old Jinling vegetarian & 素菜包 — 10 min from Deji 德基","price":"¥60–120","category":"Dinner","suggestedDay":"2026-11-19"},{"id":"b:meals:070","section":"meals","city":"Nanjing","group":"Day 5 · Dinner (🏨 Xinjiekou 新街口 — at your hotel)","rank":"⑤","rating":"4.6","name":"FLAIR Rooftop 62F (Ritz-Carlton)","address":"玄武区中山路18号","notes":"Skyline small plates & drinks at the hotel — light dinner option","price":"¥200–400","category":"Dinner","suggestedDay":"2026-11-19"},{"id":"b:meals:071","section":"meals","city":"Nanjing","group":"Snacks & sweets to seek out (anytime 随时)","rank":"🍜","rating":"4.5","name":"皮肚面 — Nanhu Zhonghua 南湖中华面馆","address":"建邺区南湖","notes":"Hearty pork-crackling noodles in rich broth","price":"¥15–30","category":"Snack","suggestedDay":""},{"id":"b:meals:072","section":"meals","city":"Nanjing","group":"Snacks & sweets to seek out (anytime 随时)","rank":"🍡","rating":"4.6","name":"糕团甜品 — Fangpo 芳婆糕团店","address":"秦淮区","notes":"乌饭团, 卤蛋, 桂花糖芋苗 — queue-worthy Jinling sweets","price":"¥8–25","category":"Snack","suggestedDay":""},{"id":"b:meals:073","section":"meals","city":"Nanjing","group":"Snacks & sweets to seek out (anytime 随时)","rank":"🌃","rating":"—","name":"Late-night food streets 深夜食堂","address":"鼓楼/玄武区","notes":"茶南大街/锁金村 (local) & 王府大街 (food + trendy cafés)","price":"¥20–50","category":"Snack","suggestedDay":""},{"id":"b:meals:074","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"①","rating":"4.5","name":"Songhelou 松鹤楼 (Guanqian)","address":"姑苏区观前街太监弄","notes":"250-yr-old; squirrel mandarin fish. 1,350+ reviews","price":"¥120–220","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:075","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"②","rating":"4.4","name":"Wufangzhai 五芳斋 (Guanqian 观前街)","address":"姑苏区观前街","notes":"Fast Su-style zongzi 粽子 & snacks — easy arrival-day lunch","price":"¥20–45","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:076","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"③","rating":"4.3","name":"Xiehe Caiguan 协和菜馆","address":"姑苏区凤凰街","notes":"Great-value classic Su-bang","price":"¥80–150","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:077","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"④","rating":"4.4","name":"Yuxing Ji 裕兴记 (Guanqian 观前街)","address":"姑苏区观前街","notes":"Famous 三虾面 / 枫镇大肉面 — Suzhou noodle institution near Guanqian","price":"¥30–70","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:078","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"⑤","rating":"4.3","name":"Tongdexing 同得兴 (Suzhou noodles 苏式面)","address":"姑苏区嘉馀坊","notes":"Renowned 枫镇大肉面 / 焖肉面 — a Suzhou noodle pilgrimage","price":"¥30–80","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:079","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"⑥","rating":"4.4","name":"哑巴生煎 / 大阿二生煎 (Lindun Rd 临顿路)","address":"姑苏区临顿路","notes":"Golden crispy-bottom 生煎馒头 & 锅贴 — grab on the walk in to Pingjiang 平江路","price":"¥15–35","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:080","section":"meals","city":"Suzhou","group":"Day 6 · Lunch (arrival Suzhou 苏州)","rank":"⑦","rating":"4.5","name":"万福兴 糕团 / 糖粥 (sweets 甜点)","address":"姑苏区 (万福兴)","notes":"桂花糖粥, 赤豆小圆子, 梅花糕, 海棠糕 — classic Suzhou sweets","price":"¥8–25","category":"Lunch","suggestedDay":"2026-11-20"},{"id":"b:meals:081","section":"meals","city":"Suzhou","group":"Day 6 · Dinner (Pingjiang Rd 平江路)","rank":"①","rating":"4.4","name":"Wumen Renjia 吴门人家","address":"姑苏区平江路潘儒巷32号","notes":"Classic Suzhou in a garden courtyard","price":"¥100–180","category":"Dinner","suggestedDay":"2026-11-20"},{"id":"b:meals:082","section":"meals","city":"Suzhou","group":"Day 6 · Dinner (Pingjiang Rd 平江路)","rank":"②","rating":"4.3","name":"Yushifan Daotuzao 玉食坊","address":"姑苏区平江路","notes":"Canal-street favourite; braised pork","price":"¥80–150","category":"Dinner","suggestedDay":"2026-11-20"},{"id":"b:meals:083","section":"meals","city":"Suzhou","group":"Day 6 · Dinner (Pingjiang Rd 平江路)","rank":"③","rating":"🏨","name":"Biao Xia 标霞 (Ritz Suzhou)","address":"姑苏区广济南路369号","notes":"In-hotel Huaiyang; near Liuyuan","price":"¥250–450","category":"Dinner","suggestedDay":"2026-11-20"},{"id":"b:meals:084","section":"meals","city":"Suzhou","group":"Day 6 · Dinner (Pingjiang Rd 平江路)","rank":"④","rating":"4.3","name":"Xiangyang Lou 向阳楼 (Pingjiang 平江路)","address":"姑苏区平江路","notes":"Canal-street Su-bang home cooking — walkable straight after the boat ride","price":"¥60–120","category":"Dinner","suggestedDay":"2026-11-20"},{"id":"b:meals:085","section":"meals","city":"Suzhou","group":"Day 6 · Dinner (Pingjiang Rd 平江路)","rank":"⑤","rating":"4","name":"Pin Von 品味 (Pingjiang Road 平江路)","address":"姑苏区平江路","notes":"Canal-side casual right on the walking street — no detour after the boat ride","price":"¥40–90","category":"Dinner","suggestedDay":"2026-11-20"},{"id":"b:meals:086","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"①","rating":"4.5","name":"Deyuelou 得月楼","address":"姑苏区观前街太监弄43号","notes":"Ming-era mandarin fish; 2,400+ reviews","price":"¥120–200","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:087","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"②","rating":"4.2","name":"Aozao Noodles 奥灶馆 (Guanqian 观前街)","address":"姑苏区观前街","notes":"Famous red/white-broth 苏式面 — 爆鱼/焖肉; the classic Suzhou noodle bowl","price":"¥25–50","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:088","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"③","rating":"4.4","name":"Yipin Shi 义昌福 (Guanqian 观前街)","address":"姑苏区观前街","notes":"Long-running Suzhou restaurant in the centre — 松鼠鱼, 响油鳝糊","price":"¥60–120","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:089","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"④","rating":"4.3","name":"Zhu Hongxing 朱鸿兴 (Guanqian 观前街)","address":"姑苏区观前街","notes":"Classic Suzhou noodles — 焖肉面/爆鱼面; quick centre-of-town lunch","price":"¥25–50","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:090","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"⑤","rating":"4.4","name":"Wumen Chuan Sheng 吴门船宴 / 老正兴 (Shiquan 十全街)","address":"姑苏区十全街","notes":"Traditional Su-bang near the Shiquan 十全街 coffee stop","price":"¥80–160","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:091","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"⑥","rating":"4.6","name":"苏式鲜肉月饼 (fresh-pork mooncake 长发/胥城)","address":"姑苏区观前街","notes":"Just-baked flaky 鲜肉月饼 — queue on 观前街 right by your lunch stops","price":"¥6–12","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:092","section":"meals","city":"Suzhou","group":"Day 7 · Lunch (Guanqian 观前街, centre)","rank":"⑦","rating":"—","name":"响油鳝糊 & 碧螺虾仁 (dishes to order 加菜)","address":"姑苏区观前街太监弄","notes":"Order these at 松鹤楼 / 得月楼 — sizzling eel & biluochun shrimp","price":"à la carte","category":"Lunch","suggestedDay":"2026-11-21"},{"id":"b:meals:093","section":"meals","city":"Suzhou","group":"Day 7 · Dinner (old town OR Jinji Lake 金鸡湖)","rank":"①","rating":"4.5","name":"Pingjiangsong 平江宋 (Platinum)","address":"姑苏区平江路","notes":"Reviving traditional Suzhou cuisine","price":"¥180–350","category":"Dinner","suggestedDay":"2026-11-21"},{"id":"b:meals:094","section":"meals","city":"Suzhou","group":"Day 7 · Dinner (old town OR Jinji Lake 金鸡湖)","rank":"②","rating":"5.0","name":"SU Yan 苏宴 (W Suzhou, Jinji Lake)","address":"工业园区苏绣路","notes":"5.0-rated; lakeside fine dining (if SIP)","price":"¥300–500","category":"Dinner","suggestedDay":"2026-11-21"},{"id":"b:meals:095","section":"meals","city":"Suzhou","group":"Day 7 · Dinner (old town OR Jinji Lake 金鸡湖)","rank":"③","rating":"4.3","name":"Lao Suzhou Cha 老苏州茶酒楼","address":"姑苏区十全街","notes":"Slower Su-bang dinner (Shiquan)","price":"¥80–150","category":"Dinner","suggestedDay":"2026-11-21"},{"id":"b:meals:096","section":"meals","city":"Suzhou","group":"Day 7 · Dinner (old town OR Jinji Lake 金鸡湖)","rank":"④","rating":"4.4","name":"Wu Yue Ren Jia 吴越人家 (old town 姑苏)","address":"姑苏区干将东路","notes":"Classic Su-bang farewell in the old town if you skip Jinji Lake 金鸡湖","price":"¥90–160","category":"Dinner","suggestedDay":"2026-11-21"},{"id":"b:meals:097","section":"meals","city":"Suzhou","group":"Day 7 · Dinner (old town OR Jinji Lake 金鸡湖)","rank":"⑤","rating":"4.5","name":"Xin Zhen Yuan 新振源 (Shantang 山塘街)","address":"姑苏区山塘街","notes":"Shrimp shengjian by the lanterns — closest to the Ritz for a late finish","price":"¥25–50","category":"Dinner","suggestedDay":"2026-11-21"},{"id":"b:explore:098","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"Raffles City 来福士 + Qianjiang Light Show 灯光秀 (Day 1)","address":"江干区钱江新城 · 夜","notes":"Conrad connects to mall; 0.5km riverside LED show.","price":"","category":"Modern Icon","suggestedDay":"2026-11-15"},{"id":"b:explore:099","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"Hefang St 河坊街 / Qinghefang 清河坊 (Day 2–3)","address":"上城区河坊街","notes":"Silk, tea, fans, snacks.","price":"","category":"Shopping","suggestedDay":"2026-11-16"},{"id":"b:explore:100","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"Wushan Night Market 吴山夜市 (Day 2)","address":"上城区仁和路","notes":"Skewers, jianbing, osmanthus cake.","price":"","category":"Street Food","suggestedDay":"2026-11-16"},{"id":"b:explore:101","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"宫宴 Gongyan Palace Banquet (Day 2)","address":"西湖区曙光路122号 · book ahead","notes":"Song-Dynasty imperial banquet + show; Hanfu. 5.0★.","price":"","category":"New Experience","suggestedDay":"2026-11-16"},{"id":"b:explore:102","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"Tianmuli 天目里 (Day 3 alt)","address":"西湖区天目山路398号","notes":"Renzo Piano district — Tsutaya, cafés.","price":"","category":"Trendy/New","suggestedDay":"2026-11-17"},{"id":"b:explore:103","section":"explore","city":"Hangzhou","group":"","rank":"","rating":"","name":"德寿宫遗址博物馆 Deshou Palace (Day 3)","address":"上城区中河中路 · 近清河坊","notes":"Southern-Song palace ruins; striking red hall. Night 德寿夜宴 is Fri–Sun only — not on this trip.","price":"","category":"Culture","suggestedDay":"2026-11-17"},{"id":"b:explore:104","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"Xinjiekou 新街口 & Deji 德基广场 (Day 5 · at hotel)","address":"秦淮区中山南路18号","notes":"'No.1 mall' — flagships, Deji Art Museum; famous themed washrooms.","price":"","category":"Shopping","suggestedDay":"2026-11-19"},{"id":"b:explore:105","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"Shiziqiao 狮子桥 (Day 5)","address":"鼓楼区湖南路狮子桥","notes":"Salted duck, dumplings, skewers.","price":"","category":"Street Food","suggestedDay":"2026-11-19"},{"id":"b:explore:106","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"茶南大街 / 锁金村 · 王府大街 (optional)","address":"鼓楼/玄武区 · 夜","notes":"Locals' late-night food streets + trendy café strip.","price":"","category":"Street Food","suggestedDay":""},{"id":"b:explore:107","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"南京博物院 民国馆 (Day 5 opt)","address":"玄武区中山东路321号 · book 1 wk","notes":"Top-3 China museum; immersive Republic-era 民国馆.","price":"","category":"Culture","suggestedDay":"2026-11-19"},{"id":"b:explore:108","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"颐和路 Yihe Road Republican quarter (Day 5 opt)","address":"鼓楼区颐和路 · day","notes":"Plane-tree-lined 1930s villa streets — great strolling/photos.","price":"","category":"Culture","suggestedDay":"2026-11-19"},{"id":"b:explore:109","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"FLAIR rooftop 62F (Ritz) / Zifeng Tower 紫峰大厦","address":"玄武区中山路18号 / 中央路1号","notes":"Skyline drinks at your hotel, or the 紫峰 deck.","price":"","category":"Modern Icon","suggestedDay":""},{"id":"b:explore:110","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"大报恩寺遗址公园 Great Bao'en Temple (Day 4 · 夜场)","address":"秦淮区中华门外雨花路1号 · ¥72","notes":"Illuminated glazed pagoda 琉璃塔 + ruins light show 光影秀. Top 打卡 spot; night session best.","price":"","category":"Culture","suggestedDay":"2026-11-18"},{"id":"b:explore:111","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"先锋书店 Librairie Avant-Garde 五台山总店 (Day 5 opt)","address":"鼓楼区广州路173号 · free","notes":"World's most beautiful bookstore' in a converted car park. Pairs with 颐和路; go before noon.","price":"","category":"Trendy/New","suggestedDay":"2026-11-19"},{"id":"b:explore:112","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"Xiaoxihu 小西湖 / Laomendong 老门东 (Day 4)","address":"秦淮区马道街21号","notes":"Regenerated Ming-Qing alleys.","price":"","category":"Trendy/New","suggestedDay":"2026-11-18"},{"id":"b:explore:113","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"牛首山 佛顶宫 Niushou Mtn (half-day)","address":"江宁区宁丹大道 · far S","notes":"Viral opulent modern Buddhist palace — needs ~half day.","price":"","category":"Optional Trip","suggestedDay":""},{"id":"b:explore:114","section":"explore","city":"Nanjing","group":"","rank":"","rating":"","name":"红山森林动物园 Hongshan Zoo","address":"玄武区和燕路168号 · N","notes":"No-cage native-habitat zoo — capybara 水豚 & red panda.","price":"","category":"Optional Trip","suggestedDay":""},{"id":"b:explore:115","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"Guanqian St 观前街 (Day 7)","address":"姑苏区观前街","notes":"Commercial heart by Xuanmiao Temple.","price":"","category":"Shopping","suggestedDay":"2026-11-21"},{"id":"b:explore:116","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"Shantang St 山塘街 (Day 6–7 · near hotel)","address":"姑苏区山塘街","notes":"Canal food under red lanterns; near the Ritz.","price":"","category":"Street Food","suggestedDay":"2026-11-20"},{"id":"b:explore:117","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"Gate of Orient 东方之门 / Suzhou Center (Day 7)","address":"工业园区星港街199号","notes":"Jinji Lake futuristic skyline.","price":"","category":"Modern Icon","suggestedDay":"2026-11-21"},{"id":"b:explore:118","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"Shuangta Market 双塔市集 (Day 6)","address":"姑苏区吴殿直街2号","notes":"Design-award wet market & cafés.","price":"","category":"Trendy/New","suggestedDay":"2026-11-20"},{"id":"b:explore:119","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"Shiquan St 十全街 (Day 7)","address":"姑苏区十全街","notes":"Vintage boutiques, jade, indie cafés.","price":"","category":"Trendy/New","suggestedDay":"2026-11-21"},{"id":"b:explore:120","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"仁恒仓街 Renheng Cang St (Day 6 opt)","address":"姑苏区仓街 (相门)","notes":"High-end shopping fused with 相门 Ming city-wall relics — photogenic.","price":"","category":"Shopping","suggestedDay":"2026-11-20"},{"id":"b:explore:121","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"寒山寺 Hanshan Temple (Day 7 opt)","address":"姑苏区寒山寺弄24号","notes":"'枫桥夜泊' poem temple; bell-ringing & 福签, 枫桥 nearby.","price":"","category":"Culture","suggestedDay":"2026-11-21"},{"id":"b:explore:122","section":"explore","city":"Suzhou","group":"","rank":"","rating":"","name":"同里 / 周庄古镇 water towns","address":"吴江同里 / 昆山周庄 · ~1h","notes":"Classic 江南水乡 canal towns — half/full-day trip.","price":"","category":"Optional Trip","suggestedDay":""},{"id":"b:events:123","section":"events","city":"Hangzhou","group":"","rank":"","rating":"","name":"West Lake ginkgo/maple 西湖红叶 (Day 2)","address":"北山街/孤山","notes":"Beishan St ginkgo, Gushan red leaves.","price":"","category":"Foliage","suggestedDay":"2026-11-16"},{"id":"b:events:124","section":"events","city":"Hangzhou","group":"","rank":"","rating":"","name":"Yongfu Temple 永福寺 (Day 3)","address":"西湖区法云弄","notes":"Gilded ginkgo vs yellow temple walls.","price":"","category":"Foliage","suggestedDay":"2026-11-17"},{"id":"b:events:125","section":"events","city":"Hangzhou","group":"","rank":"","rating":"","name":"Katy Perry — Lifetimes Tour","address":"奥体中心 · 21–22 Nov","notes":"Verify on Damai; overlaps Suzhou nights.","price":"","category":"Dated","suggestedDay":""},{"id":"b:events:126","section":"events","city":"Nanjing","group":"","rank":"","rating":"","name":"Ming Xiaoling Sacred Way 石象路 (Day 5)","address":"玄武区紫金山","notes":"'Most beautiful autumn avenue'.","price":"","category":"Foliage","suggestedDay":"2026-11-19"},{"id":"b:events:127","section":"events","city":"Nanjing","group":"","rank":"","rating":"","name":"Qixia Mountain 栖霞山 (Day 5 alt)","address":"栖霞区栖霞街88号","notes":"Famous maple mountain — half-day trip.","price":"","category":"Foliage","suggestedDay":"2026-11-19"},{"id":"b:events:128","section":"events","city":"Suzhou","group":"","rank":"","rating":"","name":"Tianping Mountain 天平山红枫节 (Day 7 alt)","address":"吴中区木渎镇","notes":"100,000 maples, PEAK mid-Nov! ¥30.","price":"","category":"Foliage","suggestedDay":"2026-11-21"},{"id":"b:events:129","section":"events","city":"Suzhou","group":"","rank":"","rating":"","name":"'Gusu 20:30' 姑苏20:30 (Day 6–7)","address":"姑苏区老城","notes":"Gardens/food streets open late.","price":"","category":"Seasonal","suggestedDay":"2026-11-20"}]};
+const DAYS = SEED.days;
 const CITIES = ['Hangzhou','Nanjing','Suzhou','Shanghai'];
-const DAYS = [
-  {d:'2026-11-15', city:'Hangzhou', label:'Shanghai → Hangzhou'},
-  {d:'2026-11-16', city:'Hangzhou', label:'Hangzhou'},
-  {d:'2026-11-17', city:'Hangzhou', label:'Hangzhou'},
-  {d:'2026-11-18', city:'Nanjing',  label:'Hangzhou → Nanjing'},
-  {d:'2026-11-19', city:'Nanjing',  label:'Nanjing'},
-  {d:'2026-11-20', city:'Suzhou',   label:'Nanjing → Suzhou'},
-  {d:'2026-11-21', city:'Shanghai', label:'Suzhou → Shanghai'},
-  {d:'2026-11-22', city:'Shanghai', label:'Shanghai → home'},
-];
-const LS_PLAN = 'jiangnan.plan.v1', LS_LOCAL = 'jiangnan.local.v1';
-const KIND_ICON = {flight:'✈', train:'🚄', hotel:'🏨', item:'•'};
+const LS_PLAN = 'jiangnan.plan.v2', LS_LOCAL = 'jiangnan.local.v2';
+const KIND_ICON = {flight:'✈', train:'🚄', hotel:'🏨'};
+const SECTIONS = [['dining','Dining & cafés'],['meals','Meal picks by day'],['explore','Shop · street food · explore'],['events','Events & foliage']];
 
-// ---------- state ----------
 const now = () => Date.now();
 const uid = (p) => p + ':' + Math.random().toString(36).slice(2,10) + now().toString(36);
-function seedBlocks(){
-  const b = (id,day,type,title,extra) => Object.assign({id,day,type,title,time:'',number:'',from:'',to:'',tentative:false,note:'',updatedAt:0},extra||{});
-  return [
-    b('seed:mh388','2026-11-15','flight','Fly to Shanghai Pudong',{number:'MH388',time:'09:10',from:'KUL T1',to:'PVG T2',note:'lands 14:30 · Business · A330-300 · via Trip.com'}),
-    b('seed:t1','2026-11-15','train','Train to Hangzhou',{from:'Shanghai',to:'Hangzhou'}),
-    b('seed:h1in','2026-11-15','hotel','Check in — Conrad Hangzhou',{tentative:true}),
-    b('seed:h1out','2026-11-18','hotel','Check out — Conrad Hangzhou',{tentative:true}),
-    b('seed:t2','2026-11-18','train','Train to Nanjing',{from:'Hangzhou',to:'Nanjing'}),
-    b('seed:h2in','2026-11-18','hotel','Check in — Ritz-Carlton Nanjing',{tentative:true}),
-    b('seed:h2out','2026-11-20','hotel','Check out — Ritz-Carlton Nanjing',{tentative:true}),
-    b('seed:t3','2026-11-20','train','Train to Suzhou',{from:'Nanjing',to:'Suzhou'}),
-    b('seed:h3in','2026-11-20','hotel','Check in — Suzhou hotel (TBC)',{tentative:true}),
-    b('seed:h3out','2026-11-21','hotel','Check out — Suzhou hotel (TBC)',{tentative:true}),
-    b('seed:t4','2026-11-21','train','Train to Shanghai',{from:'Suzhou',to:'Shanghai'}),
-    b('seed:h4in','2026-11-21','hotel','Check in — JW Marriott Pudong'),
-    b('seed:h4out','2026-11-22','hotel','Check out — JW Marriott Pudong'),
-    b('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',{number:'MH389',time:'16:05',from:'PVG T2',to:'KUL T1',note:'lands 21:50 · Business · A330-300 · via Trip.com'}),
-  ];
-}
-const defPlan  = () => ({v:1, items:{}, blocks:seedBlocks(), updatedAt:0});
-const defLocal = () => ({me:'', amapKey:'', amapSec:'', city:'Hangzhou'});
+function seedItems(){ const o={}; for (const s of SEED.items){ o[s.id]=Object.assign({notes:{},votes:[],addedBy:'plan',addedAt:0,updatedAt:0,src:'plan'}, JSON.parse(JSON.stringify(s))); } return o; }
+function seedBlocks(){ return JSON.parse(JSON.stringify(SEED.blocks)); }
+const defPlan  = () => ({v:2, items:seedItems(), blocks:seedBlocks(), updatedAt:0});
+const defLocal = () => ({me:'', city:'', sec:'dining'});
 function read(k, def){ try{ const j = JSON.parse(localStorage.getItem(k)); if (j && typeof j==='object') return Object.assign(def(), j); }catch(e){} return def(); }
 let P = read(LS_PLAN, defPlan), L = read(LS_LOCAL, defLocal);
-// make sure every seeded block exists (older saves), and refresh seeds nobody has edited yet
+// seeds nobody has touched follow the workbook; anything edited (updatedAt > 0) is left alone
+for (const s of Object.values(seedItems())){ const cur=P.items[s.id]; if (!cur) P.items[s.id]=s; else if (!cur.updatedAt){ const keep={notes:cur.notes,votes:cur.votes}; Object.assign(cur, s, keep); } }
 for (const sb of seedBlocks()){ const cur=P.blocks.find(b=>b.id===sb.id); if (!cur) P.blocks.push(sb); else if (!cur.updatedAt) Object.assign(cur, sb); }
 function savePlan(){ P.updatedAt = now(); try{ localStorage.setItem(LS_PLAN, JSON.stringify(P)); }catch(e){ toast('Could not save — storage blocked?'); } }
 function saveLocal(){ try{ localStorage.setItem(LS_LOCAL, JSON.stringify(L)); }catch(e){} }
 
-// ---------- helpers ----------
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDay = (d) => { const dt = new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); };
-const people = () => { const s = new Set(); if (L.me) s.add(L.me); for (const it of Object.values(P.items)){ if (it.addedBy) s.add(it.addedBy); for (const v of it.votes||[]) s.add(v); for (const n of Object.keys(it.notes||{})) s.add(n);} return [...s]; };
+const dayNum = (d) => DAYS.findIndex(x=>x.d===d)+1;
+const people = () => { const s = new Set(); if (L.me) s.add(L.me); for (const it of Object.values(P.items)){ if (it.addedBy && it.addedBy!=='plan') s.add(it.addedBy); for (const v of it.votes||[]) s.add(v); for (const n of Object.keys(it.notes||{})) s.add(n);} return [...s]; };
 let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); }
-const dayItems = (d) => Object.values(P.items).filter(i=>i.day===d && i.status!=='dropped').sort((a,b)=>(a.order||0)-(b.order||0));
-const timeKey = (t) => t ? t : '99:99';
+const dayItems = (d) => Object.values(P.items).filter(i=>i.day===d && i.status!=='dropped').sort((a,b)=> (tk(a.time).localeCompare(tk(b.time))) || ((a.order||0)-(b.order||0)));
+const tk = (t) => t ? t : '99:99';
+const timeSpan = (i) => i.time ? (i.end ? `${i.time}–${i.end}` : i.time) : '';
+// Open the place in the Amap app (高德地图) — a deep link, no API key involved. Longest Chinese run in the name is the best search term.
+const CN = {Hangzhou:'杭州', Nanjing:'南京', Suzhou:'苏州', Shanghai:'上海'};
+const cjk = (s) => (String(s||'').match(/[㐀-鿿]+/g)||[]).sort((a,b)=>b.length-a.length)[0]||'';
+function mapUrl(name, city, address){ const kw = cjk(name) || cjk(address) || String(name).replace(/\(.*?\)/g,'').trim(); return 'https://uri.amap.com/search?keyword='+encodeURIComponent(kw)+'&city='+encodeURIComponent(CN[city]||'')+'&src=jiangnan&callnative=1'; }
+const mapBtn = (name, city, address) => `<a class="btn small" href="${mapUrl(name, city, address)}" target="_blank" rel="noopener" title="Open in Amap 高德地图">Map ↗</a>`;
 
 // ---------- tabs ----------
 function showTab(name){
   $$('section.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+name));
   $$('nav.tabs button').forEach(b=>{ if (b.dataset.tab===name) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
-  if (name==='search') { renderSearch(); if (amap.map) setTimeout(()=>amap.map.resize(),50); else amapInitMap(); }
-  if (name==='wish') renderWish();
   if (name==='itin') renderItin();
+  if (name==='browse') renderBrowse();
+  if (name==='wish') renderWish();
   if (name==='settings') renderSettings();
   window.scrollTo({top:0});
 }
@@ -330,34 +297,44 @@ $$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>showTab(b.datase
 // ---------- items ----------
 function addItem(it){
   const ex = P.items[it.id];
-  if (ex){ if (ex.status==='dropped'){ ex.status='wishlist'; ex.updatedAt=now(); savePlan(); toast('Back on the wishlist'); } else toast('Already on the wishlist'); return ex; }
-  P.items[it.id] = Object.assign({id:'', name:'', address:'', city:'', lat:null, lng:null, category:'', addedBy:L.me, addedAt:now(), notes:{}, votes:[], status:'wishlist', day:'', order:0, time:'', duration:'', updatedAt:now()}, it);
-  savePlan(); updateBadge(); toast('Added to wishlist'); return P.items[it.id];
+  if (ex){ if (ex.status==='dropped'){ ex.status=ex.day?'scheduled':'wishlist'; ex.updatedAt=now(); savePlan(); toast('Back on the plan'); } else toast(ex.day?'Already on '+fmtDay(ex.day):'Already on the wishlist'); return ex; }
+  P.items[it.id] = Object.assign({id:'', name:'', address:'', city:'', category:'', info:'', tags:[], addedBy:L.me, addedAt:now(), notes:{}, votes:[], status:'wishlist', day:'', order:0, time:'', end:'', duration:'', suggestedDay:'', src:'user', updatedAt:now()}, it);
+  savePlan(); updateBadge(); return P.items[it.id];
 }
 function toggleVote(id){ const it=P.items[id]; if(!it||!L.me) return; const v=new Set(it.votes||[]); v.has(L.me)?v.delete(L.me):v.add(L.me); it.votes=[...v]; savePlan(); }
 function setNote(id, text){ const it=P.items[id]; if(!it||!L.me) return; it.notes=it.notes||{}; if (text.trim()) it.notes[L.me]=text.trim(); else delete it.notes[L.me]; savePlan(); }
-function schedule(id, day){ const it=P.items[id]; if(!it) return; it.day=day||''; it.status = day ? 'scheduled' : (it.status==='dropped'?'dropped':'wishlist'); if (day){ const n=dayItems(day).filter(x=>x.id!==id).length; it.order=n; } it.updatedAt=now(); savePlan(); }
-function setStatus(id, st){ const it=P.items[id]; if(!it) return; it.status=st; if (st!=='scheduled') it.day=''; it.updatedAt=now(); savePlan(); }
-function moveInDay(id, dir){ const it=P.items[id]; if(!it||!it.day) return; const list=dayItems(it.day); const i=list.findIndex(x=>x.id===id); const j=i+dir; if (j<0||j>=list.length) return; [list[i],list[j]]=[list[j],list[i]]; list.forEach((x,k)=>{x.order=k; x.updatedAt=now();}); savePlan(); }
+function schedule(id, day){ const it=P.items[id]; if(!it) return; it.day=day||''; it.status = day ? 'scheduled' : 'wishlist'; if (day && !it.time){ it.order=dayItems(day).length+100; } it.updatedAt=now(); savePlan(); }
+function setStatus(id, st){ const it=P.items[id]; if(!it) return; it.status=st; if (st==='wishlist') it.day=''; it.updatedAt=now(); savePlan(); }
+function moveInDay(id, dir){ const it=P.items[id]; if(!it||!it.day) return; const list=dayItems(it.day); const i=list.findIndex(x=>x.id===id); const j=i+dir; if (j<0||j>=list.length) return; const other=list[j];
+  // swap times if both timed, else swap order
+  if (it.time && other.time){ [it.time,other.time]=[other.time,it.time]; [it.end,other.end]=[other.end,it.end]; } else { list.forEach((x,k)=>x.order=k); [it.order,other.order]=[other.order,it.order]; }
+  it.updatedAt=other.updatedAt=now(); savePlan(); }
 function removeItem(id){ delete P.items[id]; savePlan(); updateBadge(); }
 function updateBadge(){ const n=Object.values(P.items).filter(i=>i.status==='wishlist').length; const b=$('#wishCount'); b.textContent=n; b.classList.toggle('hidden', n===0); }
 
-// ---------- render: item card ----------
-function itemCard(it, opts={}){
+function chips(it){
+  return `<span class="chip city">${esc(it.city)}</span>${it.category?`<span class="chip">${esc(it.category)}</span>`:''}${(it.tags||[]).includes('must-see')?'<span class="chip must">must-see</span>':''}${(it.tags||[]).includes('optional')?'<span class="chip opt">optional</span>':''}${it.status==='dropped'?'<span class="chip drop">dropped</span>':''}`;
+}
+const dayOptions = (sel) => ['<option value="">— not on a day —</option>'].concat(DAYS.map((d,i)=>`<option value="${d.d}" ${sel===d.d?'selected':''}>${fmtDay(d.d)} · ${esc(d.city)}</option>`)).join('');
+
+// ---------- wishlist card ----------
+function itemCard(it){
   const mine = L.me && (it.votes||[]).includes(L.me);
   const notes = Object.entries(it.notes||{}).map(([who,t])=>`<div><b>${esc(who)}:</b> ${esc(t)}</div>`).join('');
-  const dayOpts = ['<option value="">— not scheduled —</option>'].concat(DAYS.map(d=>`<option value="${d.d}" ${it.day===d.d?'selected':''}>${fmtDay(d.d)} · ${esc(d.label)}</option>`)).join('');
-  return `<div class="card item ${opts.hi?'hi':''}" data-id="${esc(it.id)}">
+  const who = it.src==='plan' ? (it.suggestedDay?`from the plan · suggested ${fmtDay(it.suggestedDay)}`:'from the plan') : `added by ${esc(it.addedBy||'?')}`;
+  return `<div class="card item" data-id="${esc(it.id)}">
     <div class="name">${esc(it.name)}</div>
     ${it.address?`<div class="addr">${esc(it.address)}</div>`:''}
-    <div class="meta"><span class="chip city">${esc(it.city)}</span>${it.category?`<span class="chip">${esc(it.category)}</span>`:''}${it.status==='dropped'?'<span class="chip drop">dropped</span>':''}${it.day?`<span class="chip">${fmtDay(it.day)}</span>`:''} <span style="color:var(--ink-3)">added by ${esc(it.addedBy||'?')}</span></div>
+    ${it.info?`<div class="info">${esc(it.info)}</div>`:''}
+    <div class="meta">${chips(it)}${it.day?`<span class="chip">${fmtDay(it.day)}</span>`:''} <span style="color:var(--ink-3)">${who}</span></div>
     ${notes?`<div class="notes">${notes}</div>`:''}
     <div class="acts">
-      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}" title="Vote">♥ ${(it.votes||[]).length}${(it.votes||[]).length?` <span style="font-weight:400;color:var(--ink-3)">${esc((it.votes||[]).join(', '))}</span>`:''}</button>
-      <select data-act="day" aria-label="Schedule on day" style="width:auto;min-height:32px;padding:4px 8px;font-size:13.5px">${dayOpts}</select>
+      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}">♥ ${(it.votes||[]).length}${(it.votes||[]).length?` <span style="font-weight:400;color:var(--ink-3)">${esc((it.votes||[]).join(', '))}</span>`:''}</button>
+      ${mapBtn(it.name, it.city, it.address)}
+      <select data-act="day" aria-label="Put on a day">${dayOptions(it.day)}</select>
       <button class="btn small ghost" data-act="note">Note</button>
       ${it.status==='dropped'?'<button class="btn small ghost" data-act="undrop">Restore</button>':'<button class="btn small ghost" data-act="drop">Drop</button>'}
-      ${it.status==='dropped'?'<button class="btn small ghost danger" data-act="del">Delete</button>':''}
+      ${it.status==='dropped'&&it.src!=='plan'?'<button class="btn small ghost danger" data-act="del">Delete</button>':''}
     </div>
     <div class="edit" data-edit="note"><label class="f">Your note (${esc(L.me||'you')})</label><textarea data-note>${esc((it.notes||{})[L.me]||'')}</textarea><div class="row" style="margin-top:6px"><button class="btn small primary" data-act="savenote">Save note</button></div></div>
   </div>`;
@@ -368,151 +345,99 @@ function bindItemCards(root, rerender){
     if (act==='vote'){ toggleVote(id); rerender(); }
     else if (act==='note'){ const ed=$('[data-edit=note]',card); ed.style.display = ed.style.display==='block'?'none':'block'; if (ed.style.display==='block') $('[data-note]',ed).focus(); }
     else if (act==='savenote'){ setNote(id, $('[data-note]',card).value); rerender(); toast('Note saved'); }
-    else if (act==='drop'){ setStatus(id,'dropped'); rerender(); updateBadge(); }
+    else if (act==='drop'){ setStatus(id,'dropped'); rerender(); updateBadge(); toast('Dropped — find it under "show dropped"'); }
     else if (act==='undrop'){ setStatus(id,'wishlist'); rerender(); updateBadge(); }
     else if (act==='del'){ if (confirm('Delete this place for everyone who imports your plan?')) { removeItem(id); rerender(); } }
   });
-  root.addEventListener('change', (e)=>{ const s=e.target.closest('select[data-act=day]'); if(!s) return; const id=s.closest('[data-id]').dataset.id; schedule(id, s.value); rerender(); updateBadge(); toast(s.value?'Scheduled':'Back to wishlist'); });
+  root.addEventListener('change', (e)=>{ const s=e.target.closest('select[data-act=day]'); if(!s) return; const id=s.closest('[data-id]').dataset.id; schedule(id, s.value); rerender(); updateBadge(); toast(s.value?'On '+fmtDay(s.value):'Back to the wishlist'); });
 }
 
-// ---------- SEARCH ----------
-const amap = {map:null, markers:[], results:[], ps:null};
-function renderCitySeg(){ $('#citySeg').innerHTML = CITIES.map(c=>`<button type="button" aria-pressed="${L.city===c}" data-city="${c}">${c}</button>`).join(''); $('#q').placeholder = 'Search places in '+L.city+'…'; }
-$('#citySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-city]'); if(!b) return; L.city=b.dataset.city; saveLocal(); renderCitySeg(); if (amap.map) centreCity(); });
-const CITY_CENTRE = {Hangzhou:[120.155,30.274], Nanjing:[118.796,32.060], Suzhou:[120.585,31.299], Shanghai:[121.474,31.230]};
-function centreCity(){ try{ amap.map.setZoomAndCenter(12, CITY_CENTRE[L.city]); }catch(e){} }
-function setSearchStatus(html, cls){ $('#searchStatus').innerHTML = html?`<div class="status ${cls||''}">${html}</div>`:''; }
-function renderSearch(){
+// ---------- BROWSE (the workbook's lists) ----------
+function renderCitySeg(){ $('#citySeg').innerHTML = ['','Hangzhou','Nanjing','Suzhou'].map(c=>`<button type="button" aria-pressed="${(L.city||'')===c}" data-city="${c}">${c||'All'}</button>`).join(''); }
+$('#citySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-city]'); if(!b) return; L.city=b.dataset.city; saveLocal(); renderBrowse(); });
+$('#secPills').innerHTML = SECTIONS.map(([k,l])=>`<button class="pill" data-sec="${k}" aria-pressed="false">${l}</button>`).join('');
+$('#secPills').addEventListener('click', e=>{ const b=e.target.closest('[data-sec]'); if(!b) return; L.sec=b.dataset.sec; saveLocal(); renderBrowse(); });
+$('#q').addEventListener('input', renderBrowse);
+function browseCard(b){
+  const id='b:'+b.id.slice(2); const ex=P.items[id];
+  const state = ex ? (ex.status==='dropped' ? 'dropped' : ex.day ? 'On '+fmtDay(ex.day) : 'On wishlist') : '';
+  const sd = b.suggestedDay ? `<option value="${b.suggestedDay}">Put on ${fmtDay(b.suggestedDay)}</option>` : '';
+  return `<div class="card item" data-bid="${esc(b.id)}">
+    <div class="name">${b.rank?`<span class="chip">${esc(b.rank)}</span>`:''}${esc(b.name)}</div>
+    ${b.address?`<div class="addr">${esc(b.address)}</div>`:''}
+    ${b.notes?`<div class="info">${esc(b.notes)}</div>`:''}
+    <div class="meta"><span class="chip city">${esc(b.city||'—')}</span>${b.category?`<span class="chip">${esc(b.category)}</span>`:''}${b.rating?`<span class="chip rate">${esc(b.rating)}${/^\d/.test(b.rating)?'★':''}</span>`:''}${b.price?`<span class="chip">${esc(b.price)}</span>`:''}</div>
+    <div class="acts">${ex?`<button class="btn small" disabled>${esc(state)}</button>`:`<button class="btn small primary" data-badd="">Add to wishlist</button>${b.suggestedDay?`<button class="btn small" data-badd="${b.suggestedDay}">Put on ${fmtDay(b.suggestedDay)}</button>`:''}`}${mapBtn(b.name, b.city, b.address)}</div>
+  </div>`;
+}
+function renderBrowse(){
   renderCitySeg();
-  const hasKey = !!L.amapKey;
-  $('#searchBtn').disabled = !hasKey;
-  $('#mapNote').classList.toggle('hidden', !!amap.map);
-  if (!hasKey) $('#mapNote').textContent = 'Add your Amap key in Settings to search and see the map. You can still add places by hand below.';
-  renderResults();
+  $$('#secPills .pill').forEach(p=>p.setAttribute('aria-pressed', p.dataset.sec===L.sec?'true':'false'));
+  const q=$('#q').value.trim().toLowerCase();
+  let list=SEED.browse.filter(b=>b.section===L.sec && (!L.city||b.city===L.city) && (!q || (b.name+' '+b.notes+' '+b.address+' '+b.group+' '+b.category).toLowerCase().includes(q)));
+  $('#browseCount').textContent = `${list.length} in ${SECTIONS.find(s=>s[0]===L.sec)[1].toLowerCase()}${L.city?' · '+L.city:''}`;
+  const r=$('#browseList'); if (!list.length){ r.innerHTML='<div class="empty">Nothing matches. Clear the filter, or add the place by hand below.</div>'; return; }
+  let html='', g=null;
+  for (const b of list){ const key=b.section==='meals'?b.group:b.city; if (key!==g){ g=key; html+=`<div class="group">${esc(key||'')}</div>`; } html+=browseCard(b); }
+  r.innerHTML=html;
 }
-function renderResults(){
-  const r=$('#results');
-  if (!amap.results.length){ r.innerHTML=''; return; }
-  r.innerHTML = amap.results.map((p,i)=>{
-    const id='amap:'+p.id, on=!!P.items[id] && P.items[id].status!=='dropped';
-    return `<div class="card item" data-ri="${i}" id="res-${i}"><div class="name">${esc(p.name)}</div><div class="addr">${esc(p.address||'')}</div>
-      <div class="meta"><span class="chip city">${esc(p.city)}</span>${p.category?`<span class="chip">${esc(p.category)}</span>`:''}</div>
-      <div class="acts"><button class="btn small ${on?'':'primary'}" data-add="${i}" ${on?'disabled':''}>${on?'On wishlist':'Add to wishlist'}</button><button class="btn small ghost" data-show="${i}">Show on map</button></div></div>`;
-  }).join('');
-}
-$('#results').addEventListener('click', e=>{
-  const a=e.target.closest('[data-add]'); if (a){ const p=amap.results[+a.dataset.add]; addItem({id:'amap:'+p.id, name:p.name, address:p.address, city:p.city, lat:p.lat, lng:p.lng, category:p.category}); renderResults(); return; }
-  const s=e.target.closest('[data-show]'); if (s){ highlight(+s.dataset.show, true); }
-});
-function highlight(i, pan){
-  $$('#results .card').forEach((c,k)=>c.classList.toggle('hi', k===i));
-  const el=$('#res-'+i); if (el && !pan) el.scrollIntoView({block:'nearest'});
-  const p=amap.results[i]; if (pan && amap.map && p && p.lat){ amap.map.setZoomAndCenter(15,[p.lng,p.lat]); $('#map').scrollIntoView({block:'nearest'}); }
-}
-function amapInitMap(){
-  if (amap.map || !window.AMap) return;
-  try{
-    amap.map = new AMap.Map('map', {zoom:12, center:CITY_CENTRE[L.city], resizeEnable:true});
-    $('#mapNote').classList.add('hidden');
-  }catch(e){ setAmapStatus('Map failed to start: '+(e.message||e), 'bad'); }
-}
-function plotResults(){
-  if (!amap.map) return;
-  amap.markers.forEach(m=>m.setMap(null)); amap.markers=[];
-  amap.results.forEach((p,i)=>{ if (!p.lat) return; const m=new AMap.Marker({position:[p.lng,p.lat], title:p.name, label:{content:String(i+1), direction:'top'}}); m.on('click',()=>highlight(i,false)); m.setMap(amap.map); amap.markers.push(m); });
-  if (amap.markers.length) amap.map.setFitView(amap.markers, false, [40,40,40,40]);
-}
-$('#searchForm').addEventListener('submit', e=>{
-  e.preventDefault(); const q=$('#q').value.trim(); if(!q) return;
-  if (!window.AMap){ setSearchStatus('Amap is not loaded — check the key in Settings.', 'bad'); return; }
-  setSearchStatus('Searching…');
-  try{
-    AMap.plugin('AMap.PlaceSearch', ()=>{
-      const ps = new AMap.PlaceSearch({city:L.city, citylimit:true, pageSize:20, extensions:'base'});
-      ps.search(q, (status, result)=>{
-        if (status==='complete' && result.poiList){
-          amap.results = result.poiList.pois.map(p=>({id:p.id, name:p.name, address:p.address||'', city:p.cityname||L.city, category:String(p.type||'').split(';')[0], lat:p.location?p.location.lat:null, lng:p.location?p.location.lng:null}));
-          setSearchStatus(amap.results.length?'':'No results in '+L.city+'. Try a Chinese name or a shorter query.');
-          renderResults(); amapInitMap(); plotResults();
-        } else if (status==='no_data'){ amap.results=[]; renderResults(); setSearchStatus('No results in '+L.city+'.'); }
-        else { setSearchStatus('Search failed: '+esc(typeof result==='string'?result:JSON.stringify(result))+'. Usually the key is wrong, or this domain is not whitelisted in the Amap console.', 'bad'); }
-      });
-    });
-  }catch(err){ setSearchStatus('Search error: '+esc(err.message||err), 'bad'); }
+$('#browseList').addEventListener('click', e=>{
+  const a=e.target.closest('[data-badd]'); if(!a) return;
+  const b=SEED.browse.find(x=>x.id===a.closest('[data-bid]').dataset.bid); if(!b) return;
+  const it=addItem({id:'b:'+b.id.slice(2), name:b.name, address:b.address, city:b.city, category:b.category, info:[b.notes,b.price].filter(Boolean).join(' · '), suggestedDay:b.suggestedDay, src:'browse'});
+  if (a.dataset.badd){ schedule(it.id, a.dataset.badd); toast('On '+fmtDay(a.dataset.badd)); } else toast('Added to wishlist');
+  renderBrowse();
 });
 $('#manualForm').addEventListener('submit', e=>{
   e.preventDefault();
   const name=$('#mName').value.trim(); if(!name) return;
-  const lat=parseFloat($('#mLat').value), lng=parseFloat($('#mLng').value);
-  const it = addItem({id:uid('m'), name, address:$('#mAddr').value.trim(), city:$('#mCity').value, category:$('#mCat').value, lat:isFinite(lat)?lat:null, lng:isFinite(lng)?lng:null});
+  const it = addItem({id:uid('m'), name, address:$('#mAddr').value.trim(), city:$('#mCity').value, category:$('#mCat').value});
   const note=$('#mNote').value.trim(); if (note) setNote(it.id, note);
-  e.target.reset(); $('#mCity').value=L.city;
+  e.target.reset(); toast('Added to wishlist'); updateBadge();
 });
-
-// ---------- Amap loader ----------
-function setAmapStatus(msg, cls){ const s=$('#amapStatus'); s.textContent=msg; s.className='status '+(cls||''); }
-let amapLoading=false;
-function loadAmap(){
-  if (!L.amapKey){ setAmapStatus('No key set — search and map are off. Wishlist and itinerary still work.'); return; }
-  if (window.AMap){ setAmapStatus('Amap loaded.', 'ok'); return; }
-  if (amapLoading) return; amapLoading=true;
-  window._AMapSecurityConfig = {securityJsCode: L.amapSec||''};
-  setAmapStatus('Loading Amap…');
-  const s=document.createElement('script');
-  s.src='https://webapi.amap.com/maps?v=2.0&key='+encodeURIComponent(L.amapKey)+'&plugin=AMap.PlaceSearch';
-  s.onload=()=>{ amapLoading=false; if (window.AMap){ setAmapStatus('Amap loaded. Use "Test key" to confirm the key and whitelist.', 'ok'); if ($('#v-search').classList.contains('on')) amapInitMap(); } else setAmapStatus('Script loaded but Amap did not start — the key is probably invalid.', 'bad'); };
-  s.onerror=()=>{ amapLoading=false; setAmapStatus('Could not load the Amap script. Check the key, and that you are online.', 'bad'); };
-  document.head.appendChild(s);
-}
-function testKey(){
-  if (!window.AMap){ setAmapStatus('Amap is not loaded yet.', 'bad'); return; }
-  setAmapStatus('Testing…');
-  try{ AMap.plugin('AMap.PlaceSearch', ()=>{ new AMap.PlaceSearch({city:'Hangzhou', citylimit:true, pageSize:1}).search('西湖', (st, res)=>{
-    if (st==='complete') setAmapStatus('Key works — searched Hangzhou and got results.', 'ok');
-    else setAmapStatus('Key rejected: '+(typeof res==='string'?res:JSON.stringify(res))+'. Check the key, the security code, and that '+location.host+' is whitelisted.', 'bad');
-  }); }); }catch(e){ setAmapStatus('Test failed: '+(e.message||e), 'bad'); }
-}
 
 // ---------- WISHLIST ----------
 function renderWish(){
-  const cs=$('#wCity'), ws=$('#wWho'); const cv=cs.value, wv=ws.value;
+  const cs=$('#wCity'), ws=$('#wWho'), cats=$('#wCat'); const cv=cs.value, wv=ws.value, catv=cats.value;
   cs.innerHTML='<option value="">All cities</option>'+CITIES.map(c=>`<option ${cv===c?'selected':''}>${c}</option>`).join('');
   ws.innerHTML='<option value="">Everyone</option>'+people().map(p=>`<option ${wv===p?'selected':''}>${esc(p)}</option>`).join('');
+  const catList=[...new Set(Object.values(P.items).map(i=>i.category).filter(Boolean))].sort();
+  cats.innerHTML='<option value="">All types</option>'+catList.map(c=>`<option ${catv===c?'selected':''}>${esc(c)}</option>`).join('');
   const showDropped=$('#wDropped').checked;
-  let list=Object.values(P.items).filter(i=> (showDropped||i.status!=='dropped') && (!cs.value||i.city===cs.value) && (!ws.value||i.addedBy===ws.value));
-  list.sort((a,b)=> ((b.votes||[]).length-(a.votes||[]).length) || (b.addedAt-a.addedAt));
+  let list=Object.values(P.items).filter(i=> (showDropped? i.status!=='scheduled' : i.status==='wishlist') && (!cs.value||i.city===cs.value) && (!cats.value||i.category===cats.value) && (!ws.value||i.addedBy===ws.value||(i.votes||[]).includes(ws.value)));
+  list.sort((a,b)=> ((b.votes||[]).length-(a.votes||[]).length) || ((a.suggestedDay||'z').localeCompare(b.suggestedDay||'z')) || (b.addedAt-a.addedAt));
   const r=$('#wishList');
-  if (!list.length){ r.innerHTML='<div class="empty">Nothing here yet. Search a city, or add a place by hand, and it lands here for everyone to vote on.</div>'; return; }
+  if (!list.length){ r.innerHTML='<div class="empty">Nothing here. Browse the lists, or add a place by hand, and it lands here for everyone to vote on.</div>'; return; }
   r.innerHTML=list.map(i=>itemCard(i)).join('');
 }
-['#wCity','#wWho','#wDropped'].forEach(s=>$(s).addEventListener('change', renderWish));
+['#wCity','#wCat','#wWho','#wDropped'].forEach(s=>$(s).addEventListener('change', renderWish));
 bindItemCards($('#wishList'), renderWish);
 
 // ---------- ITINERARY ----------
 function dayEntries(d){
-  const blocks=P.blocks.filter(b=>b.day===d).map(b=>({kind:'block', t:timeKey(b.time), b}));
-  const items=dayItems(d).map(i=>({kind:'item', t:timeKey(i.time), i}));
-  // timed entries sort by time; untimed items keep their manual order after the timed ones of the day
-  const timed=[...blocks,...items].filter(e=>e.t!=='99:99').sort((a,b)=>a.t.localeCompare(b.t));
-  const untimedBlocks=blocks.filter(e=>e.t==='99:99'), untimedItems=items.filter(e=>e.t==='99:99');
-  return [...timed, ...untimedBlocks, ...untimedItems];
+  const blocks=P.blocks.filter(b=>b.day===d).map(b=>({kind:'block', t:tk(b.time), o:0, b}));
+  const items=dayItems(d).map(i=>({kind:'item', t:tk(i.time), o:i.order||0, i}));
+  return [...blocks,...items].sort((a,b)=> a.t.localeCompare(b.t) || (a.o-b.o) || (a.kind==='block'?-1:1));
 }
 function renderItin(){
+  $('#daySeg').innerHTML = DAYS.map((d,i)=>`<button type="button" data-jump="${d.d}" title="${esc(d.city)}">${i+1}</button>`).join('');
   const wl=Object.values(P.items).filter(i=>i.status==='wishlist').length;
-  $('#itinHint').textContent = wl? `${wl} on the wishlist still unscheduled — pick a day from the Wishlist tab.` : '';
+  $('#itinHint').textContent = wl? `${wl} idea${wl===1?'':'s'} on the wishlist not yet on a day.` : '';
   $('#itin').innerHTML = DAYS.map(d=>{
     const ents=dayEntries(d.d);
-    return `<div class="day"><div class="dh"><b>${fmtDay(d.d)}</b><span>${esc(d.label)}</span></div><div class="canal">${
-      ents.length? ents.map(e=>e.kind==='block'?blockStop(e.b):itemStop(e.i)).join('') : '<div class="empty" style="padding:14px">Free day — nothing scheduled yet.</div>'
+    return `<div class="day" id="day-${d.d}"><div class="dh"><b>${fmtDay(d.d)}</b><span>${esc(d.city)} · ${esc(d.label)}</span></div><div class="canal">${
+      ents.length? ents.map(e=>e.kind==='block'?blockStop(e.b):itemStop(e.i)).join('') : '<div class="empty" style="padding:14px">Free day — nothing on it yet.</div>'
     }</div></div>`;
   }).join('');
 }
+$('#daySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-jump]'); if(!b) return; const el=$('#day-'+b.dataset.jump); if (el) el.scrollIntoView({behavior:'smooth',block:'start'}); });
 function blockStop(b){
   const sub=[b.number, (b.from||b.to)?`${esc(b.from||'?')} → ${esc(b.to||'?')}`:'', b.note].filter(Boolean).join(' · ');
   return `<div class="stop block" data-bid="${esc(b.id)}"><div class="card">
     <div><span class="t">${esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
     <div class="name">${esc(b.title)}</div>${sub?`<div class="sub">${sub}</div>`:''}
-    <div class="acts"><button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="row" style="margin-top:8px">${b.type==='hotel'?mapBtn(b.title, DAYS.find(d=>d.d===b.day).city, b.note):(b.type==='train'?mapBtn(cjk(b.from)+'站', ''):'')}</div>
+    <button class="btn small ghost more" data-bact="edit">Edit</button>
     <div class="edit"><label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">
       <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
       ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
@@ -522,20 +447,24 @@ function blockStop(b){
   </div></div>`;
 }
 function itemStop(i){
-  const dayOpts=DAYS.map(d=>`<option value="${d.d}" ${i.day===d.d?'selected':''}>${fmtDay(d.d)}</option>`).join('');
   const mine=L.me&&(i.votes||[]).includes(L.me);
   const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
-  return `<div class="stop" data-id="${esc(i.id)}"><div class="card">
-    <div><span class="t">${esc(i.time||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''} <span class="chip city">${esc(i.city)}</span>${i.category?`<span class="chip">${esc(i.category)}</span>`:''}</div>
-    <div class="name">${esc(i.name)}</div>${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
+  const opt=(i.tags||[]).includes('optional');
+  return `<div class="stop ${opt?'opt':''}" data-id="${esc(i.id)}"><div class="card">
+    <div><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span> `:''}${chips(i)}${(i.votes||[]).length?`<span class="chip" style="color:var(--vermilion)">♥ ${(i.votes||[]).length}</span>`:''}</div>
+    <div class="name">${esc(i.name)}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
     <div class="acts">
-      <button class="btn small" data-act="up" title="Move up">↑</button><button class="btn small" data-act="down" title="Move down">↓</button>
-      <input type="time" data-act="time" value="${esc(i.time)}" aria-label="Time">
-      <input type="text" data-act="dur" value="${esc(i.duration)}" placeholder="1.5h" aria-label="Duration" style="width:64px">
-      <select data-act="day" aria-label="Move to day">${dayOpts}</select>
       <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}">♥ ${(i.votes||[]).length}</button>
-      <button class="btn small ghost" data-act="unsched">Unschedule</button>
-    </div></div></div>`;
+      ${mapBtn(i.name, i.city, i.address)}
+      <button class="btn small" data-act="up" title="Earlier">↑</button><button class="btn small" data-act="down" title="Later">↓</button>
+      <input type="time" data-act="time" value="${esc(i.time)}" aria-label="Start">
+      <input type="text" data-act="dur" value="${esc(i.duration)}" placeholder="1h" aria-label="Duration" style="width:64px">
+      <select data-act="day" aria-label="Move to day">${dayOptions(i.day)}</select>
+      <button class="btn small ghost" data-act="note">Note</button>
+      <button class="btn small ghost" data-act="drop">Take off plan</button>
+    </div>
+    <div class="edit" data-edit="note"><label class="f">Your note (${esc(L.me||'you')})</label><textarea data-note>${esc((i.notes||{})[L.me]||'')}</textarea><div class="row" style="margin-top:6px"><button class="btn small primary" data-act="savenote">Save note</button></div></div>
+  </div></div>`;
 }
 $('#itin').addEventListener('click', e=>{
   const bb=e.target.closest('[data-bact]');
@@ -544,52 +473,51 @@ $('#itin').addEventListener('click', e=>{
     else if (act==='cancel'){ renderItin(); }
     else if (act==='save'){ const b=P.blocks.find(x=>x.id===id); $$('[data-f]',stop).forEach(f=>{ b[f.dataset.f] = f.type==='checkbox'?f.checked:f.value.trim(); }); b.updatedAt=now(); savePlan(); renderItin(); toast('Saved'); }
     return; }
-  const a=e.target.closest('[data-act]'); if(!a) return; const id=a.closest('[data-id]').dataset.id; const act=a.dataset.act;
-  if (act==='up'){ moveInDay(id,-1); renderItin(); }
-  else if (act==='down'){ moveInDay(id,1); renderItin(); }
-  else if (act==='vote'){ toggleVote(id); renderItin(); }
-  else if (act==='unsched'){ schedule(id,''); renderItin(); updateBadge(); toast('Back on the wishlist'); }
+  const a=e.target.closest('[data-act]');
+  const stop=e.target.closest('.stop[data-id]');
+  if (!a){ if (stop && !e.target.closest('input,select,textarea,button')) stop.classList.toggle('open'); return; }
+  const id=stop.dataset.id; const act=a.dataset.act;
+  if (act==='up'){ moveInDay(id,-1); renderItin(); openStop(id); }
+  else if (act==='down'){ moveInDay(id,1); renderItin(); openStop(id); }
+  else if (act==='vote'){ toggleVote(id); renderItin(); openStop(id); }
+  else if (act==='note'){ const ed=$('[data-edit=note]',stop); ed.style.display = ed.style.display==='block'?'none':'block'; if (ed.style.display==='block') $('[data-note]',ed).focus(); }
+  else if (act==='savenote'){ setNote(id, $('[data-note]',stop).value); renderItin(); toast('Note saved'); }
+  else if (act==='drop'){ setStatus(id,'wishlist'); renderItin(); updateBadge(); toast('Moved to the wishlist'); }
 });
+function openStop(id){ const el=$(`.stop[data-id="${CSS.escape(id)}"]`); if (el) el.classList.add('open'); }
 $('#itin').addEventListener('change', e=>{
   const a=e.target.closest('[data-act]'); if(!a) return; const idEl=a.closest('[data-id]'); if(!idEl) return; const it=P.items[idEl.dataset.id]; if(!it) return;
-  if (a.dataset.act==='time'){ it.time=a.value; it.updatedAt=now(); savePlan(); renderItin(); }
+  if (a.dataset.act==='time'){ it.time=a.value; if (it.end && it.end<=it.time) it.end=''; it.updatedAt=now(); savePlan(); renderItin(); openStop(it.id); }
   else if (a.dataset.act==='dur'){ it.duration=a.value.trim(); it.updatedAt=now(); savePlan(); }
-  else if (a.dataset.act==='day'){ schedule(it.id, a.value); renderItin(); toast('Moved to '+fmtDay(a.value)); }
+  else if (a.dataset.act==='day'){ schedule(it.id, a.value); renderItin(); toast(a.value?'Moved to '+fmtDay(a.value):'Moved to the wishlist'); updateBadge(); }
 });
 function summaryText(){
-  const out=['Jiangnan 15–22 Nov 2026',''];
+  const out=['*Jiangnan 15–22 Nov 2026*',''];
   for (const d of DAYS){
-    out.push(`*${fmtDay(d.d)} · ${d.label}*`);
+    out.push(`*${fmtDay(d.d)} · ${d.city}* — ${d.label}`);
     const ents=dayEntries(d.d);
     if (!ents.length) out.push('  (free day)');
     for (const e of ents){
-      if (e.kind==='block'){ const b=e.b; out.push(`  ${b.time?b.time+' ':''}${KIND_ICON[b.type]} ${b.title}${b.number?' '+b.number:''}${(b.from||b.to)?` ${b.from||'?'}→${b.to||'?'}`:''}${b.tentative?' (tentative)':''}${b.note?' — '+b.note:''}`); }
-      else { const i=e.i; const n=Object.entries(i.notes||{}).map(([w,t])=>`${w}: ${t}`).join('; '); out.push(`  ${i.time?i.time+' ':''}• ${i.name}${i.duration?' ('+i.duration+')':''}${n?' — '+n:''}`); }
+      if (e.kind==='block'){ const b=e.b; out.push(`${b.time?b.time+' ':''}${KIND_ICON[b.type]} ${b.title}${b.number?' '+b.number:''}${(b.from||b.to)?` ${b.from||'?'}→${b.to||'?'}`:''}${b.tentative?' (tentative)':''}`); }
+      else { const i=e.i; const n=Object.entries(i.notes||{}).map(([w,t])=>`${w}: ${t}`).join('; '); out.push(`${timeSpan(i)?timeSpan(i)+' ':''}• ${i.name}${(i.tags||[]).includes('optional')?' (optional)':''}${(i.votes||[]).length?' ♥'+(i.votes||[]).length:''}${n?' — '+n:''}`); }
     }
     out.push('');
   }
-  const wl=Object.values(P.items).filter(i=>i.status==='wishlist');
-  if (wl.length){ out.push('*Still on the wishlist*'); for (const i of wl) out.push(`  • ${i.name} (${i.city}) ♥${(i.votes||[]).length}`); }
+  const wl=Object.values(P.items).filter(i=>i.status==='wishlist' && ((i.votes||[]).length || i.src!=='plan'));
+  if (wl.length){ out.push('*Wishlist (voted or added)*'); for (const i of wl) out.push(`• ${i.name} (${i.city}) ♥${(i.votes||[]).length}`); }
   return out.join('\n');
 }
 $('#copySummary').addEventListener('click', async ()=>{
   const t=summaryText();
-  try{ await navigator.clipboard.writeText(t); toast('Summary copied — paste it into WhatsApp'); }
-  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); toast('Summary copied'); }catch(_){ prompt('Copy this:', t); } ta.remove(); }
+  try{ await navigator.clipboard.writeText(t); toast('Copied — paste it into WhatsApp'); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); toast('Copied'); }catch(_){ prompt('Copy this:', t); } ta.remove(); }
 });
 
-// ---------- SETTINGS / share ----------
-function renderSettings(){ $('#sName').value=L.me; $('#sKey').value=L.amapKey; $('#sSec').value=L.amapSec; $('#hostShow').textContent=location.host||'(local file)'; loadAmap(); }
-$('#saveSettings').addEventListener('click', ()=>{
-  const name=$('#sName').value.trim(); if(!name){ toast('Name is needed'); return; }
-  const keyChanged = L.amapKey !== $('#sKey').value.trim() || L.amapSec !== $('#sSec').value.trim();
-  L.me=name; L.amapKey=$('#sKey').value.trim(); L.amapSec=$('#sSec').value.trim(); saveLocal(); updateBadge();
-  if (keyChanged && window.AMap){ toast('Saved — reload the page to apply the new key'); setAmapStatus('Key changed. Reload the page to apply it.', ''); }
-  else { toast('Saved'); loadAmap(); }
-});
-$('#testKey').addEventListener('click', testKey);
+// ---------- SHARE / SETTINGS ----------
+function renderSettings(){ $('#sName').value=L.me; }
+$('#saveSettings').addEventListener('click', ()=>{ const name=$('#sName').value.trim(); if(!name){ toast('Name is needed'); return; } L.me=name; saveLocal(); toast('Saved'); });
 function exportPlan(){
-  const data={app:'jiangnan-trip-planner', v:1, exportedBy:L.me, exportedAt:new Date().toISOString(), items:P.items, blocks:P.blocks};
+  const data={app:'jiangnan-trip-planner', v:2, exportedBy:L.me, exportedAt:new Date().toISOString(), items:P.items, blocks:P.blocks};
   const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`jiangnan-plan-${(L.me||'me').replace(/\W+/g,'')}-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
@@ -604,9 +532,8 @@ function mergePlan(inc){
     if (!cur){ P.items[id]=it; added++; continue; }
     merged++;
     cur.votes=[...new Set([...(cur.votes||[]), ...(it.votes||[])])];
-    cur.notes=cur.notes||{}; for (const [who,t] of Object.entries(it.notes||{})) if (who!==L.me) cur.notes[who]=t;   // others own their notes; mine stays mine
-    if ((it.updatedAt||0) > (cur.updatedAt||0)){ for (const f of ['status','day','order','time','duration']) cur[f]=it[f]; cur.updatedAt=it.updatedAt; }
-    for (const f of ['address','lat','lng','category']) if (!cur[f] && it[f]) cur[f]=it[f];
+    cur.notes=cur.notes||{}; for (const [who,t] of Object.entries(it.notes||{})) if (who!==L.me) cur.notes[who]=t;
+    if ((it.updatedAt||0) > (cur.updatedAt||0)){ for (const f of ['status','day','order','time','end','duration']) cur[f]=it[f]; cur.updatedAt=it.updatedAt; }
   }
   for (const b of (inc.blocks||[])){ const cur=P.blocks.find(x=>x.id===b.id); if (!cur) { P.blocks.push(b); blocksUpd++; } else if ((b.updatedAt||0) > (cur.updatedAt||0)){ Object.assign(cur,b); blocksUpd++; } }
   savePlan(); updateBadge();
@@ -615,25 +542,22 @@ function mergePlan(inc){
 $('#importFile').addEventListener('change', e=>{
   const f=e.target.files[0]; if(!f) return;
   const rd=new FileReader();
-  rd.onload=()=>{ try{ const r=mergePlan(JSON.parse(rd.result)); $('#shareStatus').innerHTML=`<div class="status ok">Merged ${esc(r.from)}'s plan: ${r.added} new place${r.added===1?'':'s'}, ${r.merged} already known (votes and notes combined), ${r.blocksUpd} travel block${r.blocksUpd===1?'':'s'} updated.</div>`; toast('Merged'); }
+  rd.onload=()=>{ try{ const r=mergePlan(JSON.parse(rd.result)); $('#shareStatus').innerHTML=`<div class="status ok">Merged ${esc(r.from)}'s plan: ${r.added} new, ${r.merged} combined (votes and notes kept from both), ${r.blocksUpd} travel block${r.blocksUpd===1?'':'s'} updated.</div>`; toast('Merged'); }
     catch(err){ $('#shareStatus').innerHTML=`<div class="status bad">Import failed: ${esc(err.message||err)}</div>`; } e.target.value=''; };
   rd.readAsText(f);
 });
-$('#resetAll').addEventListener('click', ()=>{ if (confirm('Clear the plan, your name and the key from this browser?')){ localStorage.removeItem(LS_PLAN); localStorage.removeItem(LS_LOCAL); location.reload(); } });
+$('#resetAll').addEventListener('click', ()=>{ if (confirm('Put the plan back to the workbook and clear your name on this device?')){ localStorage.removeItem(LS_PLAN); localStorage.removeItem(LS_LOCAL); localStorage.removeItem('jiangnan.plan.v1'); localStorage.removeItem('jiangnan.local.v1'); location.reload(); } });
 
-// ---------- setup ----------
+// ---------- boot ----------
 function boot(){
-  $('#mCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join(''); $('#mCity').value=L.city;
-  $$('.hostShow').forEach(el=>el.textContent=location.host||'this site');
+  $('#mCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
+  // carry a name over from the first version of the app, if there was one
+  if (!L.me){ try{ const old=JSON.parse(localStorage.getItem('jiangnan.local.v1')); if (old&&old.me){ L.me=old.me; saveLocal(); } }catch(e){} }
   updateBadge();
   if (!L.me){ $('#setup').classList.remove('hidden'); setTimeout(()=>$('#suName').focus(),50); }
-  else { loadAmap(); }
-  renderSearch();
+  showTab('itin');
 }
-$('#setupForm').addEventListener('submit', e=>{
-  e.preventDefault(); L.me=$('#suName').value.trim(); L.amapKey=$('#suKey').value.trim(); L.amapSec=$('#suSec').value.trim(); saveLocal();
-  $('#setup').classList.add('hidden'); loadAmap(); renderSearch(); toast('Welcome, '+L.me);
-});
+$('#setupForm').addEventListener('submit', e=>{ e.preventDefault(); L.me=$('#suName').value.trim(); saveLocal(); $('#setup').classList.add('hidden'); renderItin(); toast('Welcome, '+L.me); });
 boot();
 })();
 </script>

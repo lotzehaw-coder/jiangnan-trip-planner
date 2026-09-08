@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Jiangnan Trip Planner</title>
+<style>
+:root{
+  --wash:#f5f2ea; --wash-2:#ebe6d8; --ink:#1e272b; --ink-2:#4a585e; --ink-3:#7f8c92;
+  --canal:#2c6b70; --canal-soft:#dfeae8; --canal-deep:#1f4f53;
+  --roof:#55636b; --vermilion:#b7402f; --line:#d9d3c4; --card:#fffdf8;
+  --shadow:0 1px 2px rgba(30,39,43,.08), 0 0 0 1px rgba(30,39,43,.04);
+  --r:10px; --nav:62px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--wash);color:var(--ink);
+  font:16px/1.45 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--canal)}
+:focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.app{min-height:100vh;display:flex;flex-direction:column}
+header.top{padding:14px 18px 0;background:var(--wash)}
+header.top h1{margin:0;font-size:22px;font-weight:600;letter-spacing:.2px}
+header.top h1 span{font-weight:400;color:var(--ink-3);font-size:15px;margin-left:8px}
+.wave{display:block;width:100%;height:14px;margin-top:6px}
+main{flex:1;padding:12px 14px calc(var(--nav) + 20px);max-width:820px;width:100%;margin:0 auto}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;height:var(--nav);background:var(--card);
+  border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+nav.tabs button{flex:1;border:0;background:none;color:var(--ink-3);font-size:12.5px;padding:8px 0 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-current="page"]{color:var(--canal-deep);font-weight:600}
+nav.tabs button .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--vermilion);color:#fff;font-size:10px;line-height:16px;min-width:16px;padding:0 4px;border-radius:8px;text-align:center}
+@media (min-width:900px){
+  .app{flex-direction:row}
+  header.top{display:none}
+  nav.tabs{position:sticky;top:0;bottom:auto;height:100vh;width:220px;flex-direction:column;border-top:0;border-right:1px solid var(--line);padding:22px 12px;gap:4px}
+  nav.tabs .brand{padding:0 10px 18px;font-size:20px;font-weight:600}
+  nav.tabs .brand small{display:block;font-weight:400;color:var(--ink-3);font-size:13px;margin-top:2px}
+  nav.tabs button{flex:0 0 auto;flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px;padding:10px 12px;border-radius:8px}
+  nav.tabs button[aria-current="page"]{background:var(--canal-soft)}
+  nav.tabs button .badge{position:static;margin-left:auto}
+  main{padding:26px 32px 40px}
+}
+.brand{display:none}
+@media (min-width:900px){.brand{display:block}}
+
+section.view{display:none}
+section.view.on{display:block}
+h2{font-size:18px;font-weight:600;margin:6px 0 12px}
+h3{font-size:13px;font-weight:600;color:var(--ink-2);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.6px}
+p.muted{color:var(--ink-3);font-size:14px;margin:6px 0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row > *{min-width:0}
+.grow{flex:1}
+
+input[type=text],input[type=search],input[type=time],input[type=password],select,textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:42px}
+textarea{min-height:64px;resize:vertical}
+label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:9px 14px;cursor:pointer;min-height:42px;white-space:nowrap}
+.btn:hover{border-color:var(--roof)}
+.btn.primary{background:var(--canal);border-color:var(--canal);color:#fff}
+.btn.primary:hover{background:var(--canal-deep)}
+.btn.small{min-height:32px;padding:4px 10px;font-size:13.5px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--canal)}
+.btn.danger{color:var(--vermilion)}
+.btn:disabled{opacity:.45;cursor:default}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);max-width:100%}
+.seg button{border:0;background:none;padding:8px 12px;cursor:pointer;color:var(--ink-2);min-height:40px;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--canal);color:#fff}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.pill{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13.5px;cursor:pointer;min-height:32px}
+.pill[aria-pressed="true"]{background:var(--canal-soft);border-color:var(--canal);color:var(--canal-deep);font-weight:600}
+.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--wash-2);color:var(--ink-2);margin:0 4px 2px 0;vertical-align:middle}
+.chip.city{background:var(--canal-soft);color:var(--canal-deep)}
+.chip.tent{background:#f3e3d0;color:#8a5a1e}
+.chip.opt{background:#ece6f3;color:#5b4a7a}
+.chip.must{background:#fbeeeb;color:var(--vermilion)}
+.chip.drop{background:#eee;color:#888;text-decoration:line-through}
+.chip.rate{background:#fff3cf;color:#7a5a00}
+
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px}
+.item .name{font-weight:600;font-size:16px}
+.item .addr{color:var(--ink-3);font-size:13.5px;margin-top:2px}
+.item .info{color:var(--ink-2);font-size:13.5px;margin-top:4px}
+.item .meta{margin-top:6px;font-size:13px;color:var(--ink-2)}
+.item .acts{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.item .acts select{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px;max-width:100%}
+.vote{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--card);cursor:pointer;min-height:32px;font-size:13.5px}
+.vote[aria-pressed="true"]{border-color:var(--vermilion);color:var(--vermilion);background:#fbeeeb}
+.notes{margin-top:6px;font-size:13.5px}
+.notes div{padding:2px 0}
+.notes b{color:var(--ink-2);font-weight:600}
+.empty{padding:26px 14px;text-align:center;color:var(--ink-3);border:1px dashed var(--line);border-radius:var(--r);font-size:14.5px}
+.group{font-size:14px;font-weight:600;color:var(--canal-deep);margin:16px 0 6px}
+.count{color:var(--ink-3);font-size:13px;margin:4px 0 8px}
+
+.day{margin-bottom:22px}
+.day .dh{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.day .dh b{font-size:17px}
+.day .dh span{color:var(--ink-3);font-size:14px}
+.canal{position:relative;padding-left:22px}
+.canal::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:3px;border-radius:2px;background:var(--canal);opacity:.55}
+.stop{position:relative;margin-bottom:8px}
+.stop::before{content:"";position:absolute;left:-19px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--card);border:2px solid var(--canal)}
+.stop.block::before{border-radius:2px;background:var(--canal)}
+.stop.opt::before{border-style:dashed}
+.stop .card{margin:0;padding:10px 12px}
+.stop .t{font-variant-numeric:tabular-nums;color:var(--canal-deep);font-weight:600;font-size:13.5px;margin-right:8px}
+.stop .kind{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
+.stop .name{font-weight:600}
+.stop .sub{color:var(--ink-3);font-size:13.5px}
+.stop .info{color:var(--ink-2);font-size:13.5px;margin-top:2px}
+.stop .acts{margin-top:8px;display:none;gap:6px;flex-wrap:wrap;align-items:center}
+.stop.open .acts{display:flex}
+.stop .acts select,.stop .acts input{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
+.stop .more{position:absolute;right:8px;top:8px}
+.edit{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.stop.editing .edit{display:block}
+
+.overlay{position:fixed;inset:0;background:rgba(30,39,43,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+@media (min-width:600px){.overlay{align-items:center;padding:20px}}
+.sheet{background:var(--card);width:100%;max-width:460px;border-radius:16px 16px 0 0;padding:20px 18px 26px;max-height:92vh;overflow:auto}
+@media (min-width:600px){.sheet{border-radius:14px}}
+.sheet h2{margin-top:0}
+.hidden{display:none!important}
+.status{font-size:13.5px;padding:8px 10px;border-radius:8px;background:var(--wash-2);margin-top:8px}
+.status.ok{background:var(--canal-soft);color:var(--canal-deep)}
+.status.bad{background:#fbeeeb;color:var(--vermilion)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav) + 14px);background:var(--ink);color:#fff;padding:9px 14px;border-radius:8px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1}
+@media (min-width:900px){.toast{bottom:24px}}
+details summary{cursor:pointer;color:var(--canal);font-size:14.5px;padding:6px 0}
+code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="tabs" aria-label="Sections">
+    <div class="brand">Jiangnan<small>15–22 Nov 2026</small></div>
+    <button data-tab="itin"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Itinerary</button>
+    <button data-tab="browse"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Browse</button>
+    <button data-tab="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Wishlist<span class="badge hidden" id="wishCount"></span></button>
+    <button data-tab="settings"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12m0 0-4-4m4 4 4-4"/></svg>Share</button>
+  </nav>
+
+  <div class="grow">
+    <header class="top">
+      <h1>Jiangnan <span>15–22 Nov 2026</span></h1>
+      <svg class="wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8 Q 25 2 50 8 T 100 8 T 150 8 T 200 8 T 250 8 T 300 8 T 350 8 T 400 8" fill="none" stroke="#2c6b70" stroke-width="1.6" opacity=".5"/></svg>
+    </header>
+
+    <main>
+      <!-- ITINERARY -->
+      <section class="view on" id="v-itin">
+        <div class="row" style="margin-bottom:6px">
+          <div class="seg" id="daySeg" role="group" aria-label="Jump to day"></div>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn small" id="copySummary">Copy as text for WhatsApp</button>
+          <span class="muted" id="itinHint" style="font-size:13px"></span>
+        </div>
+        <p class="muted" style="font-size:13px;margin:0 0 10px">Tap a stop to vote, add a note, change its time, move it to another day, or take it off the plan.</p>
+        <div id="itin"></div>
+      </section>
+
+      <!-- BROWSE -->
+      <section class="view" id="v-browse">
+        <div class="row">
+          <div class="seg" id="citySeg" role="group" aria-label="City"></div>
+        </div>
+        <div class="pills" id="secPills" role="group" aria-label="Section"></div>
+        <input type="search" id="q" placeholder="Filter by name, dish, address…" autocomplete="off">
+        <div class="count" id="browseCount"></div>
+        <div id="browseList"></div>
+        <details style="margin-top:16px">
+          <summary>Add a place that isn't in the list</summary>
+          <form id="manualForm" class="card" style="margin-top:8px">
+            <label class="f" for="mName">Name</label><input type="text" id="mName" required>
+            <label class="f" for="mAddr">Address</label><input type="text" id="mAddr">
+            <div class="row">
+              <div class="grow"><label class="f" for="mCity">City</label><select id="mCity"></select></div>
+              <div class="grow"><label class="f" for="mCat">Category</label><select id="mCat">
+                <option>Food</option><option>Sight</option><option>Café</option><option>Shop</option><option>Night</option><option>Other</option></select></div>
+            </div>
+            <label class="f" for="mNote">Note</label><input type="text" id="mNote" placeholder="Where you heard about it, what to order…">
+            <div style="margin-top:12px"><button class="btn primary" type="submit">Add to wishlist</button></div>
+          </form>
+        </details>
+      </section>
+
+      <!-- WISHLIST -->
+      <section class="view" id="v-wish">
+        <div class="row">
+          <select id="wCity" style="width:auto"><option value="">All cities</option></select>
+          <select id="wCat" style="width:auto"><option value="">All types</option></select>
+          <select id="wWho" style="width:auto"><option value="">Everyone</option></select>
+          <label style="font-size:14px"><input type="checkbox" id="wDropped"> show dropped</label>
+        </div>
+        <p class="muted" style="font-size:13px">Ideas not yet on a day — the optional and alternative picks from the plan, plus anything anyone adds. Vote, then pick a day.</p>
+        <div id="wishList" style="margin-top:8px"></div>
+      </section>
+
+      <!-- SHARE / SETTINGS -->
+      <section class="view" id="v-settings">
+        <h2>Share the plan</h2>
+        <p class="muted">Export a file, send it on WhatsApp, and your companion imports it. Import <b>merges</b> — everyone's votes, notes and additions are kept, nothing is overwritten. Repeat in both directions until the plan is final.</p>
+        <div class="row">
+          <button class="btn primary" id="exportBtn">Export plan (.json)</button>
+          <label class="btn" for="importFile" style="display:inline-flex;align-items:center">Import &amp; merge<input type="file" id="importFile" accept=".json,application/json" class="hidden"></label>
+        </div>
+        <div id="shareStatus"></div>
+
+        <h2 style="margin-top:26px">You</h2>
+        <label class="f" for="sName">Display name</label>
+        <input type="text" id="sName" placeholder="Tze">
+        <p class="muted">Shown on your votes, notes and the places you add. Stored only on this device.</p>
+        <div class="row" style="margin-top:8px"><button class="btn primary" id="saveSettings">Save</button></div>
+
+        <h2 style="margin-top:26px">About</h2>
+        <p class="muted">Built from the <i>China Itinerary HZ·NJ·SZ 15–22 Nov</i> workbook. Flights are the confirmed Trip.com booking. Trains are not booked yet and are marked <span class="chip tent">tentative</span>. Everything lives in this browser — no account, no server.</p>
+        <details><summary>Reset this device</summary>
+          <p class="muted">Puts the plan back to the original workbook and clears your name. Export first if you want to keep anything.</p>
+          <button class="btn danger" id="resetAll">Reset</button></details>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="overlay hidden" id="setup">
+  <form class="sheet" id="setupForm">
+    <h2>Welcome to the Jiangnan planner</h2>
+    <p class="muted">The whole 8-day plan is already in here. Add your name so your votes and notes carry it.</p>
+    <label class="f" for="suName">Your name</label>
+    <input type="text" id="suName" required placeholder="Tze" autocomplete="off">
+    <div style="margin-top:14px"><button class="btn primary" type="submit" style="width:100%">Open the plan</button></div>
+  </form>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+const SEED = __SEED__;
+const DAYS = SEED.days;
+const CITIES = ['Hangzhou','Nanjing','Suzhou','Shanghai'];
+const LS_PLAN = 'jiangnan.plan.v2', LS_LOCAL = 'jiangnan.local.v2';
+const KIND_ICON = {flight:'✈', train:'🚄', hotel:'🏨'};
+const SECTIONS = [['dining','Dining & cafés'],['meals','Meal picks by day'],['explore','Shop · street food · explore'],['events','Events & foliage']];
+
+const now = () => Date.now();
+const uid = (p) => p + ':' + Math.random().toString(36).slice(2,10) + now().toString(36);
+function seedItems(){ const o={}; for (const s of SEED.items){ o[s.id]=Object.assign({notes:{},votes:[],addedBy:'plan',addedAt:0,updatedAt:0,src:'plan'}, JSON.parse(JSON.stringify(s))); } return o; }
+function seedBlocks(){ return JSON.parse(JSON.stringify(SEED.blocks)); }
+const defPlan  = () => ({v:2, items:seedItems(), blocks:seedBlocks(), updatedAt:0});
+const defLocal = () => ({me:'', city:'', sec:'dining'});
+function read(k, def){ try{ const j = JSON.parse(localStorage.getItem(k)); if (j && typeof j==='object') return Object.assign(def(), j); }catch(e){} return def(); }
+let P = read(LS_PLAN, defPlan), L = read(LS_LOCAL, defLocal);
+// seeds nobody has touched follow the workbook; anything edited (updatedAt > 0) is left alone
+for (const s of Object.values(seedItems())){ const cur=P.items[s.id]; if (!cur) P.items[s.id]=s; else if (!cur.updatedAt){ const keep={notes:cur.notes,votes:cur.votes}; Object.assign(cur, s, keep); } }
+for (const sb of seedBlocks()){ const cur=P.blocks.find(b=>b.id===sb.id); if (!cur) P.blocks.push(sb); else if (!cur.updatedAt) Object.assign(cur, sb); }
+function savePlan(){ P.updatedAt = now(); try{ localStorage.setItem(LS_PLAN, JSON.stringify(P)); }catch(e){ toast('Could not save — storage blocked?'); } }
+function saveLocal(){ try{ localStorage.setItem(LS_LOCAL, JSON.stringify(L)); }catch(e){} }
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDay = (d) => { const dt = new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); };
+const dayNum = (d) => DAYS.findIndex(x=>x.d===d)+1;
+const people = () => { const s = new Set(); if (L.me) s.add(L.me); for (const it of Object.values(P.items)){ if (it.addedBy && it.addedBy!=='plan') s.add(it.addedBy); for (const v of it.votes||[]) s.add(v); for (const n of Object.keys(it.notes||{})) s.add(n);} return [...s]; };
+let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); }
+const dayItems = (d) => Object.values(P.items).filter(i=>i.day===d && i.status!=='dropped').sort((a,b)=> (tk(a.time).localeCompare(tk(b.time))) || ((a.order||0)-(b.order||0)));
+const tk = (t) => t ? t : '99:99';
+const timeSpan = (i) => i.time ? (i.end ? `${i.time}–${i.end}` : i.time) : '';
+// Open the place in the Amap app (高德地图) — a deep link, no API key involved. Longest Chinese run in the name is the best search term.
+const CN = {Hangzhou:'杭州', Nanjing:'南京', Suzhou:'苏州', Shanghai:'上海'};
+const cjk = (s) => (String(s||'').match(/[㐀-鿿]+/g)||[]).sort((a,b)=>b.length-a.length)[0]||'';
+function mapUrl(name, city, address){ const kw = cjk(name) || cjk(address) || String(name).replace(/\(.*?\)/g,'').trim(); return 'https://uri.amap.com/search?keyword='+encodeURIComponent(kw)+'&city='+encodeURIComponent(CN[city]||'')+'&src=jiangnan&callnative=1'; }
+const mapBtn = (name, city, address) => `<a class="btn small" href="${mapUrl(name, city, address)}" target="_blank" rel="noopener" title="Open in Amap 高德地图">Map ↗</a>`;
+
+// ---------- tabs ----------
+function showTab(name){
+  $$('section.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+name));
+  $$('nav.tabs button').forEach(b=>{ if (b.dataset.tab===name) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  if (name==='itin') renderItin();
+  if (name==='browse') renderBrowse();
+  if (name==='wish') renderWish();
+  if (name==='settings') renderSettings();
+  window.scrollTo({top:0});
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+// ---------- items ----------
+function addItem(it){
+  const ex = P.items[it.id];
+  if (ex){ if (ex.status==='dropped'){ ex.status=ex.day?'scheduled':'wishlist'; ex.updatedAt=now(); savePlan(); toast('Back on the plan'); } else toast(ex.day?'Already on '+fmtDay(ex.day):'Already on the wishlist'); return ex; }
+  P.items[it.id] = Object.assign({id:'', name:'', address:'', city:'', category:'', info:'', tags:[], addedBy:L.me, addedAt:now(), notes:{}, votes:[], status:'wishlist', day:'', order:0, time:'', end:'', duration:'', suggestedDay:'', src:'user', updatedAt:now()}, it);
+  savePlan(); updateBadge(); return P.items[it.id];
+}
+function toggleVote(id){ const it=P.items[id]; if(!it||!L.me) return; const v=new Set(it.votes||[]); v.has(L.me)?v.delete(L.me):v.add(L.me); it.votes=[...v]; savePlan(); }
+function setNote(id, text){ const it=P.items[id]; if(!it||!L.me) return; it.notes=it.notes||{}; if (text.trim()) it.notes[L.me]=text.trim(); else delete it.notes[L.me]; savePlan(); }
+function schedule(id, day){ const it=P.items[id]; if(!it) return; it.day=day||''; it.status = day ? 'scheduled' : 'wishlist'; if (day && !it.time){ it.order=dayItems(day).length+100; } it.updatedAt=now(); savePlan(); }
+function setStatus(id, st){ const it=P.items[id]; if(!it) return; it.status=st; if (st==='wishlist') it.day=''; it.updatedAt=now(); savePlan(); }
+function moveInDay(id, dir){ const it=P.items[id]; if(!it||!it.day) return; const list=dayItems(it.day); const i=list.findIndex(x=>x.id===id); const j=i+dir; if (j<0||j>=list.length) return; const other=list[j];
+  // swap times if both timed, else swap order
+  if (it.time && other.time){ [it.time,other.time]=[other.time,it.time]; [it.end,other.end]=[other.end,it.end]; } else { list.forEach((x,k)=>x.order=k); [it.order,other.order]=[other.order,it.order]; }
+  it.updatedAt=other.updatedAt=now(); savePlan(); }
+function removeItem(id){ delete P.items[id]; savePlan(); updateBadge(); }
+function updateBadge(){ const n=Object.values(P.items).filter(i=>i.status==='wishlist').length; const b=$('#wishCount'); b.textContent=n; b.classList.toggle('hidden', n===0); }
+
+function chips(it){
+  return `<span class="chip city">${esc(it.city)}</span>${it.category?`<span class="chip">${esc(it.category)}</span>`:''}${(it.tags||[]).includes('must-see')?'<span class="chip must">must-see</span>':''}${(it.tags||[]).includes('optional')?'<span class="chip opt">optional</span>':''}${it.status==='dropped'?'<span class="chip drop">dropped</span>':''}`;
+}
+const dayOptions = (sel) => ['<option value="">— not on a day —</option>'].concat(DAYS.map((d,i)=>`<option value="${d.d}" ${sel===d.d?'selected':''}>${fmtDay(d.d)} · ${esc(d.city)}</option>`)).join('');
+
+// ---------- wishlist card ----------
+function itemCard(it){
+  const mine = L.me && (it.votes||[]).includes(L.me);
+  const notes = Object.entries(it.notes||{}).map(([who,t])=>`<div><b>${esc(who)}:</b> ${esc(t)}</div>`).join('');
+  const who = it.src==='plan' ? (it.suggestedDay?`from the plan · suggested ${fmtDay(it.suggestedDay)}`:'from the plan') : `added by ${esc(it.addedBy||'?')}`;
+  return `<div class="card item" data-id="${esc(it.id)}">
+    <div class="name">${esc(it.name)}</div>
+    ${it.address?`<div class="addr">${esc(it.address)}</div>`:''}
+    ${it.info?`<div class="info">${esc(it.info)}</div>`:''}
+    <div class="meta">${chips(it)}${it.day?`<span class="chip">${fmtDay(it.day)}</span>`:''} <span style="color:var(--ink-3)">${who}</span></div>
+    ${notes?`<div class="notes">${notes}</div>`:''}
+    <div class="acts">
+      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}">♥ ${(it.votes||[]).length}${(it.votes||[]).length?` <span style="font-weight:400;color:var(--ink-3)">${esc((it.votes||[]).join(', '))}</span>`:''}</button>
+      ${mapBtn(it.name, it.city, it.address)}
+      <select data-act="day" aria-label="Put on a day">${dayOptions(it.day)}</select>
+      <button class="btn small ghost" data-act="note">Note</button>
+      ${it.status==='dropped'?'<button class="btn small ghost" data-act="undrop">Restore</button>':'<button class="btn small ghost" data-act="drop">Drop</button>'}
+      ${it.status==='dropped'&&it.src!=='plan'?'<button class="btn small ghost danger" data-act="del">Delete</button>':''}
+    </div>
+    <div class="edit" data-edit="note"><label class="f">Your note (${esc(L.me||'you')})</label><textarea data-note>${esc((it.notes||{})[L.me]||'')}</textarea><div class="row" style="margin-top:6px"><button class="btn small primary" data-act="savenote">Save note</button></div></div>
+  </div>`;
+}
+function bindItemCards(root, rerender){
+  root.addEventListener('click', (e)=>{
+    const b=e.target.closest('[data-act]'); if(!b) return; const card=b.closest('[data-id]'); const id=card.dataset.id; const act=b.dataset.act;
+    if (act==='vote'){ toggleVote(id); rerender(); }
+    else if (act==='note'){ const ed=$('[data-edit=note]',card); ed.style.display = ed.style.display==='block'?'none':'block'; if (ed.style.display==='block') $('[data-note]',ed).focus(); }
+    else if (act==='savenote'){ setNote(id, $('[data-note]',card).value); rerender(); toast('Note saved'); }
+    else if (act==='drop'){ setStatus(id,'dropped'); rerender(); updateBadge(); toast('Dropped — find it under "show dropped"'); }
+    else if (act==='undrop'){ setStatus(id,'wishlist'); rerender(); updateBadge(); }
+    else if (act==='del'){ if (confirm('Delete this place for everyone who imports your plan?')) { removeItem(id); rerender(); } }
+  });
+  root.addEventListener('change', (e)=>{ const s=e.target.closest('select[data-act=day]'); if(!s) return; const id=s.closest('[data-id]').dataset.id; schedule(id, s.value); rerender(); updateBadge(); toast(s.value?'On '+fmtDay(s.value):'Back to the wishlist'); });
+}
+
+// ---------- BROWSE (the workbook's lists) ----------
+function renderCitySeg(){ $('#citySeg').innerHTML = ['','Hangzhou','Nanjing','Suzhou'].map(c=>`<button type="button" aria-pressed="${(L.city||'')===c}" data-city="${c}">${c||'All'}</button>`).join(''); }
+$('#citySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-city]'); if(!b) return; L.city=b.dataset.city; saveLocal(); renderBrowse(); });
+$('#secPills').innerHTML = SECTIONS.map(([k,l])=>`<button class="pill" data-sec="${k}" aria-pressed="false">${l}</button>`).join('');
+$('#secPills').addEventListener('click', e=>{ const b=e.target.closest('[data-sec]'); if(!b) return; L.sec=b.dataset.sec; saveLocal(); renderBrowse(); });
+$('#q').addEventListener('input', renderBrowse);
+function browseCard(b){
+  const id='b:'+b.id.slice(2); const ex=P.items[id];
+  const state = ex ? (ex.status==='dropped' ? 'dropped' : ex.day ? 'On '+fmtDay(ex.day) : 'On wishlist') : '';
+  const sd = b.suggestedDay ? `<option value="${b.suggestedDay}">Put on ${fmtDay(b.suggestedDay)}</option>` : '';
+  return `<div class="card item" data-bid="${esc(b.id)}">
+    <div class="name">${b.rank?`<span class="chip">${esc(b.rank)}</span>`:''}${esc(b.name)}</div>
+    ${b.address?`<div class="addr">${esc(b.address)}</div>`:''}
+    ${b.notes?`<div class="info">${esc(b.notes)}</div>`:''}
+    <div class="meta"><span class="chip city">${esc(b.city||'—')}</span>${b.category?`<span class="chip">${esc(b.category)}</span>`:''}${b.rating?`<span class="chip rate">${esc(b.rating)}${/^\d/.test(b.rating)?'★':''}</span>`:''}${b.price?`<span class="chip">${esc(b.price)}</span>`:''}</div>
+    <div class="acts">${ex?`<button class="btn small" disabled>${esc(state)}</button>`:`<button class="btn small primary" data-badd="">Add to wishlist</button>${b.suggestedDay?`<button class="btn small" data-badd="${b.suggestedDay}">Put on ${fmtDay(b.suggestedDay)}</button>`:''}`}${mapBtn(b.name, b.city, b.address)}</div>
+  </div>`;
+}
+function renderBrowse(){
+  renderCitySeg();
+  $$('#secPills .pill').forEach(p=>p.setAttribute('aria-pressed', p.dataset.sec===L.sec?'true':'false'));
+  const q=$('#q').value.trim().toLowerCase();
+  let list=SEED.browse.filter(b=>b.section===L.sec && (!L.city||b.city===L.city) && (!q || (b.name+' '+b.notes+' '+b.address+' '+b.group+' '+b.category).toLowerCase().includes(q)));
+  $('#browseCount').textContent = `${list.length} in ${SECTIONS.find(s=>s[0]===L.sec)[1].toLowerCase()}${L.city?' · '+L.city:''}`;
+  const r=$('#browseList'); if (!list.length){ r.innerHTML='<div class="empty">Nothing matches. Clear the filter, or add the place by hand below.</div>'; return; }
+  let html='', g=null;
+  for (const b of list){ const key=b.section==='meals'?b.group:b.city; if (key!==g){ g=key; html+=`<div class="group">${esc(key||'')}</div>`; } html+=browseCard(b); }
+  r.innerHTML=html;
+}
+$('#browseList').addEventListener('click', e=>{
+  const a=e.target.closest('[data-badd]'); if(!a) return;
+  const b=SEED.browse.find(x=>x.id===a.closest('[data-bid]').dataset.bid); if(!b) return;
+  const it=addItem({id:'b:'+b.id.slice(2), name:b.name, address:b.address, city:b.city, category:b.category, info:[b.notes,b.price].filter(Boolean).join(' · '), suggestedDay:b.suggestedDay, src:'browse'});
+  if (a.dataset.badd){ schedule(it.id, a.dataset.badd); toast('On '+fmtDay(a.dataset.badd)); } else toast('Added to wishlist');
+  renderBrowse();
+});
+$('#manualForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=$('#mName').value.trim(); if(!name) return;
+  const it = addItem({id:uid('m'), name, address:$('#mAddr').value.trim(), city:$('#mCity').value, category:$('#mCat').value});
+  const note=$('#mNote').value.trim(); if (note) setNote(it.id, note);
+  e.target.reset(); toast('Added to wishlist'); updateBadge();
+});
+
+// ---------- WISHLIST ----------
+function renderWish(){
+  const cs=$('#wCity'), ws=$('#wWho'), cats=$('#wCat'); const cv=cs.value, wv=ws.value, catv=cats.value;
+  cs.innerHTML='<option value="">All cities</option>'+CITIES.map(c=>`<option ${cv===c?'selected':''}>${c}</option>`).join('');
+  ws.innerHTML='<option value="">Everyone</option>'+people().map(p=>`<option ${wv===p?'selected':''}>${esc(p)}</option>`).join('');
+  const catList=[...new Set(Object.values(P.items).map(i=>i.category).filter(Boolean))].sort();
+  cats.innerHTML='<option value="">All types</option>'+catList.map(c=>`<option ${catv===c?'selected':''}>${esc(c)}</option>`).join('');
+  const showDropped=$('#wDropped').checked;
+  let list=Object.values(P.items).filter(i=> (showDropped? i.status!=='scheduled' : i.status==='wishlist') && (!cs.value||i.city===cs.value) && (!cats.value||i.category===cats.value) && (!ws.value||i.addedBy===ws.value||(i.votes||[]).includes(ws.value)));
+  list.sort((a,b)=> ((b.votes||[]).length-(a.votes||[]).length) || ((a.suggestedDay||'z').localeCompare(b.suggestedDay||'z')) || (b.addedAt-a.addedAt));
+  const r=$('#wishList');
+  if (!list.length){ r.innerHTML='<div class="empty">Nothing here. Browse the lists, or add a place by hand, and it lands here for everyone to vote on.</div>'; return; }
+  r.innerHTML=list.map(i=>itemCard(i)).join('');
+}
+['#wCity','#wCat','#wWho','#wDropped'].forEach(s=>$(s).addEventListener('change', renderWish));
+bindItemCards($('#wishList'), renderWish);
+
+// ---------- ITINERARY ----------
+function dayEntries(d){
+  const blocks=P.blocks.filter(b=>b.day===d).map(b=>({kind:'block', t:tk(b.time), o:0, b}));
+  const items=dayItems(d).map(i=>({kind:'item', t:tk(i.time), o:i.order||0, i}));
+  return [...blocks,...items].sort((a,b)=> a.t.localeCompare(b.t) || (a.o-b.o) || (a.kind==='block'?-1:1));
+}
+function renderItin(){
+  $('#daySeg').innerHTML = DAYS.map((d,i)=>`<button type="button" data-jump="${d.d}" title="${esc(d.city)}">${i+1}</button>`).join('');
+  const wl=Object.values(P.items).filter(i=>i.status==='wishlist').length;
+  $('#itinHint').textContent = wl? `${wl} idea${wl===1?'':'s'} on the wishlist not yet on a day.` : '';
+  $('#itin').innerHTML = DAYS.map(d=>{
+    const ents=dayEntries(d.d);
+    return `<div class="day" id="day-${d.d}"><div class="dh"><b>${fmtDay(d.d)}</b><span>${esc(d.city)} · ${esc(d.label)}</span></div><div class="canal">${
+      ents.length? ents.map(e=>e.kind==='block'?blockStop(e.b):itemStop(e.i)).join('') : '<div class="empty" style="padding:14px">Free day — nothing on it yet.</div>'
+    }</div></div>`;
+  }).join('');
+}
+$('#daySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-jump]'); if(!b) return; const el=$('#day-'+b.dataset.jump); if (el) el.scrollIntoView({behavior:'smooth',block:'start'}); });
+function blockStop(b){
+  const sub=[b.number, (b.from||b.to)?`${esc(b.from||'?')} → ${esc(b.to||'?')}`:'', b.note].filter(Boolean).join(' · ');
+  return `<div class="stop block" data-bid="${esc(b.id)}"><div class="card">
+    <div><span class="t">${esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
+    <div class="name">${esc(b.title)}</div>${sub?`<div class="sub">${sub}</div>`:''}
+    <div class="row" style="margin-top:8px">${b.type==='hotel'?mapBtn(b.title, DAYS.find(d=>d.d===b.day).city, b.note):(b.type==='train'?mapBtn(cjk(b.from)+'站', ''):'')}</div>
+    <button class="btn small ghost more" data-bact="edit">Edit</button>
+    <div class="edit"><label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">
+      <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
+      ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
+      <label class="f">Note</label><input type="text" data-f="note" value="${esc(b.note)}">
+      <label style="display:block;margin-top:8px;font-size:14px"><input type="checkbox" data-f="tentative" ${b.tentative?'checked':''}> tentative</label>
+      <div class="row" style="margin-top:10px"><button class="btn small primary" data-bact="save">Save</button><button class="btn small ghost" data-bact="cancel">Cancel</button></div></div>
+  </div></div>`;
+}
+function itemStop(i){
+  const mine=L.me&&(i.votes||[]).includes(L.me);
+  const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
+  const opt=(i.tags||[]).includes('optional');
+  return `<div class="stop ${opt?'opt':''}" data-id="${esc(i.id)}"><div class="card">
+    <div><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span> `:''}${chips(i)}${(i.votes||[]).length?`<span class="chip" style="color:var(--vermilion)">♥ ${(i.votes||[]).length}</span>`:''}</div>
+    <div class="name">${esc(i.name)}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
+    <div class="acts">
+      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}">♥ ${(i.votes||[]).length}</button>
+      ${mapBtn(i.name, i.city, i.address)}
+      <button class="btn small" data-act="up" title="Earlier">↑</button><button class="btn small" data-act="down" title="Later">↓</button>
+      <input type="time" data-act="time" value="${esc(i.time)}" aria-label="Start">
+      <input type="text" data-act="dur" value="${esc(i.duration)}" placeholder="1h" aria-label="Duration" style="width:64px">
+      <select data-act="day" aria-label="Move to day">${dayOptions(i.day)}</select>
+      <button class="btn small ghost" data-act="note">Note</button>
+      <button class="btn small ghost" data-act="drop">Take off plan</button>
+    </div>
+    <div class="edit" data-edit="note"><label class="f">Your note (${esc(L.me||'you')})</label><textarea data-note>${esc((i.notes||{})[L.me]||'')}</textarea><div class="row" style="margin-top:6px"><button class="btn small primary" data-act="savenote">Save note</button></div></div>
+  </div></div>`;
+}
+$('#itin').addEventListener('click', e=>{
+  const bb=e.target.closest('[data-bact]');
+  if (bb){ const stop=bb.closest('[data-bid]'); const id=stop.dataset.bid; const act=bb.dataset.bact;
+    if (act==='edit'){ stop.classList.add('editing'); $('input',$('.edit',stop)).focus(); }
+    else if (act==='cancel'){ renderItin(); }
+    else if (act==='save'){ const b=P.blocks.find(x=>x.id===id); $$('[data-f]',stop).forEach(f=>{ b[f.dataset.f] = f.type==='checkbox'?f.checked:f.value.trim(); }); b.updatedAt=now(); savePlan(); renderItin(); toast('Saved'); }
+    return; }
+  const a=e.target.closest('[data-act]');
+  const stop=e.target.closest('.stop[data-id]');
+  if (!a){ if (stop && !e.target.closest('input,select,textarea,button')) stop.classList.toggle('open'); return; }
+  const id=stop.dataset.id; const act=a.dataset.act;
+  if (act==='up'){ moveInDay(id,-1); renderItin(); openStop(id); }
+  else if (act==='down'){ moveInDay(id,1); renderItin(); openStop(id); }
+  else if (act==='vote'){ toggleVote(id); renderItin(); openStop(id); }
+  else if (act==='note'){ const ed=$('[data-edit=note]',stop); ed.style.display = ed.style.display==='block'?'none':'block'; if (ed.style.display==='block') $('[data-note]',ed).focus(); }
+  else if (act==='savenote'){ setNote(id, $('[data-note]',stop).value); renderItin(); toast('Note saved'); }
+  else if (act==='drop'){ setStatus(id,'wishlist'); renderItin(); updateBadge(); toast('Moved to the wishlist'); }
+});
+function openStop(id){ const el=$(`.stop[data-id="${CSS.escape(id)}"]`); if (el) el.classList.add('open'); }
+$('#itin').addEventListener('change', e=>{
+  const a=e.target.closest('[data-act]'); if(!a) return; const idEl=a.closest('[data-id]'); if(!idEl) return; const it=P.items[idEl.dataset.id]; if(!it) return;
+  if (a.dataset.act==='time'){ it.time=a.value; if (it.end && it.end<=it.time) it.end=''; it.updatedAt=now(); savePlan(); renderItin(); openStop(it.id); }
+  else if (a.dataset.act==='dur'){ it.duration=a.value.trim(); it.updatedAt=now(); savePlan(); }
+  else if (a.dataset.act==='day'){ schedule(it.id, a.value); renderItin(); toast(a.value?'Moved to '+fmtDay(a.value):'Moved to the wishlist'); updateBadge(); }
+});
+function summaryText(){
+  const out=['*Jiangnan 15–22 Nov 2026*',''];
+  for (const d of DAYS){
+    out.push(`*${fmtDay(d.d)} · ${d.city}* — ${d.label}`);
+    const ents=dayEntries(d.d);
+    if (!ents.length) out.push('  (free day)');
+    for (const e of ents){
+      if (e.kind==='block'){ const b=e.b; out.push(`${b.time?b.time+' ':''}${KIND_ICON[b.type]} ${b.title}${b.number?' '+b.number:''}${(b.from||b.to)?` ${b.from||'?'}→${b.to||'?'}`:''}${b.tentative?' (tentative)':''}`); }
+      else { const i=e.i; const n=Object.entries(i.notes||{}).map(([w,t])=>`${w}: ${t}`).join('; '); out.push(`${timeSpan(i)?timeSpan(i)+' ':''}• ${i.name}${(i.tags||[]).includes('optional')?' (optional)':''}${(i.votes||[]).length?' ♥'+(i.votes||[]).length:''}${n?' — '+n:''}`); }
+    }
+    out.push('');
+  }
+  const wl=Object.values(P.items).filter(i=>i.status==='wishlist' && ((i.votes||[]).length || i.src!=='plan'));
+  if (wl.length){ out.push('*Wishlist (voted or added)*'); for (const i of wl) out.push(`• ${i.name} (${i.city}) ♥${(i.votes||[]).length}`); }
+  return out.join('\n');
+}
+$('#copySummary').addEventListener('click', async ()=>{
+  const t=summaryText();
+  try{ await navigator.clipboard.writeText(t); toast('Copied — paste it into WhatsApp'); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); toast('Copied'); }catch(_){ prompt('Copy this:', t); } ta.remove(); }
+});
+
+// ---------- SHARE / SETTINGS ----------
+function renderSettings(){ $('#sName').value=L.me; }
+$('#saveSettings').addEventListener('click', ()=>{ const name=$('#sName').value.trim(); if(!name){ toast('Name is needed'); return; } L.me=name; saveLocal(); toast('Saved'); });
+function exportPlan(){
+  const data={app:'jiangnan-trip-planner', v:2, exportedBy:L.me, exportedAt:new Date().toISOString(), items:P.items, blocks:P.blocks};
+  const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`jiangnan-plan-${(L.me||'me').replace(/\W+/g,'')}-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  $('#shareStatus').innerHTML='<div class="status ok">Exported. Send the file on WhatsApp; they import it from this same screen.</div>';
+}
+$('#exportBtn').addEventListener('click', exportPlan);
+function mergePlan(inc){
+  if (!inc || inc.app!=='jiangnan-trip-planner' || !inc.items) throw new Error('That file is not a Jiangnan plan export.');
+  let added=0, merged=0, blocksUpd=0;
+  for (const [id, it] of Object.entries(inc.items)){
+    const cur=P.items[id];
+    if (!cur){ P.items[id]=it; added++; continue; }
+    merged++;
+    cur.votes=[...new Set([...(cur.votes||[]), ...(it.votes||[])])];
+    cur.notes=cur.notes||{}; for (const [who,t] of Object.entries(it.notes||{})) if (who!==L.me) cur.notes[who]=t;
+    if ((it.updatedAt||0) > (cur.updatedAt||0)){ for (const f of ['status','day','order','time','end','duration']) cur[f]=it[f]; cur.updatedAt=it.updatedAt; }
+  }
+  for (const b of (inc.blocks||[])){ const cur=P.blocks.find(x=>x.id===b.id); if (!cur) { P.blocks.push(b); blocksUpd++; } else if ((b.updatedAt||0) > (cur.updatedAt||0)){ Object.assign(cur,b); blocksUpd++; } }
+  savePlan(); updateBadge();
+  return {added, merged, blocksUpd, from:inc.exportedBy||'?'};
+}
+$('#importFile').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{ try{ const r=mergePlan(JSON.parse(rd.result)); $('#shareStatus').innerHTML=`<div class="status ok">Merged ${esc(r.from)}'s plan: ${r.added} new, ${r.merged} combined (votes and notes kept from both), ${r.blocksUpd} travel block${r.blocksUpd===1?'':'s'} updated.</div>`; toast('Merged'); }
+    catch(err){ $('#shareStatus').innerHTML=`<div class="status bad">Import failed: ${esc(err.message||err)}</div>`; } e.target.value=''; };
+  rd.readAsText(f);
+});
+$('#resetAll').addEventListener('click', ()=>{ if (confirm('Put the plan back to the workbook and clear your name on this device?')){ localStorage.removeItem(LS_PLAN); localStorage.removeItem(LS_LOCAL); localStorage.removeItem('jiangnan.plan.v1'); localStorage.removeItem('jiangnan.local.v1'); location.reload(); } });
+
+// ---------- boot ----------
+function boot(){
+  $('#mCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
+  // carry a name over from the first version of the app, if there was one
+  if (!L.me){ try{ const old=JSON.parse(localStorage.getItem('jiangnan.local.v1')); if (old&&old.me){ L.me=old.me; saveLocal(); } }catch(e){} }
+  updateBadge();
+  if (!L.me){ $('#setup').classList.remove('hidden'); setTimeout(()=>$('#suName').focus(),50); }
+  showTab('itin');
+}
+$('#setupForm').addEventListener('submit', e=>{ e.preventDefault(); L.me=$('#suName').value.trim(); saveLocal(); $('#setup').classList.add('hidden'); renderItin(); toast('Welcome, '+L.me); });
+boot();
+})();
+</script>
+</body>
+</html>
