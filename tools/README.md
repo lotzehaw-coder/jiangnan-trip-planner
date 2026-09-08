@@ -1,11 +1,9 @@
 # Generator
 
-`index.html` is built from the workbook:
-
 ```bash
 cd tools
-python parse_seed.py          # itinerary.xlsx -> seed.json
-python -c "t=open('template.html',encoding='utf-8').read();s=open('seed.json',encoding='utf-8').read();open('../index.html','w',encoding='utf-8').write(t.replace('__SEED__',s.replace('</script','<\/script')))"
+python parse_seed.py     # pulls the workbook from the iCloud share (or --local), writes seed.json
+python build.py          # seed.json + template.html -> ../index.html
 ```
 
-Needs Python 3 and `openpyxl`.
+Needs Python 3 and `openpyxl`. Coordinates live in `parse_seed.py` (`COORDS`, WGS-84 -> GCJ-02).
