@@ -280,7 +280,7 @@ const uid = (p) => p + ':' + Math.random().toString(36).slice(2,10) + now().toSt
 function seedBlocks(){
   const b = (id,day,type,title,extra) => Object.assign({id,day,type,title,time:'',number:'',from:'',to:'',tentative:false,note:'',updatedAt:0},extra||{});
   return [
-    b('seed:mh388','2026-11-15','flight','Arrive Shanghai Pudong',{number:'MH388',from:'KUL',to:'PVG'}),
+    b('seed:mh388','2026-11-15','flight','Fly to Shanghai Pudong',{number:'MH388',time:'09:10',from:'KUL T1',to:'PVG T2',note:'lands 14:30 · Business · A330-300 · via Trip.com'}),
     b('seed:t1','2026-11-15','train','Train to Hangzhou',{from:'Shanghai',to:'Hangzhou'}),
     b('seed:h1in','2026-11-15','hotel','Check in — Conrad Hangzhou',{tentative:true}),
     b('seed:h1out','2026-11-18','hotel','Check out — Conrad Hangzhou',{tentative:true}),
@@ -293,15 +293,15 @@ function seedBlocks(){
     b('seed:t4','2026-11-21','train','Train to Shanghai',{from:'Suzhou',to:'Shanghai'}),
     b('seed:h4in','2026-11-21','hotel','Check in — JW Marriott Pudong'),
     b('seed:h4out','2026-11-22','hotel','Check out — JW Marriott Pudong'),
-    b('seed:mh389','2026-11-22','flight','Depart Shanghai Pudong',{number:'MH389',from:'PVG',to:'KUL'}),
+    b('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',{number:'MH389',time:'16:05',from:'PVG T2',to:'KUL T1',note:'lands 21:50 · Business · A330-300 · via Trip.com'}),
   ];
 }
 const defPlan  = () => ({v:1, items:{}, blocks:seedBlocks(), updatedAt:0});
 const defLocal = () => ({me:'', amapKey:'', amapSec:'', city:'Hangzhou'});
 function read(k, def){ try{ const j = JSON.parse(localStorage.getItem(k)); if (j && typeof j==='object') return Object.assign(def(), j); }catch(e){} return def(); }
 let P = read(LS_PLAN, defPlan), L = read(LS_LOCAL, defLocal);
-// make sure every seeded block exists (older saves)
-for (const sb of seedBlocks()) if (!P.blocks.some(b=>b.id===sb.id)) P.blocks.push(sb);
+// make sure every seeded block exists (older saves), and refresh seeds nobody has edited yet
+for (const sb of seedBlocks()){ const cur=P.blocks.find(b=>b.id===sb.id); if (!cur) P.blocks.push(sb); else if (!cur.updatedAt) Object.assign(cur, sb); }
 function savePlan(){ P.updatedAt = now(); try{ localStorage.setItem(LS_PLAN, JSON.stringify(P)); }catch(e){ toast('Could not save — storage blocked?'); } }
 function saveLocal(){ try{ localStorage.setItem(LS_LOCAL, JSON.stringify(L)); }catch(e){} }
 
