@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Jiangnan Trip Planner</title>
+<style>
+:root{
+  --wash:#f5f2ea; --wash-2:#ebe6d8; --ink:#1e272b; --ink-2:#4a585e; --ink-3:#7f8c92;
+  --canal:#2c6b70; --canal-soft:#dfeae8; --canal-deep:#1f4f53;
+  --roof:#55636b; --vermilion:#b7402f; --line:#d9d3c4; --card:#fffdf8;
+  --shadow:0 1px 2px rgba(30,39,43,.08), 0 0 0 1px rgba(30,39,43,.04);
+  --r:10px; --nav:62px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--wash);color:var(--ink);
+  font:16px/1.45 -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--canal)}
+:focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* layout */
+.app{min-height:100vh;display:flex;flex-direction:column}
+header.top{padding:14px 18px 0;background:var(--wash)}
+header.top h1{margin:0;font-size:22px;font-weight:600;letter-spacing:.2px}
+header.top h1 span{font-weight:400;color:var(--ink-3);font-size:15px;margin-left:8px}
+.wave{display:block;width:100%;height:14px;margin-top:6px}
+main{flex:1;padding:12px 14px calc(var(--nav) + 20px);max-width:820px;width:100%;margin:0 auto}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;height:var(--nav);background:var(--card);
+  border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+nav.tabs button{flex:1;border:0;background:none;color:var(--ink-3);font-size:12.5px;padding:8px 0 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-current="page"]{color:var(--canal-deep);font-weight:600}
+nav.tabs button .badge{position:absolute;margin-left:26px;margin-top:-2px;background:var(--vermilion);color:#fff;font-size:10px;line-height:16px;min-width:16px;padding:0 4px;border-radius:8px;text-align:center}
+@media (min-width:900px){
+  .app{flex-direction:row}
+  header.top{display:none}
+  nav.tabs{position:sticky;top:0;bottom:auto;height:100vh;width:220px;flex-direction:column;border-top:0;border-right:1px solid var(--line);padding:22px 12px;gap:4px}
+  nav.tabs .brand{padding:0 10px 18px;font-size:20px;font-weight:600}
+  nav.tabs .brand small{display:block;font-weight:400;color:var(--ink-3);font-size:13px;margin-top:2px}
+  nav.tabs button{flex:0 0 auto;flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px;padding:10px 12px;border-radius:8px}
+  nav.tabs button[aria-current="page"]{background:var(--canal-soft)}
+  nav.tabs button .badge{position:static;margin:0 0 0 auto}
+  main{padding:26px 32px 40px}
+}
+.brand{display:none}
+@media (min-width:900px){.brand{display:block}}
+
+section.view{display:none}
+section.view.on{display:block}
+h2{font-size:18px;font-weight:600;margin:6px 0 12px}
+h3{font-size:14px;font-weight:600;color:var(--ink-2);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.6px}
+p.muted{color:var(--ink-3);font-size:14px;margin:6px 0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row > *{min-width:0}
+.grow{flex:1}
+
+/* controls */
+input[type=text],input[type=search],input[type=time],input[type=number],input[type=password],select,textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:42px}
+textarea{min-height:64px;resize:vertical}
+label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:9px 14px;cursor:pointer;min-height:42px;white-space:nowrap}
+.btn:hover{border-color:var(--roof)}
+.btn.primary{background:var(--canal);border-color:var(--canal);color:#fff}
+.btn.primary:hover{background:var(--canal-deep)}
+.btn.small{min-height:32px;padding:4px 10px;font-size:13.5px}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--canal)}
+.btn.danger{color:var(--vermilion)}
+.btn:disabled{opacity:.45;cursor:default}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:none;padding:8px 12px;cursor:pointer;color:var(--ink-2);min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--canal);color:#fff}
+.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--wash-2);color:var(--ink-2);margin-right:4px}
+.chip.city{background:var(--canal-soft);color:var(--canal-deep)}
+.chip.tent{background:#f3e3d0;color:#8a5a1e}
+.chip.drop{background:#eee;color:#888;text-decoration:line-through}
+
+/* cards */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px}
+.card.hi{box-shadow:0 0 0 2px var(--canal)}
+.item .name{font-weight:600;font-size:16px}
+.item .addr{color:var(--ink-3);font-size:13.5px;margin-top:2px}
+.item .meta{margin-top:6px;font-size:13px;color:var(--ink-2)}
+.item .acts{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.vote{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--card);cursor:pointer;min-height:32px;font-size:13.5px}
+.vote[aria-pressed="true"]{border-color:var(--vermilion);color:var(--vermilion);background:#fbeeeb}
+.notes{margin-top:6px;font-size:13.5px}
+.notes div{padding:2px 0}
+.notes b{color:var(--ink-2);font-weight:600}
+.empty{padding:26px 14px;text-align:center;color:var(--ink-3);border:1px dashed var(--line);border-radius:var(--r);font-size:14.5px}
+
+/* map */
+#map{width:100%;height:240px;border-radius:var(--r);background:var(--canal-soft);margin:10px 0;overflow:hidden}
+@media (min-width:900px){#map{height:320px}}
+.mapnote{font-size:13px;color:var(--ink-3);text-align:center;padding:100px 12px 0}
+
+/* itinerary — the canal */
+.day{margin-bottom:22px}
+.day .dh{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.day .dh b{font-size:17px}
+.day .dh span{color:var(--ink-3);font-size:14px}
+.canal{position:relative;padding-left:22px}
+.canal::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:3px;border-radius:2px;
+  background:linear-gradient(var(--canal) 0 0) padding-box;opacity:.55}
+.stop{position:relative;margin-bottom:8px}
+.stop::before{content:"";position:absolute;left:-19px;top:15px;width:9px;height:9px;border-radius:50%;background:var(--card);border:2px solid var(--canal)}
+.stop.block::before{border-radius:2px;background:var(--canal)}
+.stop .card{margin:0}
+.stop .t{font-variant-numeric:tabular-nums;color:var(--canal-deep);font-weight:600;font-size:13.5px;margin-right:8px}
+.stop .kind{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
+.stop .name{font-weight:600}
+.stop .sub{color:var(--ink-3);font-size:13.5px}
+.stop .acts{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.stop .acts select{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
+.stop .acts input{width:auto;min-height:32px;padding:4px 8px;font-size:13.5px}
+.stop.editing .edit{display:block}
+.edit{display:none;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.edit .row input{flex:1}
+
+/* overlay setup */
+.overlay{position:fixed;inset:0;background:rgba(30,39,43,.55);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:0}
+@media (min-width:600px){.overlay{align-items:center;padding:20px}}
+.sheet{background:var(--card);width:100%;max-width:460px;border-radius:16px 16px 0 0;padding:20px 18px 26px;max-height:92vh;overflow:auto}
+@media (min-width:600px){.sheet{border-radius:14px}}
+.sheet h2{margin-top:0}
+.hidden{display:none!important}
+.status{font-size:13.5px;padding:8px 10px;border-radius:8px;background:var(--wash-2);margin-top:8px}
+.status.ok{background:var(--canal-soft);color:var(--canal-deep)}
+.status.bad{background:#fbeeeb;color:var(--vermilion)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav) + 14px);background:var(--ink);color:#fff;padding:9px 14px;border-radius:8px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media (min-width:900px){.toast{bottom:24px}}
+details summary{cursor:pointer;color:var(--canal);font-size:14.5px;padding:6px 0}
+code{background:var(--wash-2);padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="tabs" aria-label="Sections">
+    <div class="brand">Jiangnan<small>15–22 Nov 2026</small></div>
+    <button data-tab="search" aria-current="page"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
+    <button data-tab="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Wishlist<span class="badge hidden" id="wishCount"></span></button>
+    <button data-tab="itin"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Itinerary</button>
+    <button data-tab="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+  </nav>
+
+  <div class="grow">
+    <header class="top">
+      <h1>Jiangnan <span>15–22 Nov 2026</span></h1>
+      <svg class="wave" viewBox="0 0 400 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8 Q 25 2 50 8 T 100 8 T 150 8 T 200 8 T 250 8 T 300 8 T 350 8 T 400 8" fill="none" stroke="#2c6b70" stroke-width="1.6" opacity=".5"/></svg>
+    </header>
+
+    <main>
+      <!-- SEARCH -->
+      <section class="view on" id="v-search">
+        <div class="row">
+          <div class="seg" id="citySeg" role="group" aria-label="City"></div>
+        </div>
+        <form class="row" id="searchForm" style="margin-top:10px">
+          <input type="search" id="q" class="grow" placeholder="Search places in Hangzhou…" autocomplete="off">
+          <button class="btn primary" type="submit" id="searchBtn">Search</button>
+        </form>
+        <div id="searchStatus"></div>
+        <div id="map"><div class="mapnote" id="mapNote">Add your Amap key in Settings to search and see the map.</div></div>
+        <div id="results"></div>
+        <details style="margin-top:16px">
+          <summary>Add a place by hand</summary>
+          <form id="manualForm" class="card" style="margin-top:8px">
+            <label class="f" for="mName">Name</label><input type="text" id="mName" required>
+            <label class="f" for="mAddr">Address</label><input type="text" id="mAddr">
+            <div class="row">
+              <div class="grow"><label class="f" for="mCity">City</label><select id="mCity"></select></div>
+              <div class="grow"><label class="f" for="mCat">Category</label><select id="mCat">
+                <option>Food</option><option>Sight</option><option>Cafe</option><option>Shopping</option><option>Night</option><option>Other</option></select></div>
+            </div>
+            <div class="row">
+              <div class="grow"><label class="f" for="mLat">Latitude (optional)</label><input type="text" id="mLat" inputmode="decimal" placeholder="30.25"></div>
+              <div class="grow"><label class="f" for="mLng">Longitude (optional)</label><input type="text" id="mLng" inputmode="decimal" placeholder="120.15"></div>
+            </div>
+            <label class="f" for="mNote">Note</label><input type="text" id="mNote" placeholder="Where you heard about it, what to order…">
+            <div style="margin-top:12px"><button class="btn primary" type="submit">Add to wishlist</button></div>
+          </form>
+        </details>
+      </section>
+
+      <!-- WISHLIST -->
+      <section class="view" id="v-wish">
+        <div class="row">
+          <select id="wCity" style="width:auto"><option value="">All cities</option></select>
+          <select id="wWho" style="width:auto"><option value="">Everyone</option></select>
+          <label style="font-size:14px;margin-left:auto"><input type="checkbox" id="wDropped"> show dropped</label>
+        </div>
+        <div id="wishList" style="margin-top:12px"></div>
+      </section>
+
+      <!-- ITINERARY -->
+      <section class="view" id="v-itin">
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn small" id="copySummary">Copy summary as text</button>
+          <span class="muted" id="itinHint" style="font-size:13px"></span>
+        </div>
+        <div id="itin"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="v-settings">
+        <h2>You</h2>
+        <label class="f" for="sName">Display name</label>
+        <input type="text" id="sName" placeholder="Tze">
+        <p class="muted">Shown on the places you add and your votes. Stored only on this device.</p>
+
+        <h2 style="margin-top:22px">Amap</h2>
+        <label class="f" for="sKey">JS API key</label>
+        <input type="password" id="sKey" autocomplete="off">
+        <label class="f" for="sSec">Security JS code</label>
+        <input type="password" id="sSec" autocomplete="off">
+        <p class="muted">Both come from <a href="https://console.amap.com/dev/key/app" target="_blank" rel="noopener">console.amap.com</a> — create a Web (JS API) key. Whitelist this site's domain (<code id="hostShow"></code>) in the key's settings or searches will be refused. Keys stay in this browser only; they are never included in an export.</p>
+        <div id="amapStatus" class="status">No key set — search and map are off. Wishlist and itinerary still work.</div>
+        <div class="row" style="margin-top:12px"><button class="btn primary" id="saveSettings">Save</button><button class="btn" id="testKey">Test key</button></div>
+
+        <h2 style="margin-top:26px">Share the plan</h2>
+        <p class="muted">Export a file, send it on WhatsApp, and your companion imports it. Import <b>merges</b> — everyone's places, votes and notes are kept, nothing is overwritten. Repeat in both directions until the plan is final.</p>
+        <div class="row">
+          <button class="btn primary" id="exportBtn">Export plan (.json)</button>
+          <label class="btn" for="importFile" style="display:inline-flex;align-items:center">Import &amp; merge<input type="file" id="importFile" accept=".json,application/json" class="hidden"></label>
+        </div>
+        <div id="shareStatus"></div>
+
+        <h2 style="margin-top:26px">Trip</h2>
+        <p class="muted">Flights, trains and hotels are edited in the Itinerary tab. Tap a block to change its number, time or name.</p>
+        <details><summary>Reset everything on this device</summary>
+          <p class="muted">Clears the plan, your name and the key from this browser. Export first if you want to keep anything.</p>
+          <button class="btn danger" id="resetAll">Reset</button></details>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="overlay hidden" id="setup">
+  <form class="sheet" id="setupForm">
+    <h2>Welcome to the Jiangnan planner</h2>
+    <p class="muted">One screen and you're in.</p>
+    <label class="f" for="suName">Your name</label>
+    <input type="text" id="suName" required placeholder="Tze" autocomplete="off">
+    <label class="f" for="suKey">Amap JS API key <span style="color:var(--ink-3)">(optional, add later in Settings)</span></label>
+    <input type="password" id="suKey" autocomplete="off">
+    <label class="f" for="suSec">Amap security JS code</label>
+    <input type="password" id="suSec" autocomplete="off">
+    <p class="muted">Remember to whitelist <code class="hostShow"></code> in the Amap console for the key.</p>
+    <div style="margin-top:14px"><button class="btn primary" type="submit" style="width:100%">Start planning</button></div>
+  </form>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+// ---------- constants ----------
+const CITIES = ['Hangzhou','Nanjing','Suzhou','Shanghai'];
+const DAYS = [
+  {d:'2026-11-15', city:'Hangzhou', label:'Shanghai → Hangzhou'},
+  {d:'2026-11-16', city:'Hangzhou', label:'Hangzhou'},
+  {d:'2026-11-17', city:'Hangzhou', label:'Hangzhou'},
+  {d:'2026-11-18', city:'Nanjing',  label:'Hangzhou → Nanjing'},
+  {d:'2026-11-19', city:'Nanjing',  label:'Nanjing'},
+  {d:'2026-11-20', city:'Suzhou',   label:'Nanjing → Suzhou'},
+  {d:'2026-11-21', city:'Shanghai', label:'Suzhou → Shanghai'},
+  {d:'2026-11-22', city:'Shanghai', label:'Shanghai → home'},
+];
+const LS_PLAN = 'jiangnan.plan.v1', LS_LOCAL = 'jiangnan.local.v1';
+const KIND_ICON = {flight:'✈', train:'🚄', hotel:'🏨', item:'•'};
+
+// ---------- state ----------
+const now = () => Date.now();
+const uid = (p) => p + ':' + Math.random().toString(36).slice(2,10) + now().toString(36);
+function seedBlocks(){
+  const b = (id,day,type,title,extra) => Object.assign({id,day,type,title,time:'',number:'',from:'',to:'',tentative:false,note:'',updatedAt:0},extra||{});
+  return [
+    b('seed:mh388','2026-11-15','flight','Arrive Shanghai Pudong',{number:'MH388',from:'KUL',to:'PVG'}),
+    b('seed:t1','2026-11-15','train','Train to Hangzhou',{from:'Shanghai',to:'Hangzhou'}),
+    b('seed:h1in','2026-11-15','hotel','Check in — Conrad Hangzhou',{tentative:true}),
+    b('seed:h1out','2026-11-18','hotel','Check out — Conrad Hangzhou',{tentative:true}),
+    b('seed:t2','2026-11-18','train','Train to Nanjing',{from:'Hangzhou',to:'Nanjing'}),
+    b('seed:h2in','2026-11-18','hotel','Check in — Ritz-Carlton Nanjing',{tentative:true}),
+    b('seed:h2out','2026-11-20','hotel','Check out — Ritz-Carlton Nanjing',{tentative:true}),
+    b('seed:t3','2026-11-20','train','Train to Suzhou',{from:'Nanjing',to:'Suzhou'}),
+    b('seed:h3in','2026-11-20','hotel','Check in — Suzhou hotel (TBC)',{tentative:true}),
+    b('seed:h3out','2026-11-21','hotel','Check out — Suzhou hotel (TBC)',{tentative:true}),
+    b('seed:t4','2026-11-21','train','Train to Shanghai',{from:'Suzhou',to:'Shanghai'}),
+    b('seed:h4in','2026-11-21','hotel','Check in — JW Marriott Pudong'),
+    b('seed:h4out','2026-11-22','hotel','Check out — JW Marriott Pudong'),
+    b('seed:mh389','2026-11-22','flight','Depart Shanghai Pudong',{number:'MH389',from:'PVG',to:'KUL'}),
+  ];
+}
+const defPlan  = () => ({v:1, items:{}, blocks:seedBlocks(), updatedAt:0});
+const defLocal = () => ({me:'', amapKey:'', amapSec:'', city:'Hangzhou'});
+function read(k, def){ try{ const j = JSON.parse(localStorage.getItem(k)); if (j && typeof j==='object') return Object.assign(def(), j); }catch(e){} return def(); }
+let P = read(LS_PLAN, defPlan), L = read(LS_LOCAL, defLocal);
+// make sure every seeded block exists (older saves)
+for (const sb of seedBlocks()) if (!P.blocks.some(b=>b.id===sb.id)) P.blocks.push(sb);
+function savePlan(){ P.updatedAt = now(); try{ localStorage.setItem(LS_PLAN, JSON.stringify(P)); }catch(e){ toast('Could not save — storage blocked?'); } }
+function saveLocal(){ try{ localStorage.setItem(LS_LOCAL, JSON.stringify(L)); }catch(e){} }
+
+// ---------- helpers ----------
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = (s) => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDay = (d) => { const dt = new Date(d+'T00:00:00'); return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}); };
+const people = () => { const s = new Set(); if (L.me) s.add(L.me); for (const it of Object.values(P.items)){ if (it.addedBy) s.add(it.addedBy); for (const v of it.votes||[]) s.add(v); for (const n of Object.keys(it.notes||{})) s.add(n);} return [...s]; };
+let toastT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); }
+const dayItems = (d) => Object.values(P.items).filter(i=>i.day===d && i.status!=='dropped').sort((a,b)=>(a.order||0)-(b.order||0));
+const timeKey = (t) => t ? t : '99:99';
+
+// ---------- tabs ----------
+function showTab(name){
+  $$('section.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+name));
+  $$('nav.tabs button').forEach(b=>{ if (b.dataset.tab===name) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  if (name==='search') { renderSearch(); if (amap.map) setTimeout(()=>amap.map.resize(),50); else amapInitMap(); }
+  if (name==='wish') renderWish();
+  if (name==='itin') renderItin();
+  if (name==='settings') renderSettings();
+  window.scrollTo({top:0});
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+// ---------- items ----------
+function addItem(it){
+  const ex = P.items[it.id];
+  if (ex){ if (ex.status==='dropped'){ ex.status='wishlist'; ex.updatedAt=now(); savePlan(); toast('Back on the wishlist'); } else toast('Already on the wishlist'); return ex; }
+  P.items[it.id] = Object.assign({id:'', name:'', address:'', city:'', lat:null, lng:null, category:'', addedBy:L.me, addedAt:now(), notes:{}, votes:[], status:'wishlist', day:'', order:0, time:'', duration:'', updatedAt:now()}, it);
+  savePlan(); updateBadge(); toast('Added to wishlist'); return P.items[it.id];
+}
+function toggleVote(id){ const it=P.items[id]; if(!it||!L.me) return; const v=new Set(it.votes||[]); v.has(L.me)?v.delete(L.me):v.add(L.me); it.votes=[...v]; savePlan(); }
+function setNote(id, text){ const it=P.items[id]; if(!it||!L.me) return; it.notes=it.notes||{}; if (text.trim()) it.notes[L.me]=text.trim(); else delete it.notes[L.me]; savePlan(); }
+function schedule(id, day){ const it=P.items[id]; if(!it) return; it.day=day||''; it.status = day ? 'scheduled' : (it.status==='dropped'?'dropped':'wishlist'); if (day){ const n=dayItems(day).filter(x=>x.id!==id).length; it.order=n; } it.updatedAt=now(); savePlan(); }
+function setStatus(id, st){ const it=P.items[id]; if(!it) return; it.status=st; if (st!=='scheduled') it.day=''; it.updatedAt=now(); savePlan(); }
+function moveInDay(id, dir){ const it=P.items[id]; if(!it||!it.day) return; const list=dayItems(it.day); const i=list.findIndex(x=>x.id===id); const j=i+dir; if (j<0||j>=list.length) return; [list[i],list[j]]=[list[j],list[i]]; list.forEach((x,k)=>{x.order=k; x.updatedAt=now();}); savePlan(); }
+function removeItem(id){ delete P.items[id]; savePlan(); updateBadge(); }
+function updateBadge(){ const n=Object.values(P.items).filter(i=>i.status==='wishlist').length; const b=$('#wishCount'); b.textContent=n; b.classList.toggle('hidden', n===0); }
+
+// ---------- render: item card ----------
+function itemCard(it, opts={}){
+  const mine = L.me && (it.votes||[]).includes(L.me);
+  const notes = Object.entries(it.notes||{}).map(([who,t])=>`<div><b>${esc(who)}:</b> ${esc(t)}</div>`).join('');
+  const dayOpts = ['<option value="">— not scheduled —</option>'].concat(DAYS.map(d=>`<option value="${d.d}" ${it.day===d.d?'selected':''}>${fmtDay(d.d)} · ${esc(d.label)}</option>`)).join('');
+  return `<div class="card item ${opts.hi?'hi':''}" data-id="${esc(it.id)}">
+    <div class="name">${esc(it.name)}</div>
+    ${it.address?`<div class="addr">${esc(it.address)}</div>`:''}
+    <div class="meta"><span class="chip city">${esc(it.city)}</span>${it.category?`<span class="chip">${esc(it.category)}</span>`:''}${it.status==='dropped'?'<span class="chip drop">dropped</span>':''}${it.day?`<span class="chip">${fmtDay(it.day)}</span>`:''} <span style="color:var(--ink-3)">added by ${esc(it.addedBy||'?')}</span></div>
+    ${notes?`<div class="notes">${notes}</div>`:''}
+    <div class="acts">
+      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}" title="Vote">♥ ${(it.votes||[]).length}${(it.votes||[]).length?` <span style="font-weight:400;color:var(--ink-3)">${esc((it.votes||[]).join(', '))}</span>`:''}</button>
+      <select data-act="day" aria-label="Schedule on day" style="width:auto;min-height:32px;padding:4px 8px;font-size:13.5px">${dayOpts}</select>
+      <button class="btn small ghost" data-act="note">Note</button>
+      ${it.status==='dropped'?'<button class="btn small ghost" data-act="undrop">Restore</button>':'<button class="btn small ghost" data-act="drop">Drop</button>'}
+      ${it.status==='dropped'?'<button class="btn small ghost danger" data-act="del">Delete</button>':''}
+    </div>
+    <div class="edit" data-edit="note"><label class="f">Your note (${esc(L.me||'you')})</label><textarea data-note>${esc((it.notes||{})[L.me]||'')}</textarea><div class="row" style="margin-top:6px"><button class="btn small primary" data-act="savenote">Save note</button></div></div>
+  </div>`;
+}
+function bindItemCards(root, rerender){
+  root.addEventListener('click', (e)=>{
+    const b=e.target.closest('[data-act]'); if(!b) return; const card=b.closest('[data-id]'); const id=card.dataset.id; const act=b.dataset.act;
+    if (act==='vote'){ toggleVote(id); rerender(); }
+    else if (act==='note'){ const ed=$('[data-edit=note]',card); ed.style.display = ed.style.display==='block'?'none':'block'; if (ed.style.display==='block') $('[data-note]',ed).focus(); }
+    else if (act==='savenote'){ setNote(id, $('[data-note]',card).value); rerender(); toast('Note saved'); }
+    else if (act==='drop'){ setStatus(id,'dropped'); rerender(); updateBadge(); }
+    else if (act==='undrop'){ setStatus(id,'wishlist'); rerender(); updateBadge(); }
+    else if (act==='del'){ if (confirm('Delete this place for everyone who imports your plan?')) { removeItem(id); rerender(); } }
+  });
+  root.addEventListener('change', (e)=>{ const s=e.target.closest('select[data-act=day]'); if(!s) return; const id=s.closest('[data-id]').dataset.id; schedule(id, s.value); rerender(); updateBadge(); toast(s.value?'Scheduled':'Back to wishlist'); });
+}
+
+// ---------- SEARCH ----------
+const amap = {map:null, markers:[], results:[], ps:null};
+function renderCitySeg(){ $('#citySeg').innerHTML = CITIES.map(c=>`<button type="button" aria-pressed="${L.city===c}" data-city="${c}">${c}</button>`).join(''); $('#q').placeholder = 'Search places in '+L.city+'…'; }
+$('#citySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-city]'); if(!b) return; L.city=b.dataset.city; saveLocal(); renderCitySeg(); if (amap.map) centreCity(); });
+const CITY_CENTRE = {Hangzhou:[120.155,30.274], Nanjing:[118.796,32.060], Suzhou:[120.585,31.299], Shanghai:[121.474,31.230]};
+function centreCity(){ try{ amap.map.setZoomAndCenter(12, CITY_CENTRE[L.city]); }catch(e){} }
+function setSearchStatus(html, cls){ $('#searchStatus').innerHTML = html?`<div class="status ${cls||''}">${html}</div>`:''; }
+function renderSearch(){
+  renderCitySeg();
+  const hasKey = !!L.amapKey;
+  $('#searchBtn').disabled = !hasKey;
+  $('#mapNote').classList.toggle('hidden', !!amap.map);
+  if (!hasKey) $('#mapNote').textContent = 'Add your Amap key in Settings to search and see the map. You can still add places by hand below.';
+  renderResults();
+}
+function renderResults(){
+  const r=$('#results');
+  if (!amap.results.length){ r.innerHTML=''; return; }
+  r.innerHTML = amap.results.map((p,i)=>{
+    const id='amap:'+p.id, on=!!P.items[id] && P.items[id].status!=='dropped';
+    return `<div class="card item" data-ri="${i}" id="res-${i}"><div class="name">${esc(p.name)}</div><div class="addr">${esc(p.address||'')}</div>
+      <div class="meta"><span class="chip city">${esc(p.city)}</span>${p.category?`<span class="chip">${esc(p.category)}</span>`:''}</div>
+      <div class="acts"><button class="btn small ${on?'':'primary'}" data-add="${i}" ${on?'disabled':''}>${on?'On wishlist':'Add to wishlist'}</button><button class="btn small ghost" data-show="${i}">Show on map</button></div></div>`;
+  }).join('');
+}
+$('#results').addEventListener('click', e=>{
+  const a=e.target.closest('[data-add]'); if (a){ const p=amap.results[+a.dataset.add]; addItem({id:'amap:'+p.id, name:p.name, address:p.address, city:p.city, lat:p.lat, lng:p.lng, category:p.category}); renderResults(); return; }
+  const s=e.target.closest('[data-show]'); if (s){ highlight(+s.dataset.show, true); }
+});
+function highlight(i, pan){
+  $$('#results .card').forEach((c,k)=>c.classList.toggle('hi', k===i));
+  const el=$('#res-'+i); if (el && !pan) el.scrollIntoView({block:'nearest'});
+  const p=amap.results[i]; if (pan && amap.map && p && p.lat){ amap.map.setZoomAndCenter(15,[p.lng,p.lat]); $('#map').scrollIntoView({block:'nearest'}); }
+}
+function amapInitMap(){
+  if (amap.map || !window.AMap) return;
+  try{
+    amap.map = new AMap.Map('map', {zoom:12, center:CITY_CENTRE[L.city], resizeEnable:true});
+    $('#mapNote').classList.add('hidden');
+  }catch(e){ setAmapStatus('Map failed to start: '+(e.message||e), 'bad'); }
+}
+function plotResults(){
+  if (!amap.map) return;
+  amap.markers.forEach(m=>m.setMap(null)); amap.markers=[];
+  amap.results.forEach((p,i)=>{ if (!p.lat) return; const m=new AMap.Marker({position:[p.lng,p.lat], title:p.name, label:{content:String(i+1), direction:'top'}}); m.on('click',()=>highlight(i,false)); m.setMap(amap.map); amap.markers.push(m); });
+  if (amap.markers.length) amap.map.setFitView(amap.markers, false, [40,40,40,40]);
+}
+$('#searchForm').addEventListener('submit', e=>{
+  e.preventDefault(); const q=$('#q').value.trim(); if(!q) return;
+  if (!window.AMap){ setSearchStatus('Amap is not loaded — check the key in Settings.', 'bad'); return; }
+  setSearchStatus('Searching…');
+  try{
+    AMap.plugin('AMap.PlaceSearch', ()=>{
+      const ps = new AMap.PlaceSearch({city:L.city, citylimit:true, pageSize:20, extensions:'base'});
+      ps.search(q, (status, result)=>{
+        if (status==='complete' && result.poiList){
+          amap.results = result.poiList.pois.map(p=>({id:p.id, name:p.name, address:p.address||'', city:p.cityname||L.city, category:String(p.type||'').split(';')[0], lat:p.location?p.location.lat:null, lng:p.location?p.location.lng:null}));
+          setSearchStatus(amap.results.length?'':'No results in '+L.city+'. Try a Chinese name or a shorter query.');
+          renderResults(); amapInitMap(); plotResults();
+        } else if (status==='no_data'){ amap.results=[]; renderResults(); setSearchStatus('No results in '+L.city+'.'); }
+        else { setSearchStatus('Search failed: '+esc(typeof result==='string'?result:JSON.stringify(result))+'. Usually the key is wrong, or this domain is not whitelisted in the Amap console.', 'bad'); }
+      });
+    });
+  }catch(err){ setSearchStatus('Search error: '+esc(err.message||err), 'bad'); }
+});
+$('#manualForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=$('#mName').value.trim(); if(!name) return;
+  const lat=parseFloat($('#mLat').value), lng=parseFloat($('#mLng').value);
+  const it = addItem({id:uid('m'), name, address:$('#mAddr').value.trim(), city:$('#mCity').value, category:$('#mCat').value, lat:isFinite(lat)?lat:null, lng:isFinite(lng)?lng:null});
+  const note=$('#mNote').value.trim(); if (note) setNote(it.id, note);
+  e.target.reset(); $('#mCity').value=L.city;
+});
+
+// ---------- Amap loader ----------
+function setAmapStatus(msg, cls){ const s=$('#amapStatus'); s.textContent=msg; s.className='status '+(cls||''); }
+let amapLoading=false;
+function loadAmap(){
+  if (!L.amapKey){ setAmapStatus('No key set — search and map are off. Wishlist and itinerary still work.'); return; }
+  if (window.AMap){ setAmapStatus('Amap loaded.', 'ok'); return; }
+  if (amapLoading) return; amapLoading=true;
+  window._AMapSecurityConfig = {securityJsCode: L.amapSec||''};
+  setAmapStatus('Loading Amap…');
+  const s=document.createElement('script');
+  s.src='https://webapi.amap.com/maps?v=2.0&key='+encodeURIComponent(L.amapKey)+'&plugin=AMap.PlaceSearch';
+  s.onload=()=>{ amapLoading=false; if (window.AMap){ setAmapStatus('Amap loaded. Use "Test key" to confirm the key and whitelist.', 'ok'); if ($('#v-search').classList.contains('on')) amapInitMap(); } else setAmapStatus('Script loaded but Amap did not start — the key is probably invalid.', 'bad'); };
+  s.onerror=()=>{ amapLoading=false; setAmapStatus('Could not load the Amap script. Check the key, and that you are online.', 'bad'); };
+  document.head.appendChild(s);
+}
+function testKey(){
+  if (!window.AMap){ setAmapStatus('Amap is not loaded yet.', 'bad'); return; }
+  setAmapStatus('Testing…');
+  try{ AMap.plugin('AMap.PlaceSearch', ()=>{ new AMap.PlaceSearch({city:'Hangzhou', citylimit:true, pageSize:1}).search('西湖', (st, res)=>{
+    if (st==='complete') setAmapStatus('Key works — searched Hangzhou and got results.', 'ok');
+    else setAmapStatus('Key rejected: '+(typeof res==='string'?res:JSON.stringify(res))+'. Check the key, the security code, and that '+location.host+' is whitelisted.', 'bad');
+  }); }); }catch(e){ setAmapStatus('Test failed: '+(e.message||e), 'bad'); }
+}
+
+// ---------- WISHLIST ----------
+function renderWish(){
+  const cs=$('#wCity'), ws=$('#wWho'); const cv=cs.value, wv=ws.value;
+  cs.innerHTML='<option value="">All cities</option>'+CITIES.map(c=>`<option ${cv===c?'selected':''}>${c}</option>`).join('');
+  ws.innerHTML='<option value="">Everyone</option>'+people().map(p=>`<option ${wv===p?'selected':''}>${esc(p)}</option>`).join('');
+  const showDropped=$('#wDropped').checked;
+  let list=Object.values(P.items).filter(i=> (showDropped||i.status!=='dropped') && (!cs.value||i.city===cs.value) && (!ws.value||i.addedBy===ws.value));
+  list.sort((a,b)=> ((b.votes||[]).length-(a.votes||[]).length) || (b.addedAt-a.addedAt));
+  const r=$('#wishList');
+  if (!list.length){ r.innerHTML='<div class="empty">Nothing here yet. Search a city, or add a place by hand, and it lands here for everyone to vote on.</div>'; return; }
+  r.innerHTML=list.map(i=>itemCard(i)).join('');
+}
+['#wCity','#wWho','#wDropped'].forEach(s=>$(s).addEventListener('change', renderWish));
+bindItemCards($('#wishList'), renderWish);
+
+// ---------- ITINERARY ----------
+function dayEntries(d){
+  const blocks=P.blocks.filter(b=>b.day===d).map(b=>({kind:'block', t:timeKey(b.time), b}));
+  const items=dayItems(d).map(i=>({kind:'item', t:timeKey(i.time), i}));
+  // timed entries sort by time; untimed items keep their manual order after the timed ones of the day
+  const timed=[...blocks,...items].filter(e=>e.t!=='99:99').sort((a,b)=>a.t.localeCompare(b.t));
+  const untimedBlocks=blocks.filter(e=>e.t==='99:99'), untimedItems=items.filter(e=>e.t==='99:99');
+  return [...timed, ...untimedBlocks, ...untimedItems];
+}
+function renderItin(){
+  const wl=Object.values(P.items).filter(i=>i.status==='wishlist').length;
+  $('#itinHint').textContent = wl? `${wl} on the wishlist still unscheduled — pick a day from the Wishlist tab.` : '';
+  $('#itin').innerHTML = DAYS.map(d=>{
+    const ents=dayEntries(d.d);
+    return `<div class="day"><div class="dh"><b>${fmtDay(d.d)}</b><span>${esc(d.label)}</span></div><div class="canal">${
+      ents.length? ents.map(e=>e.kind==='block'?blockStop(e.b):itemStop(e.i)).join('') : '<div class="empty" style="padding:14px">Free day — nothing scheduled yet.</div>'
+    }</div></div>`;
+  }).join('');
+}
+function blockStop(b){
+  const sub=[b.number, (b.from||b.to)?`${esc(b.from||'?')} → ${esc(b.to||'?')}`:'', b.note].filter(Boolean).join(' · ');
+  return `<div class="stop block" data-bid="${esc(b.id)}"><div class="card">
+    <div><span class="t">${esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
+    <div class="name">${esc(b.title)}</div>${sub?`<div class="sub">${sub}</div>`:''}
+    <div class="acts"><button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="edit"><label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">
+      <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
+      ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
+      <label class="f">Note</label><input type="text" data-f="note" value="${esc(b.note)}">
+      <label style="display:block;margin-top:8px;font-size:14px"><input type="checkbox" data-f="tentative" ${b.tentative?'checked':''}> tentative</label>
+      <div class="row" style="margin-top:10px"><button class="btn small primary" data-bact="save">Save</button><button class="btn small ghost" data-bact="cancel">Cancel</button></div></div>
+  </div></div>`;
+}
+function itemStop(i){
+  const dayOpts=DAYS.map(d=>`<option value="${d.d}" ${i.day===d.d?'selected':''}>${fmtDay(d.d)}</option>`).join('');
+  const mine=L.me&&(i.votes||[]).includes(L.me);
+  const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
+  return `<div class="stop" data-id="${esc(i.id)}"><div class="card">
+    <div><span class="t">${esc(i.time||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''} <span class="chip city">${esc(i.city)}</span>${i.category?`<span class="chip">${esc(i.category)}</span>`:''}</div>
+    <div class="name">${esc(i.name)}</div>${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
+    <div class="acts">
+      <button class="btn small" data-act="up" title="Move up">↑</button><button class="btn small" data-act="down" title="Move down">↓</button>
+      <input type="time" data-act="time" value="${esc(i.time)}" aria-label="Time">
+      <input type="text" data-act="dur" value="${esc(i.duration)}" placeholder="1.5h" aria-label="Duration" style="width:64px">
+      <select data-act="day" aria-label="Move to day">${dayOpts}</select>
+      <button class="vote" data-act="vote" aria-pressed="${mine?'true':'false'}">♥ ${(i.votes||[]).length}</button>
+      <button class="btn small ghost" data-act="unsched">Unschedule</button>
+    </div></div></div>`;
+}
+$('#itin').addEventListener('click', e=>{
+  const bb=e.target.closest('[data-bact]');
+  if (bb){ const stop=bb.closest('[data-bid]'); const id=stop.dataset.bid; const act=bb.dataset.bact;
+    if (act==='edit'){ stop.classList.add('editing'); $('input',$('.edit',stop)).focus(); }
+    else if (act==='cancel'){ renderItin(); }
+    else if (act==='save'){ const b=P.blocks.find(x=>x.id===id); $$('[data-f]',stop).forEach(f=>{ b[f.dataset.f] = f.type==='checkbox'?f.checked:f.value.trim(); }); b.updatedAt=now(); savePlan(); renderItin(); toast('Saved'); }
+    return; }
+  const a=e.target.closest('[data-act]'); if(!a) return; const id=a.closest('[data-id]').dataset.id; const act=a.dataset.act;
+  if (act==='up'){ moveInDay(id,-1); renderItin(); }
+  else if (act==='down'){ moveInDay(id,1); renderItin(); }
+  else if (act==='vote'){ toggleVote(id); renderItin(); }
+  else if (act==='unsched'){ schedule(id,''); renderItin(); updateBadge(); toast('Back on the wishlist'); }
+});
+$('#itin').addEventListener('change', e=>{
+  const a=e.target.closest('[data-act]'); if(!a) return; const idEl=a.closest('[data-id]'); if(!idEl) return; const it=P.items[idEl.dataset.id]; if(!it) return;
+  if (a.dataset.act==='time'){ it.time=a.value; it.updatedAt=now(); savePlan(); renderItin(); }
+  else if (a.dataset.act==='dur'){ it.duration=a.value.trim(); it.updatedAt=now(); savePlan(); }
+  else if (a.dataset.act==='day'){ schedule(it.id, a.value); renderItin(); toast('Moved to '+fmtDay(a.value)); }
+});
+function summaryText(){
+  const out=['Jiangnan 15–22 Nov 2026',''];
+  for (const d of DAYS){
+    out.push(`*${fmtDay(d.d)} · ${d.label}*`);
+    const ents=dayEntries(d.d);
+    if (!ents.length) out.push('  (free day)');
+    for (const e of ents){
+      if (e.kind==='block'){ const b=e.b; out.push(`  ${b.time?b.time+' ':''}${KIND_ICON[b.type]} ${b.title}${b.number?' '+b.number:''}${(b.from||b.to)?` ${b.from||'?'}→${b.to||'?'}`:''}${b.tentative?' (tentative)':''}${b.note?' — '+b.note:''}`); }
+      else { const i=e.i; const n=Object.entries(i.notes||{}).map(([w,t])=>`${w}: ${t}`).join('; '); out.push(`  ${i.time?i.time+' ':''}• ${i.name}${i.duration?' ('+i.duration+')':''}${n?' — '+n:''}`); }
+    }
+    out.push('');
+  }
+  const wl=Object.values(P.items).filter(i=>i.status==='wishlist');
+  if (wl.length){ out.push('*Still on the wishlist*'); for (const i of wl) out.push(`  • ${i.name} (${i.city}) ♥${(i.votes||[]).length}`); }
+  return out.join('\n');
+}
+$('#copySummary').addEventListener('click', async ()=>{
+  const t=summaryText();
+  try{ await navigator.clipboard.writeText(t); toast('Summary copied — paste it into WhatsApp'); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); toast('Summary copied'); }catch(_){ prompt('Copy this:', t); } ta.remove(); }
+});
+
+// ---------- SETTINGS / share ----------
+function renderSettings(){ $('#sName').value=L.me; $('#sKey').value=L.amapKey; $('#sSec').value=L.amapSec; $('#hostShow').textContent=location.host||'(local file)'; loadAmap(); }
+$('#saveSettings').addEventListener('click', ()=>{
+  const name=$('#sName').value.trim(); if(!name){ toast('Name is needed'); return; }
+  const keyChanged = L.amapKey !== $('#sKey').value.trim() || L.amapSec !== $('#sSec').value.trim();
+  L.me=name; L.amapKey=$('#sKey').value.trim(); L.amapSec=$('#sSec').value.trim(); saveLocal(); updateBadge();
+  if (keyChanged && window.AMap){ toast('Saved — reload the page to apply the new key'); setAmapStatus('Key changed. Reload the page to apply it.', ''); }
+  else { toast('Saved'); loadAmap(); }
+});
+$('#testKey').addEventListener('click', testKey);
+function exportPlan(){
+  const data={app:'jiangnan-trip-planner', v:1, exportedBy:L.me, exportedAt:new Date().toISOString(), items:P.items, blocks:P.blocks};
+  const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`jiangnan-plan-${(L.me||'me').replace(/\W+/g,'')}-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  $('#shareStatus').innerHTML='<div class="status ok">Exported. Send the file on WhatsApp; they import it from this same screen.</div>';
+}
+$('#exportBtn').addEventListener('click', exportPlan);
+function mergePlan(inc){
+  if (!inc || inc.app!=='jiangnan-trip-planner' || !inc.items) throw new Error('That file is not a Jiangnan plan export.');
+  let added=0, merged=0, blocksUpd=0;
+  for (const [id, it] of Object.entries(inc.items)){
+    const cur=P.items[id];
+    if (!cur){ P.items[id]=it; added++; continue; }
+    merged++;
+    cur.votes=[...new Set([...(cur.votes||[]), ...(it.votes||[])])];
+    cur.notes=cur.notes||{}; for (const [who,t] of Object.entries(it.notes||{})) if (who!==L.me) cur.notes[who]=t;   // others own their notes; mine stays mine
+    if ((it.updatedAt||0) > (cur.updatedAt||0)){ for (const f of ['status','day','order','time','duration']) cur[f]=it[f]; cur.updatedAt=it.updatedAt; }
+    for (const f of ['address','lat','lng','category']) if (!cur[f] && it[f]) cur[f]=it[f];
+  }
+  for (const b of (inc.blocks||[])){ const cur=P.blocks.find(x=>x.id===b.id); if (!cur) { P.blocks.push(b); blocksUpd++; } else if ((b.updatedAt||0) > (cur.updatedAt||0)){ Object.assign(cur,b); blocksUpd++; } }
+  savePlan(); updateBadge();
+  return {added, merged, blocksUpd, from:inc.exportedBy||'?'};
+}
+$('#importFile').addEventListener('change', e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{ try{ const r=mergePlan(JSON.parse(rd.result)); $('#shareStatus').innerHTML=`<div class="status ok">Merged ${esc(r.from)}'s plan: ${r.added} new place${r.added===1?'':'s'}, ${r.merged} already known (votes and notes combined), ${r.blocksUpd} travel block${r.blocksUpd===1?'':'s'} updated.</div>`; toast('Merged'); }
+    catch(err){ $('#shareStatus').innerHTML=`<div class="status bad">Import failed: ${esc(err.message||err)}</div>`; } e.target.value=''; };
+  rd.readAsText(f);
+});
+$('#resetAll').addEventListener('click', ()=>{ if (confirm('Clear the plan, your name and the key from this browser?')){ localStorage.removeItem(LS_PLAN); localStorage.removeItem(LS_LOCAL); location.reload(); } });
+
+// ---------- setup ----------
+function boot(){
+  $('#mCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join(''); $('#mCity').value=L.city;
+  $$('.hostShow').forEach(el=>el.textContent=location.host||'this site');
+  updateBadge();
+  if (!L.me){ $('#setup').classList.remove('hidden'); setTimeout(()=>$('#suName').focus(),50); }
+  else { loadAmap(); }
+  renderSearch();
+}
+$('#setupForm').addEventListener('submit', e=>{
+  e.preventDefault(); L.me=$('#suName').value.trim(); L.amapKey=$('#suKey').value.trim(); L.amapSec=$('#suSec').value.trim(); saveLocal();
+  $('#setup').classList.add('hidden'); loadAmap(); renderSearch(); toast('Welcome, '+L.me);
+});
+boot();
+})();
+</script>
+</body>
+</html>
