@@ -708,15 +708,14 @@ async function requestRefresh(){
     if (Date.now()-t0 > 15*60*1000){ clearInterval(refreshPoll); refreshMsg('No answer yet. The computer that rebuilds the planner may be off; try again later.', 'bad'); return; }
     try{
       const txt = await (await fetch(REFRESH + '/json?poll=1&since=' + Math.floor(req/1000 - 5), {cache:'no-store'})).text();
-      for (const line of txt.split('\n')){ if (!line.trim()) continue; let m; try{ m = JSON.parse(line); }catch(e){ continue; }
-        if (m.event !== 'message') continue; let d; try{ d = JSON.parse(m.message); }catch(e){ continue; }
-        if (d.done && d.req >= req - 2000){
-          clearInterval(refreshPoll);
-          if (d.error) refreshMsg('The rebuild failed: ' + esc(d.error), 'bad');
-          else if (d.changed) refreshMsg('Updated from the workbook ✓ <button class="btn small primary" onclick="location.reload()">Reload now</button>', 'ok');
-          else refreshMsg('Checked the workbook ✓ Nothing has changed since the last update.', 'ok');
-          return;
-        }
+      let d = null;   // the LATEST answer to this request wins (a retry may follow an error)
+      for (const line of txt.split('\n')){ if (!line.trim()) continue; let m, x; try{ m = JSON.parse(line); x = JSON.parse(m.message); }catch(e){ continue; }
+        if (m.event === 'message' && x.done && x.req >= req - 2000) d = x; }
+      if (d){
+        clearInterval(refreshPoll);
+        if (d.error) refreshMsg('The rebuild failed: ' + esc(d.error), 'bad');
+        else if (d.changed) refreshMsg('Updated from the workbook ✓ <button class="btn small primary" onclick="location.reload()">Reload now</button>', 'ok');
+        else refreshMsg('Checked the workbook ✓ Nothing has changed since the last update.', 'ok');
       }
     }catch(e){}
   }, 15000);
