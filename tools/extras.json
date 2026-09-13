@@ -173,10 +173,10 @@
    "brand": "Canopy",
    "area": "Hubin, 6 min walk to West Lake",
    "address": "上城区国货路2号 · No. 2 Guohuo Road",
-   "opened": "Opened Dec 2020 · 160 rooms",
+   "opened": "Opened Jan 2021 · 160 rooms",
    "pros": [
     "6-minute walk to the lake and the Hubin shopping street",
-    "Metro Line 1 five minutes away (7 stops to Hangzhou East)",
+    "8-minute walk to Ding'an Road metro (Line 1 to Hangzhou East)",
     "Walk to Hefang Street and the Wushan night market"
    ],
    "cons": [
@@ -211,7 +211,7 @@
     }
    ],
    "near": [
-    "broken",
+    "hubin",
     "hefang"
    ]
   },
@@ -224,7 +224,7 @@
    "brand": "Conrad",
    "area": "Qianjiang New City, on the river",
    "address": "上城区新业路228号 · Raffles City",
-   "opened": "Opened 2019 · 306 rooms",
+   "opened": "Opened 2019 · 324 rooms",
    "pros": [
     "Top floors of Raffles City: mall, food court and metro downstairs",
     "Qiantang River views and the light show at the door",
@@ -311,24 +311,21 @@
      "cap": "Indoor pool · © Marriott"
     }
    ],
-   "near": [
-    "gongchen"
-   ]
+   "near": []
   },
   "azure": {
    "id": "azure",
    "short": "Azure",
    "name": "The Azure Qiantang, a Luxury Collection Hotel",
-   "cn": "杭州钱塘江畔精选酒店",
+   "cn": "杭州绿城尊蓝钱江豪华精选酒店",
    "chain": "Marriott",
    "brand": "Luxury Collection",
-   "area": "Qiantang riverfront, south of the city centre",
-   "address": "上城区钱江路 · Qiantang River bank",
+   "area": "Qiantang riverfront by Wangjiang Gate, south-east of the old city",
+   "address": "上城区望江东路39号 · 39 Wangjiang Road East",
    "opened": "Opened 2014 · 205 rooms",
    "pros": [
     "Every room looks over the Qiantang River",
-    "Quiet, big rooms and a heated indoor pool",
-    "Between West Lake and the Six Harmonies Pagoda"
+    "Quiet, big rooms and a heated indoor pool"
    ],
    "cons": [
     "Taxi everywhere; no metro at the door",
@@ -425,7 +422,7 @@
    "opened": "Opened Jun 2020 · 295 rooms",
    "pros": [
     "Right above Deji Plaza and the Xinjiekou metro (Lines 1 & 2)",
-    "Views over Xuanwu Lake and the city from every room",
+    "Xuanwu Lake and Purple Mountain views",
     "FLAIR rooftop bar on 62F, indoor pool"
    ],
    "cons": [
@@ -526,7 +523,7 @@
    "pros": [
     "Executive rooms with lounge access from ¥856",
     "Wanda Plaza mall next door",
-    "Short walk to the Nanjing Massacre Memorial Hall"
+    "About 2 km (one metro stop) to the Nanjing Massacre Memorial Hall"
    ],
    "cons": [
     "~6 km west of the old-town sights",
@@ -621,11 +618,10 @@
    "opened": "Opened 2019",
    "pros": [
     "Nanjing's first Small Luxury Hotels of the World member",
-    "Neo-classical European style with an in-house art gallery",
-    "Same owners as Nanjing Impressions 南京大牌档"
+    "Neo-classical European style with an in-house art gallery"
    ],
    "cons": [
-    "Earns Hilton points, but Hilton elite perks do not apply at SLH hotels",
+    "Earns Hilton points; elite perks limited to breakfast, a space-available upgrade and late checkout; no lounge",
     "~5 km to Fuzimiao"
    ],
    "url": "https://www.hilton.com/en/hotels/nkgnjlx-the-new-jingli-hotel/",
@@ -759,7 +755,7 @@
    "brand": "Hilton",
    "area": "Jinji Lake, Suzhou Industrial Park",
    "address": "工业园区苏州大道东275号 · Nanshi Street metro",
-   "opened": "Opened May 2016",
+   "opened": "Opened May 2016 as DoubleTree · Hilton since 2019 · 358 rooms",
    "pros": [
     "Executive rooms with lounge access from ¥892",
     "Metro at the door (Line 1 to the old town)",
@@ -846,9 +842,7 @@
      "cap": "Indoor pool · © Marriott"
     }
    ],
-   "near": [
-    "liuyuan"
-   ]
+   "near": []
   }
  },
  "priceNote": "Lowest public rate per room per night for 2 adults, before taxes (about 6%), checked on hilton.com / marriott.com on 13 Sep 2026. RM at 1 CNY = RM0.606.",

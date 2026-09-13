@@ -21,8 +21,8 @@ def hotel(id, **kw): H[id] = dict(id=id, **kw)
 
 # ---------------- Hangzhou ----------------
 hotel('canopy', short='Canopy', name='Canopy by Hilton Hangzhou West Lake', cn='杭州西湖希尔顿嘉悦里酒店', chain='Hilton', brand='Canopy',
-      area='Hubin, 6 min walk to West Lake', address='上城区国货路2号 · No. 2 Guohuo Road', opened='Opened Dec 2020 · 160 rooms',
-      pros=['6-minute walk to the lake and the Hubin shopping street', 'Metro Line 1 five minutes away (7 stops to Hangzhou East)', 'Walk to Hefang Street and the Wushan night market'],
+      area='Hubin, 6 min walk to West Lake', address='上城区国货路2号 · No. 2 Guohuo Road', opened='Opened Jan 2021 · 160 rooms',
+      pros=['6-minute walk to the lake and the Hubin shopping street', '8-minute walk to Ding\'an Road metro (Line 1 to Hangzhou East)', 'Walk to Hefang Street and the Wushan night market'],
       cons=['Boutique hotel: no executive lounge or big pool', 'Lake-view rooms cost more (from ¥1,153)'],
       url='https://www.hilton.com/en/hotels/hghwlpy-canopy-hangzhou-west-lake/',
       photos=[(hil('HGHWLPY', '15097650/outside-building.jpg?cw=4143&ch=2762&xposition=0&yposition=119'), 'The hotel'),
@@ -31,9 +31,9 @@ hotel('canopy', short='Canopy', name='Canopy by Hilton Hangzhou West Lake', cn='
               (hil('HGHWLPY', '15097558/hghwl-lakeview-room.jpg?cw=4176&ch=2784&xposition=0&yposition=108'), 'Lake-view room'),
               (hil('HGHWLPY', '15097515/hghwl-canopy-loft-room.jpg?cw=4282&ch=2854&xposition=0&yposition=72'), 'Canopy loft'),
               (hil('HGHWLPY', '15097608/hghwl-restaurant-bar-1.jpg?cw=4457&ch=2971&xposition=0&yposition=14'), 'Restaurant & bar')],
-      near=['broken', 'hefang'])
+      near=['hubin', 'hefang'])
 hotel('conrad', short='Conrad', name='Conrad Hangzhou', cn='杭州康莱德酒店', chain='Hilton', brand='Conrad',
-      area='Qianjiang New City, on the river', address='上城区新业路228号 · Raffles City', opened='Opened 2019 · 306 rooms',
+      area='Qianjiang New City, on the river', address='上城区新业路228号 · Raffles City', opened='Opened 2019 · 324 rooms',
       pros=['Top floors of Raffles City: mall, food court and metro downstairs', 'Qiantang River views and the light show at the door', 'Sky lobby, pool and executive lounge'],
       cons=['~25 min by car to West Lake', 'Most expensive in Hangzhou (river view from ¥1,768)'],
       url='https://www.hilton.com/en/hotels/hghfrci-conrad-hangzhou/',
@@ -51,10 +51,10 @@ hotel('jwhz', short='JW Marriott', name='JW Marriott Hotel Hangzhou', cn='杭州
       url='https://www.marriott.com/en-us/hotels/hghjw-jw-marriott-hotel-hangzhou/overview/',
       photos=[(mar('R/HGHJW/hghjw-exterior-0026'), 'The hotel'), (mar('R/HGHJW/hghjw-frontdesk-0027'), 'Lobby'), (mar('R/HGHJW/hghjw-guestroom-4439'), 'Guest room'),
               (mar('R/HGHJW/hghjw-suite-0013'), 'Suite'), (mar('R/HGHJW/hghjw-lounge-0029'), 'Executive lounge'), (mar('R/HGHJW/hghjw-pool-0023'), 'Indoor pool')],
-      near=['gongchen'])
-hotel('azure', short='Azure', name='The Azure Qiantang, a Luxury Collection Hotel', cn='杭州钱塘江畔精选酒店', chain='Marriott', brand='Luxury Collection',
-      area='Qiantang riverfront, south of the city centre', address='上城区钱江路 · Qiantang River bank', opened='Opened 2014 · 205 rooms',
-      pros=['Every room looks over the Qiantang River', 'Quiet, big rooms and a heated indoor pool', 'Between West Lake and the Six Harmonies Pagoda'],
+      near=[])
+hotel('azure', short='Azure', name='The Azure Qiantang, a Luxury Collection Hotel', cn='杭州绿城尊蓝钱江豪华精选酒店', chain='Marriott', brand='Luxury Collection',
+      area='Qiantang riverfront by Wangjiang Gate, south-east of the old city', address='上城区望江东路39号 · 39 Wangjiang Road East', opened='Opened 2014 · 205 rooms',
+      pros=['Every room looks over the Qiantang River', 'Quiet, big rooms and a heated indoor pool'],
       cons=['Taxi everywhere; no metro at the door', 'Pricier than JW or Marriott Qianjiang'],
       url='https://www.marriott.com/en-us/hotels/hghlc-the-azure-qiantang-a-luxury-collection-hotel-hangzhou/overview/',
       photos=[(mar('R/HGHLC/hghlc-exterior-9657'), 'The hotel'), (mar('R/HGHLC/hghlc-reception-9667'), 'Reception'), (mar('R/HGHLC/hghlc-queen-premierriverview-room-1135'), 'Premier river-view room'),
@@ -72,7 +72,7 @@ hotel('mqj', short='Marriott', name='Hangzhou Marriott Hotel Qianjiang', cn='杭
 # ---------------- Nanjing ----------------
 hotel('ritznj', short='Ritz-Carlton', name='The Ritz-Carlton, Nanjing', cn='南京丽思卡尔顿酒店', chain='Marriott', brand='Ritz-Carlton',
       area='Xinjiekou, city centre', address='玄武区中山路18号 · floors 38–62 of Deji Plaza', opened='Opened Jun 2020 · 295 rooms',
-      pros=['Right above Deji Plaza and the Xinjiekou metro (Lines 1 & 2)', 'Views over Xuanwu Lake and the city from every room', 'FLAIR rooftop bar on 62F, indoor pool'],
+      pros=['Right above Deji Plaza and the Xinjiekou metro (Lines 1 & 2)', 'Xuanwu Lake and Purple Mountain views', 'FLAIR rooftop bar on 62F, indoor pool'],
       cons=['The most expensive hotel on the trip', 'Marriott Platinum gets no lounge or breakfast at Ritz-Carlton'],
       url='https://www.ritzcarlton.com/en/hotels/nkgrz-the-ritz-carlton-nanjing/overview/',
       photos=[(mar('R/NKGRZ/nkgrz-aerial-view-4134'), 'City view from the tower'), (mar('R/NKGRZ/nkgrz-arrival-lobby-3145'), 'Arrival lobby'), (mar('R/NKGRZ/nkgrz-deluxe-guest-9275'), 'Deluxe room'),
@@ -88,7 +88,7 @@ hotel('westinnj', short='Westin', name='The Westin Nanjing Xuanwu Lake', cn='南
       near=['xuanwu'])
 hotel('hiltonnj', short='Hilton', name='Hilton Nanjing', cn='南京希尔顿酒店', chain='Hilton', brand='Hilton',
       area='Hexi, next to Wanda Plaza', address='建邺区江东中路100号 · 100 Jiangdong Middle Road', opened='Opened Nov 2011 · 355 rooms',
-      pros=['Executive rooms with lounge access from ¥856', 'Wanda Plaza mall next door', 'Short walk to the Nanjing Massacre Memorial Hall'],
+      pros=['Executive rooms with lounge access from ¥856', 'Wanda Plaza mall next door', 'About 2 km (one metro stop) to the Nanjing Massacre Memorial Hall'],
       cons=['~6 km west of the old-town sights', 'Taxi or metro to everything on the plan'],
       url='https://www.hilton.com/en/hotels/nkgjfhi-hilton-nanjing/',
       photos=[(hil('NKGJFHI', '20252579/dji-0389.jpg?cw=4500&ch=3000&xposition=2&yposition=0'), 'The hotel'), (hil('NKGJFHI', '4830553/lobby-03v2.jpg?cw=2250&ch=1500&xposition=1&yposition=0'), 'Lobby'),
@@ -106,8 +106,8 @@ hotel('hiltonriver', short='Hilton Riverside', name='Hilton Nanjing Riverside', 
       near=[])
 hotel('jingli', short='New Jingli', name='The New Jingli Hotel (SLH)', cn='南京新晶丽酒店', chain='Hilton', brand='SLH · book on hilton.com',
       area='Yuhuatai, south of the old city', address='雨花台区紫荆花路2号 · near Kazimen metro', opened='Opened 2019',
-      pros=["Nanjing's first Small Luxury Hotels of the World member", 'Neo-classical European style with an in-house art gallery', 'Same owners as Nanjing Impressions 南京大牌档'],
-      cons=['Earns Hilton points, but Hilton elite perks do not apply at SLH hotels', '~5 km to Fuzimiao'],
+      pros=["Nanjing's first Small Luxury Hotels of the World member", 'Neo-classical European style with an in-house art gallery'],
+      cons=['Earns Hilton points; elite perks limited to breakfast, a space-available upgrade and late checkout; no lounge', '~5 km to Fuzimiao'],
       url='https://www.hilton.com/en/hotels/nkgnjlx-the-new-jingli-hotel/',
       photos=[(hil('NKGNJLX', '20631301/nkgnjlx-111626483-hotel-front-6631x4282.jpg?cw=4843&ch=3229&xposition=78&yposition=0'), 'Hotel front'),
               (hil('NKGNJLX', '20827918/nkgnjlx-111628465-deluxe-room-6480x4320.jpg?cw=5000&ch=3333&xposition=0&yposition=-1'), 'Deluxe room'),
@@ -133,7 +133,7 @@ hotel('wsz', short='W Suzhou', name='W Suzhou', cn='苏州W酒店', chain='Marri
               (mar('R/SZVWH/szvwh-wow-suite-8792'), 'WOW suite'), (mar('R/SZVWH/szvwh-wet-8784'), 'WET pool'), (mar('R/SZVWH/szvwh-living-room-8519'), 'Living Room lounge')],
       near=['jinji'])
 hotel('hiltonsz', short='Hilton', name='Hilton Suzhou', cn='苏州希尔顿酒店', chain='Hilton', brand='Hilton',
-      area='Jinji Lake, Suzhou Industrial Park', address='工业园区苏州大道东275号 · Nanshi Street metro', opened='Opened May 2016',
+      area='Jinji Lake, Suzhou Industrial Park', address='工业园区苏州大道东275号 · Nanshi Street metro', opened='Opened May 2016 as DoubleTree · Hilton since 2019 · 358 rooms',
       pros=['Executive rooms with lounge access from ¥892', 'Metro at the door (Line 1 to the old town)', 'Pool, suites with kitchens'],
       cons=['~10 km east of the old-town gardens', 'Business-district location'],
       url='https://www.hilton.com/en/hotels/szvtvhi-hilton-suzhou/',
@@ -148,7 +148,7 @@ hotel('szmarriott', short='Marriott', name='Suzhou Marriott Hotel', cn='苏州�
       url='https://www.marriott.com/en-us/hotels/szvmc-suzhou-marriott-hotel/overview/',
       photos=[(mar('R/SZVMC/szvmc-exterior-7447'), 'The hotel'), (mar('R/SZVMC/szvmc-lobby-7451'), 'Lobby'), (mar('R/SZVMC/szvmc-king-guestroom-7440'), 'King room'),
               (mar('R/SZVMC/szvmc-executive-suite-7455'), 'Executive suite'), (mar('R/SZVMC/szvmc-lounge-7452'), 'Executive lounge'), (mar('R/SZVMC/szvmc-pool-0029'), 'Indoor pool')],
-      near=['liuyuan'])
+      near=[])
 
 # ---------------- stays: price = lowest public rate for THOSE dates ----------------
 STAYS = [

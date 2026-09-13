@@ -92,7 +92,7 @@ B('seed:t1','2026-11-15','train','G-train to Hangzhou East 杭州东',time='17:0
 # hotel blocks follow the Hotels tab: {hotel} is whichever hotel is locked/most picked for that stay (tools/hotels.py)
 B('seed:h1in','2026-11-15','hotel','Check in — {hotel}',time='19:10',stay='hz1',role='in')
 B('seed:h1out','2026-11-17','hotel','Check out — {hotel}',time='08:15',stay='hz1',role='out',note="ask the concierge to keep the bags; collect them on the way to tonight's hotel")
-B('seed:h1bin','2026-11-17','hotel','Check in — {hotel}',time='20:00',stay='hz2',role='in')
+B('seed:h1bin','2026-11-17','hotel','Check in — {hotel}',time='22:00',stay='hz2',role='in',note='after the 宫宴 show; collect the bags from the first hotel on the way')
 B('seed:h1bout','2026-11-18','hotel','Check out — {hotel}',time='08:00',stay='hz2',role='out',note='store bags or take to the station')
 B('seed:t2','2026-11-18','train','G-train to Nanjing South 南京南',time='10:30',**{'from':'Hangzhou East 杭州东','to':'Nanjing South 南京南'},tentative=True,note='~1h30 · not booked yet')
 B('seed:h2in','2026-11-18','hotel','Check in — {hotel}',time='12:15',stay='nj',role='in')

@@ -24,7 +24,8 @@
   "cap": "Beishan Street, West Lake",
   "reject": [
    "File:Hangzhou, Lago del Oeste 1978 05.jpg",
-   "File:Zheganjujiuzhi 20230716 112606.jpg"
+   "File:Zheganjujiuzhi 20230716 112606.jpg",
+   "File:Baochu Road near Beishan Street, 202501.jpg"
   ]
  },
  "broken": {
@@ -40,7 +41,8 @@
   "cap": "Broken Bridge & Bai Causeway",
   "reject": [
    "File:Huanglong & Broken Bridge - Hangzhou City & Outer West Lake in Hubin.jpg",
-   "File:Huanglong & Broken Bridge - Hangzhou City & West Lake w Bai Causeway w North Inner West Lake.jpg"
+   "File:Huanglong & Broken Bridge - Hangzhou City & West Lake w Bai Causeway w North Inner West Lake.jpg",
+   "File:Huanglong & Broken Bridge - Hangzhou City & West Lake w Bai Causeway.jpg"
   ]
  },
  "gushan": {
@@ -85,7 +87,8 @@
   "cap": "Three Pools Mirroring the Moon",
   "reject": [
    "File:'Three Pools Mirroring the Moon' (三潭印月), West Lake (西湖), Hangzhou (杭州).jpg",
-   "File:Xiaoyingzhou in West Lake.jpg"
+   "File:Xiaoyingzhou in West Lake.jpg",
+   "File:Three Pools Mirroring the Moon.jpg"
   ]
  },
  "louwailou": {
@@ -171,8 +174,12 @@
   ],
   "cap": "Yue Fei Temple, by Yue Lake",
   "reject": [
-   "File:Yue Fei statue (West Lake) 2 2016 January.jpg"
-  ]
+   "File:Yue Fei statue (West Lake) 2 2016 January.jpg",
+   "File:Yue Fei Temple, 2015-03-22 26.jpg",
+   "File:Entrance gate of the Yue Fei Temple, Hangzhou 2006 18-11.jpg",
+   "File:Yue Fei statue (West Lake) 1 2016 January.jpg"
+  ],
+  "n": 0
  },
  "wushannight": {
   "q": [
@@ -212,7 +219,8 @@
   ],
   "cap": "Feilai Feng carvings",
   "reject": [
-   "File:Feilaifeng zaoxiang 7577.jpg"
+   "File:Feilaifeng zaoxiang 7577.jpg",
+   "File:20260423 Stone Sculptures at Feilaifeng 01.jpg"
   ]
  },
  "yongfu": {
@@ -223,7 +231,10 @@
   "kw": [
    "永福寺"
   ],
-  "cap": "Yongfu Temple"
+  "cap": "Yongfu Temple",
+  "reject": [
+   "File:Shops at Yongfu Temple, Hangzhou.JPG"
+  ]
  },
  "faxi": {
   "q": [
@@ -250,8 +261,7 @@
    "Wushan Hangzhou pavilion"
   ],
   "kw": [
-   "城隍阁",
-   "吴山"
+   "城隍阁"
   ],
   "cap": "City God Pavilion, Wushan"
  },
@@ -296,7 +306,8 @@
   "cap": "Gongchen Bridge, Grand Canal",
   "reject": [
    "File:20231122 Gongchen Bridge 02.jpg",
-   "File:20231122 Gongchen Bridge 04.jpg"
+   "File:20231122 Gongchen Bridge 04.jpg",
+   "File:20231122 Gongchen Bridge 01.jpg"
   ]
  },
  "xiaohe": {
@@ -382,7 +393,9 @@
   ],
   "cap": "Zhonghua Gate",
   "reject": [
-   "File:2024Apr - Nanjing - East Zhonghua Gate 中华东门 - img 02.jpg"
+   "File:2024Apr - Nanjing - East Zhonghua Gate 中华东门 - img 02.jpg",
+   "File:2024Apr - Nanjing - East Zhonghua Gate 中华东门 - img 04.jpg",
+   "File:2024Apr - Nanjing - East Zhonghua Gate 中华东门 - img 01.jpg"
   ]
  },
  "baoen": {
@@ -442,9 +455,11 @@
   "cap": "Sun Yat-sen Mausoleum",
   "reject": [
    "File:China-Nanjing (2024) Mausoleum of Sun Yat Sen 中山陵 - img 01.jpg",
-   "File:Wang Jingwei leaving the Sun Yat-sen Mausoleum 汪精衛離開中山陵 (wc510dn0122).jpg"
+   "File:Wang Jingwei leaving the Sun Yat-sen Mausoleum 汪精衛離開中山陵 (wc510dn0122).jpg",
+   "File:China-Nanjing (2024) Mausoleum of Sun Yat Sen 中山陵 - img 09.jpg",
+   "File:China-Nanjing (2024) Mausoleum of Sun Yat Sen 中山陵 - img 02.jpg"
   ],
-  "n": 4
+  "n": 0
  },
  "meiling": {
   "q": [
@@ -456,7 +471,8 @@
   ],
   "cap": "Meiling Palace",
   "reject": [
-   "File:Meiling Gong 8.jpg"
+   "File:Meiling Gong 8.jpg",
+   "File:Meiling Gong 2.jpg"
   ]
  },
  "yinyuetai": {
@@ -468,7 +484,10 @@
   "kw": [
    "音乐台"
   ],
-  "cap": "Music Platform"
+  "cap": "Music Platform",
+  "reject": [
+   "File:Nanjing, 2 July 2024 (37).jpg"
+  ]
  },
  "shixiang": {
   "q": [
@@ -558,7 +577,10 @@
    "紫峰",
    "FLAIR"
   ],
-  "cap": "Nanjing skyline"
+  "cap": "Nanjing skyline",
+  "reject": [
+   "File:Nanjing Greenland Financial Center UC.jpg"
+  ]
  },
  "niushou": {
   "q": [
@@ -682,7 +704,8 @@
   "cap": "Shantang Street",
   "reject": [
    "File:Shantang Street, Suzhou (December 2015) - 10.JPG",
-   "File:Shantang Street, Suzhou (December 2015) - 14.JPG"
+   "File:Shantang Street, Suzhou (December 2015) - 14.JPG",
+   "File:Shantang Street, Suzhou (December 2015) - 25.JPG"
   ]
  },
  "xiangmen": {
@@ -734,7 +757,8 @@
   "cap": "Tiger Hill",
   "reject": [
    "File:Yunyan Pagoda 20160514 (5).jpg",
-   "File:Yunyan Pagoda 20160514 (6).jpg"
+   "File:Yunyan Pagoda 20160514 (6).jpg",
+   "File:Yunyan Pagoda 20160514 (9).jpg"
   ]
  },
  "hanshan": {

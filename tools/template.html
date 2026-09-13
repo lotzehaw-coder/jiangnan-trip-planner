@@ -381,7 +381,7 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
         <details style="margin-top:18px"><summary>Photo credits</summary><p class="muted">Place photos: Wikimedia Commons. Hotel photos: the hotels' own galleries (© Marriott / © Hilton), shown from their sites.</p><div class="credits" id="credits"></div></details>
 
         <h2 style="margin-top:26px">About</h2>
-        <p class="muted">Built from the <i>China Itinerary HZ·NJ·SZ 15–22 Nov</i> workbook. Flights are the confirmed Trip.com booking. Trains are not booked yet and are marked <span class="chip tent">tentative</span>. <b>Map</b> opens 高德地图 straight into directions to the stop (Apple Maps on iPhone if you prefer). Everything lives in this browser — no account, no server, no API keys.</p>
+        <p class="muted">Built from the <i>China Itinerary HZ·NJ·SZ 15–22 Nov</i> workbook. Flights are the confirmed Trip.com booking. Trains are not booked yet and are marked <span class="chip tent">tentative</span>. <b>Map</b> opens the place itself (photos, reviews) in 高德地图 Amap, Google Maps or Apple Maps, in a new tab so the planner stays put. Everything lives in this browser — no account, no server, no API keys.</p>
         <details><summary>Reset this device</summary>
           <p class="muted">Puts the plan back to the original workbook and clears your name. Export first if you want to keep anything.</p>
           <button class="btn danger" id="resetAll">Reset</button></details>
@@ -456,11 +456,11 @@ function nextStop(){ const t=todayKey(); if (!DAYS.some(d=>d.d===t)) return null
 const UA=navigator.userAgent, isIOS=/iPhone|iPad|iPod/.test(UA), isAndroid=/Android/.test(UA);
 function mapTargets(o){
   // Default is the PLACE (photos, reviews). Transit directions only work once you're in China, so they're a second option, not the default.
-  const name=cjk(o.name)||String(o.name||'').replace(/\(.*?\)/g,'').trim(); const kw=cjk(o.name)||cjk(o.address)||name; const city=CN[o.city]||'';
+  const name=o.q||cjk(o.name)||String(o.name||'').replace(/\(.*?\)/g,'').trim(); const kw=o.q||cjk(o.name)||cjk(o.address)||name; const city=CN[o.city]||'';
   const enc=encodeURIComponent, near=o.lat&&o.lng;
   const q = near ? kw : (city && !kw.startsWith(city) ? city+' '+kw : kw);
   const box = near ? `&lat1=${(o.lat-0.04).toFixed(5)}&lon1=${(o.lng-0.04).toFixed(5)}&lat2=${(o.lat+0.04).toFixed(5)}&lon2=${(o.lng+0.04).toFixed(5)}` : '';
-  const en = String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast|Check in|Check out)\s*[—–:-]\s*/i,'').replace(/\s+/g,' ').trim();
+  const en = o.en || String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast|Check in|Check out)\s*[—–:-]\s*/i,'').replace(/\s+/g,' ').trim();
   const t={name, kw};
   t.placeApp = isIOS ? `iosamap://poi?sourceApplication=jiangnan&name=${enc(q)}${box}&dev=0`
              : isAndroid ? `intent://poi?sourceApplication=jiangnan&keywords=${enc(q)}${near?`&lat=${o.lat}&lon=${o.lng}`:''}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end` : '';
@@ -502,7 +502,7 @@ function openMap(o){
 }
 $('#mapOverlay').addEventListener('click', e=>{ if (e.target.id==='mapOverlay') e.target.classList.add('hidden'); });
 document.addEventListener('click', e=>{ const b=e.target.closest('[data-map]'); if(!b) return; e.preventDefault(); try{ openMap(JSON.parse(b.dataset.map)); }catch(err){ toast('Could not open the map'); } });
-const mapBtn = (o) => `<button class="btn small map" data-map="${esc(JSON.stringify({name:o.name||o.title, city:o.city, address:o.address||o.note||'', lat:o.lat||null, lng:o.lng||null}))}"><svg><use href="#ico-map"/></svg>Map</button>`;
+const mapBtn = (o) => `<button class="btn small map" data-map="${esc(JSON.stringify({name:o.name||o.title, q:o.q||'', en:o.en||'', city:o.city, address:o.address||o.note||'', lat:o.lat||null, lng:o.lng||null}))}"><svg><use href="#ico-map"/></svg>Map</button>`;
 
 // ---------- photos: carousels (swipe on phones, arrows on desktop) ----------
 const PICS = SEED.pics || {};
@@ -614,7 +614,7 @@ function renderHotels(){
           <div class="addr">${esc(h.address)}</div>
           <div class="tally"><div class="bar"><i style="width:${max?Math.round(n/max*100):0}%"></i></div><span>${n?`${n} · ${esc(t[o.id].join(', '))}`:'no picks yet'}</span></div>
           <div class="row" style="margin-top:10px"><button class="btn small pick ${on?'on':''}" data-hpick="${st.id}|${o.id}">${on?'✓ Your pick':'Pick this hotel'}</button>
-            ${mapBtn({name:h.cn, city:st.city, address:h.address})}<a class="btn small ghost" href="${esc(h.url)}" target="_blank" rel="noopener">Hotel site ↗</a></div>
+            ${mapBtn({name:h.name, q:h.cn, en:h.name, city:st.city, address:h.address})}<a class="btn small ghost" href="${esc(h.url)}" target="_blank" rel="noopener">Hotel site ↗</a></div>
         </div></div>`; }).join('')}
       ${mine[st.id]?`<button class="btn small more" data-hmore="${st.id}">${L.hopen&&L.hopen[st.id]?'Hide the other options':`See all ${st.options.length} options`}</button>`:''}</div>`;
   }).join('');
@@ -812,7 +812,10 @@ $('#toggleAll').addEventListener('click', ()=>{ const all=DAYS.every(d=>L.closed
 // the workbook's Meal Options / Dining / Explore rows for this day, untimed, at the end of the day
 const SEC_LABEL = {dining:'Dining & cafés', explore:'Shop · street food · explore', events:'Events & foliage'};
 function dayExtras(d){
-  const list=SEED.browse.filter(b=>b.suggestedDay===d); if (!list.length) return '';
+  const key=(x)=>cjk(x.name)||String(x.name||'').toLowerCase().replace(/\(.*?\)/g,'').trim();
+  const onDay=new Set(dayItems(d).map(i=>cjk(i.name)).filter(Boolean)); const seen=new Set();
+  const list=SEED.browse.filter(b=>{ if (b.suggestedDay!==d) return false; const k=key(b); if (seen.has(k)) return false; seen.add(k); const c=cjk(b.name); return !(c.length>=3 && [...onDay].some(n=>n.length>=3 && (n.includes(c)||c.includes(n)))); });
+  if (!list.length) return '';
   const groups={}; for (const b of list){ const g = b.section==='meals' ? b.group.replace(/^Day \d+\s*·\s*/,'') : SEC_LABEL[b.section]||b.section; (groups[g]=groups[g]||[]).push(b); }
   return `<details class="extras" data-xday="${d}" ${L.xopen&&L.xopen[d]?'open':''}><summary>🍜 Meal &amp; dining options for this day (${list.length})</summary>${Object.entries(groups).map(([g,xs])=>`<div class="group">${esc(g)}</div>`+xs.map(b=>{
     const ex=P.items['b:'+b.id.slice(2)]; const on=ex&&ex.status!=='dropped';
@@ -822,13 +825,13 @@ function dayExtras(d){
 }
 function blockStop(b){
   const sub=[b.number, (b.from||b.to)?`${esc(b.from||'?')} → ${esc(b.to||'?')}`:'', esc(blockNote(b))].filter(Boolean).join(' · ');
-  const hh=b.stay&&STAY[b.stay]?hotelOf(b.stay):null;
+  const hh=b.stay&&STAY[b.stay]&&!sameHz(b)?hotelOf(b.stay):null; const nomove=b.stay&&STAY[b.stay]&&sameHz(b);
   const city=(DAYS.find(d=>d.d===b.day)||{}).city;
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
-    <div class="top"><span class="t">${esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
+    <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
     <div class="name">${esc(blockTitle(b))}</div>${sub?`<div class="sub">${sub}</div>`:''}
     ${hh?car(hh.photos.slice(0,3),'big',hh.name):''}
-    <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.cn,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
     <div class="edit">${b.stay?'':`<label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">`}
       <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
       ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
