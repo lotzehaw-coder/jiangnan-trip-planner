@@ -349,18 +349,22 @@ function nextStop(){ const t=todayKey(); if (!DAYS.some(d=>d.d===t)) return null
 // ---------- MAP: straight into the app ----------
 const UA=navigator.userAgent, isIOS=/iPhone|iPad|iPod/.test(UA), isAndroid=/Android/.test(UA);
 function mapTargets(o){
+  // Default is the PLACE (photos, reviews). Transit directions only work once you're in China, so they're a second option, not the default.
   const name=cjk(o.name)||String(o.name||'').replace(/\(.*?\)/g,'').trim(); const kw=cjk(o.name)||cjk(o.address)||name; const city=CN[o.city]||'';
+  const enc=encodeURIComponent, near=o.lat&&o.lng;
+  const q = near ? kw : (city && !kw.startsWith(city) ? city+' '+kw : kw);
+  const box = near ? `&lat1=${(o.lat-0.04).toFixed(5)}&lon1=${(o.lng-0.04).toFixed(5)}&lat2=${(o.lat+0.04).toFixed(5)}&lon2=${(o.lng+0.04).toFixed(5)}` : '';
+  const en = String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast)\s*[—–-]\s*/i,'').replace(/\s+/g,' ').trim();
   const t={name, kw};
-  if (o.lat && o.lng){
-    t.amapApp = isIOS ? `iosamap://path?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${encodeURIComponent(name)}&dev=0&t=1`
-             : isAndroid ? `androidamap://route?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${encodeURIComponent(name)}&dev=0&t=1` : '';
-    t.amapWeb = `https://uri.amap.com/navigation?to=${o.lng},${o.lat},${encodeURIComponent(name)}&mode=bus&src=jiangnan&callnative=1`;
-    t.apple = `https://maps.apple.com/?daddr=${o.lat},${o.lng}&q=${encodeURIComponent(name)}&dirflg=r`;
-  } else {
-    t.amapApp = isIOS ? `iosamap://poi?sourceApplication=jiangnan&keywords=${encodeURIComponent(kw)}&city=${encodeURIComponent(city)}`
-             : isAndroid ? `androidamap://poi?sourceApplication=jiangnan&keywords=${encodeURIComponent(kw)}&city=${encodeURIComponent(city)}&dev=0` : '';
-    t.amapWeb = `https://uri.amap.com/search?keyword=${encodeURIComponent(kw)}&city=${encodeURIComponent(city)}&src=jiangnan&callnative=1`;
-    t.apple = `https://maps.apple.com/?q=${encodeURIComponent(kw+' '+city)}`;
+  t.placeApp = isIOS ? `iosamap://poi?sourceApplication=jiangnan&name=${enc(q)}${box}&dev=0`
+             : isAndroid ? `androidamap://poi?sourceApplication=jiangnan&keywords=${enc(q)}${near?`&lat=${o.lat}&lon=${o.lng}`:''}&dev=0` : '';
+  t.placeWeb = `https://uri.amap.com/search?keyword=${enc(kw)}${city?`&city=${enc(city)}`:''}${near?`&center=${o.lng},${o.lat}`:''}&view=map&src=jiangnan&callnative=1`;
+  t.google = `https://www.google.com/maps/search/?api=1&query=${enc((en||kw)+(o.city?', '+o.city:'')+', China')}`;
+  t.apple = `https://maps.apple.com/?q=${enc(q)}${near?`&sll=${o.lat},${o.lng}`:''}`;
+  if (near){
+    t.routeApp = isIOS ? `iosamap://path?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${enc(name)}&dev=0&t=1`
+               : isAndroid ? `androidamap://route?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${enc(name)}&dev=0&t=1` : '';
+    t.routeWeb = `https://uri.amap.com/navigation?to=${o.lng},${o.lat},${enc(name)}&mode=bus&src=jiangnan&callnative=1`;
   }
   return t;
 }
@@ -374,14 +378,15 @@ function launch(app, web){
 }
 function openMap(o){
   const t=mapTargets(o);
-  if (!isIOS){ launch(t.amapApp, t.amapWeb); return; }
-  // iPhone: offer both, since some people keep Apple Maps for transit
-  const m=$('#mapMenu'); m.innerHTML=`<h3>${esc(t.name)}</h3><p>${o.lat?'Directions by public transport':'Search on the map'} — opens the app directly.</p>
+  const m=$('#mapMenu'); m.innerHTML=`<h3>${esc(t.name)}</h3><p>Opens the place so you can see its photos and reviews.</p>
     <button class="btn map" data-go="amap"><svg><use href="#ico-map"/></svg> 高德地图 Amap</button>
-    <button class="btn" data-go="apple">Apple Maps</button>
+    <button class="btn" data-go="google">Google Maps · English reviews</button>
+    ${isIOS?'<button class="btn" data-go="apple">Apple Maps</button>':''}
+    ${t.routeWeb?'<button class="btn ghost" data-go="route">Transit directions (once you\'re there)</button>':''}
     <button class="btn ghost" data-go="x">Cancel</button>`;
   $('#mapOverlay').classList.remove('hidden');
-  m.onclick=(e)=>{ const b=e.target.closest('[data-go]'); if(!b) return; $('#mapOverlay').classList.add('hidden'); if (b.dataset.go==='amap') launch(t.amapApp, t.amapWeb); else if (b.dataset.go==='apple') location.href=t.apple; };
+  m.onclick=(e)=>{ const b=e.target.closest('[data-go]'); if(!b) return; $('#mapOverlay').classList.add('hidden'); const g=b.dataset.go;
+    if (g==='amap') launch(t.placeApp, t.placeWeb); else if (g==='google') window.open(t.google,'_blank','noopener'); else if (g==='apple') location.href=t.apple; else if (g==='route') launch(t.routeApp, t.routeWeb); };
 }
 $('#mapOverlay').addEventListener('click', e=>{ if (e.target.id==='mapOverlay') e.target.classList.add('hidden'); });
 document.addEventListener('click', e=>{ const b=e.target.closest('[data-map]'); if(!b) return; e.preventDefault(); try{ openMap(JSON.parse(b.dataset.map)); }catch(err){ toast('Could not open the map'); } });
