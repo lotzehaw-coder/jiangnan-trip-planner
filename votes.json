@@ -12,9 +12,11 @@
   "Jit": {
    "p": {
     "hz1": "canopy",
-    "hz2": "conrad"
+    "hz2": "conrad",
+    "sz": "ritzsz",
+    "nj": "ritznj"
    },
-   "t": 1789307469473
+   "t": 1789308247706
   }
  }
 }
