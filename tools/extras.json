@@ -2,6 +2,7 @@
  "stays": [
   {
    "id": "hz1",
+   "start": "2026-11-15",
    "city": "Hangzhou",
    "title": "Hangzhou · first two nights",
    "dates": "Sun 15 → Tue 17 Nov",
@@ -43,6 +44,7 @@
   },
   {
    "id": "hz2",
+   "start": "2026-11-17",
    "city": "Hangzhou",
    "title": "Hangzhou · last night",
    "dates": "Tue 17 → Wed 18 Nov",
@@ -84,6 +86,7 @@
   },
   {
    "id": "nj",
+   "start": "2026-11-18",
    "city": "Nanjing",
    "title": "Nanjing",
    "dates": "Wed 18 → Fri 20 Nov",
@@ -125,6 +128,7 @@
   },
   {
    "id": "sz",
+   "start": "2026-11-20",
    "city": "Suzhou",
    "title": "Suzhou",
    "dates": "Fri 20 → Sun 22 Nov",
@@ -162,6 +166,7 @@
  "hotels": {
   "canopy": {
    "id": "canopy",
+   "short": "Canopy",
    "name": "Canopy by Hilton Hangzhou West Lake",
    "cn": "杭州西湖希尔顿嘉悦里酒店",
    "chain": "Hilton",
@@ -212,6 +217,7 @@
   },
   "conrad": {
    "id": "conrad",
+   "short": "Conrad",
    "name": "Conrad Hangzhou",
    "cn": "杭州康莱德酒店",
    "chain": "Hilton",
@@ -261,6 +267,7 @@
   },
   "jwhz": {
    "id": "jwhz",
+   "short": "JW Marriott",
    "name": "JW Marriott Hotel Hangzhou",
    "cn": "杭州JW万豪酒店",
    "chain": "Marriott",
@@ -310,6 +317,7 @@
   },
   "azure": {
    "id": "azure",
+   "short": "Azure",
    "name": "The Azure Qiantang, a Luxury Collection Hotel",
    "cn": "杭州钱塘江畔精选酒店",
    "chain": "Marriott",
@@ -357,6 +365,7 @@
   },
   "mqj": {
    "id": "mqj",
+   "short": "Marriott",
    "name": "Hangzhou Marriott Hotel Qianjiang",
    "cn": "杭州钱江新城万豪酒店",
    "chain": "Marriott",
@@ -406,6 +415,7 @@
   },
   "ritznj": {
    "id": "ritznj",
+   "short": "Ritz-Carlton",
    "name": "The Ritz-Carlton, Nanjing",
    "cn": "南京丽思卡尔顿酒店",
    "chain": "Marriott",
@@ -455,6 +465,7 @@
   },
   "westinnj": {
    "id": "westinnj",
+   "short": "Westin",
    "name": "The Westin Nanjing Xuanwu Lake",
    "cn": "南京金茂威斯汀大酒店",
    "chain": "Marriott",
@@ -504,6 +515,7 @@
   },
   "hiltonnj": {
    "id": "hiltonnj",
+   "short": "Hilton",
    "name": "Hilton Nanjing",
    "cn": "南京希尔顿酒店",
    "chain": "Hilton",
@@ -551,6 +563,7 @@
   },
   "hiltonriver": {
    "id": "hiltonriver",
+   "short": "Hilton Riverside",
    "name": "Hilton Nanjing Riverside",
    "cn": "南京世茂滨江希尔顿酒店",
    "chain": "Hilton",
@@ -598,6 +611,7 @@
   },
   "jingli": {
    "id": "jingli",
+   "short": "New Jingli",
    "name": "The New Jingli Hotel (SLH)",
    "cn": "南京新晶丽酒店",
    "chain": "Hilton",
@@ -637,6 +651,7 @@
   },
   "ritzsz": {
    "id": "ritzsz",
+   "short": "Ritz-Carlton",
    "name": "The Ritz-Carlton, Suzhou",
    "cn": "苏州丽思卡尔顿酒店",
    "chain": "Marriott",
@@ -687,6 +702,7 @@
   },
   "wsz": {
    "id": "wsz",
+   "short": "W Suzhou",
    "name": "W Suzhou",
    "cn": "苏州W酒店",
    "chain": "Marriott",
@@ -736,6 +752,7 @@
   },
   "hiltonsz": {
    "id": "hiltonsz",
+   "short": "Hilton",
    "name": "Hilton Suzhou",
    "cn": "苏州希尔顿酒店",
    "chain": "Hilton",
@@ -785,6 +802,7 @@
   },
   "szmarriott": {
    "id": "szmarriott",
+   "short": "Marriott",
    "name": "Suzhou Marriott Hotel",
    "cn": "苏州万豪酒店",
    "chain": "Marriott",

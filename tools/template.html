@@ -246,6 +246,29 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
 .xopt{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:space-between;align-items:flex-start;padding:8px 2px;border-bottom:1px solid var(--paper-2);font-size:14px}
 .xopt > div:first-child{flex:1 1 240px;min-width:0}
 .xopt .sub{color:var(--ink-3);font-size:12.5px;margin-top:2px}
+/* hotels: the nights bar pinned at the top, filled in as you pick */
+.nightbar{position:sticky;top:0;z-index:8;background:var(--paper);margin:0 -14px;padding:8px 14px 10px;border-bottom:1px solid var(--line)}
+@media (min-width:900px){.nightbar{margin:0;padding:10px 0 12px}}
+.nightbar .hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;color:var(--ink-3);margin-bottom:6px}
+.nightbar .hd b{color:var(--ink);font-size:14.5px;white-space:nowrap}
+.nightbar .hd span{text-align:right}
+.nb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.nb .dl{font-size:10.5px;color:var(--ink-3);text-align:center;line-height:1.15}
+.nb .dl b{display:block;color:var(--ink-2);font-size:12px}
+.nb .seg{border:0;border-radius:8px;min-height:44px;padding:4px 3px;font-size:11.5px;line-height:1.15;font-weight:650;color:#fff;background:var(--ci);cursor:pointer;text-align:center;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.nb .seg small{font-weight:400;opacity:.9;font-size:10.5px}
+.nb .seg.empty{background:transparent;color:var(--ci);border:2px dashed var(--ci);font-weight:600}
+.nb .seg.on{box-shadow:0 0 0 2px var(--ink) inset}
+.nightbar .foot{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.stayrows{margin:12px 0 4px}
+.stayrow{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--card);border-radius:12px;box-shadow:var(--shadow);margin-bottom:6px;border-left:5px solid var(--ci);cursor:pointer}
+.stayrow .w{flex:1;min-width:0}
+.stayrow .w b{display:block;font-size:14.5px}
+.stayrow .w span{font-size:12.5px;color:var(--ink-3)}
+.stayrow .pr{text-align:right;font-size:13px;white-space:nowrap}
+.stayrow .pr b{display:block;font-size:15px}
+.stayrow.todo .w b{color:var(--ci)}
+.stay .more{width:100%;justify-content:center;margin:-2px 0 10px}
 </style>
 </head>
 <body>
@@ -286,7 +309,9 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
       <!-- HOTELS -->
       <section class="view" id="v-hotels">
         <h2>Hotels</h2>
-        <p class="muted">Marriott and Hilton choices for every stay, with real prices for our dates. Tap <b>Pick this hotel</b>: picks save on this website for everyone, and the itinerary follows the most-picked hotel (ties keep the original plan).</p>
+        <p class="muted">Pick a hotel for each stay. Your nights fill in below; everyone's picks save online, and the itinerary follows the most-picked hotel.</p>
+        <div class="nightbar" id="nightBar"></div>
+        <div class="stayrows" id="stayRows"></div>
         <div class="status" id="hotelSync">Loading everyone's picks…</div>
         <div id="hotelList" style="margin-top:12px"></div>
         <p class="muted" id="priceNote" style="font-size:12.5px"></p>
@@ -547,15 +572,38 @@ async function loadHotelPicks(force){
 }
 document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState==='visible') loadHotelPicks(); });
 window.addEventListener('online', ()=>{ if (L.hUnsynced) syncHotel(); });
+// the 7 nights of the trip, one cell each; a stay spans its nights. Filled with YOUR picks; empty = not picked yet.
+function renderNightBar(mine){
+  const first=HX.stays[0].start, nights=HX.stays.reduce((a,x)=>a+x.nights,0);
+  const dayOf=(k)=>{ const d=new Date(first+'T00:00:00'); d.setDate(d.getDate()+k); return d; };
+  const optOf=(st)=>st.options.find(o=>o.id===mine[st.id]);
+  // merge the two Hangzhou stays into one block when both are the same hotel (no hotel move)
+  const segs=[]; for (const st of HX.stays){ const o=optOf(st), last=segs[segs.length-1];
+    if (o && last && last.o && last.o.id===o.id && last.st.city===st.city){ last.n+=st.nights; last.cost+=o.price*st.nights; last.ids.push(st.id); }
+    else segs.push({st, o, n:st.nights, cost:o?o.price*st.nights:0, ids:[st.id]}); }
+  const picked=HX.stays.filter(optOf), total=picked.reduce((a,st)=>a+optOf(st).price*st.nights,0);
+  $('#nightBar').innerHTML = `<div class="hd"><b>🌙 Your hotel nights</b><span>${picked.length} of ${HX.stays.length} stays picked${total?` · ≈ ¥${money(total)} (RM${money(Math.round(total*HX.myr))})`:''}</span></div>
+    <div class="nb">${Array.from({length:nights},(_,k)=>{ const d=dayOf(k); return `<div class="dl"><b>${d.getDate()}</b>${d.toLocaleDateString('en-GB',{weekday:'short'})}</div>`; }).join('')}
+    ${segs.map(g=>{ const h=g.o&&HX.hotels[g.o.id];
+      return `<button type="button" class="seg ${h?'':'empty'}" style="grid-column:span ${g.n};--ci:${CITY_VAR[g.st.city]}" data-gostay="${g.ids[0]}" aria-label="${esc(g.st.title)}">${h?`${esc(h.short||h.name)}<small>${g.ids.length>1?'no move · ':''}${g.n} night${g.n>1?'s':''}</small>`:`Pick<small>${g.n>1?esc(g.st.city):'&nbsp;'}</small>`}</button>`; }).join('')}</div>
+    <div class="foot"><span>✈ land PVG Sun 15</span><span>check out Sun 22 ✈</span></div>`;
+  $('#stayRows').innerHTML = HX.stays.map(st=>{ const o=optOf(st), h=o&&HX.hotels[o.id], pk=stayPick(st.id);
+    return `<div class="stayrow ${h?'':'todo'}" style="--ci:${CITY_VAR[st.city]}" data-gostay="${st.id}"><div class="w"><b>${h?esc(h.name):`${esc(st.city)}: tap to pick`}</b><span>${esc(st.dates)} · ${st.nights} night${st.nights>1?'s':''}${!h?` · now: ${esc(HX.hotels[pk.id].short||HX.hotels[pk.id].name)}`:''}</span></div>
+      <div class="pr">${o?`<b>¥${money(o.price*st.nights)}</b>¥${money(o.price)} × ${st.nights}`:`${st.options.length} options ›`}</div></div>`; }).join('');
+}
+document.addEventListener('click', e=>{ const g=e.target.closest('[data-gostay]'); if(!g) return; const sid=g.dataset.gostay; L.hopen=L.hopen||{};
+  if (!(((HB[L.me]||{}).p||{})[sid])) { L.hopen[sid]=true; saveLocal(); renderHotels(); }
+  const el=$('#stay-'+sid); if (el){ const y=el.getBoundingClientRect().top+scrollY-($('#nightBar').offsetHeight+8); window.scrollTo({top:y, behavior:'smooth'}); } });
 function renderHotels(){
   $('#priceNote').textContent = HX.priceNote || '';
   const mine=(HB[L.me]||{}).p||{};
+  renderNightBar(mine);
   $('#hotelList').innerHTML = HX.stays.map(st=>{
     const t=hTally(st.id), max=Math.max(0,...Object.values(t).map(v=>v.length)), pk=stayPick(st.id);
     return `<div class="stay" id="stay-${st.id}"><h2 style="margin-bottom:2px;color:${CITY_VAR[st.city]}">${esc(st.title)} ${CN[st.city]||''}</h2>
       <div class="nights">${esc(st.dates)} · ${st.nights} night${st.nights>1?'s':''} · the itinerary shows <b>${esc(HX.hotels[pk.id].name)}</b> (${esc(pk.how)})</div>
       <div class="tip">💡 ${esc(st.tip)}</div>
-      ${st.options.map(o=>{ const h=HX.hotels[o.id], n=t[o.id].length, on=mine[st.id]===o.id;
+      ${st.options.filter(o=>!mine[st.id] || (L.hopen&&L.hopen[st.id]) || mine[st.id]===o.id).map(o=>{ const h=HX.hotels[o.id], n=t[o.id].length, on=mine[st.id]===o.id;
         const near=(h.near||[]).map(pid=>PICS[pid]&&{src:PICS[pid].files[0], cap:'Nearby · '+PICS[pid].cap}).filter(Boolean);
         return `<div class="hotel ${on?'mine':''}">
         <div class="banner">${car(h.photos.concat(near),'',h.name)}${o.id===st.default?'<span class="badge">In the original plan</span>':''}<div class="t"><b>${esc(h.name)}</b><span>${esc(h.cn)} · ${esc(h.area)}</span></div></div>
@@ -567,10 +615,16 @@ function renderHotels(){
           <div class="tally"><div class="bar"><i style="width:${max?Math.round(n/max*100):0}%"></i></div><span>${n?`${n} · ${esc(t[o.id].join(', '))}`:'no picks yet'}</span></div>
           <div class="row" style="margin-top:10px"><button class="btn small pick ${on?'on':''}" data-hpick="${st.id}|${o.id}">${on?'✓ Your pick':'Pick this hotel'}</button>
             ${mapBtn({name:h.cn, city:st.city, address:h.address})}<a class="btn small ghost" href="${esc(h.url)}" target="_blank" rel="noopener">Hotel site ↗</a></div>
-        </div></div>`; }).join('')}</div>`;
+        </div></div>`; }).join('')}
+      ${mine[st.id]?`<button class="btn small more" data-hmore="${st.id}">${L.hopen&&L.hopen[st.id]?'Hide the other options':`See all ${st.options.length} options`}</button>`:''}</div>`;
   }).join('');
 }
-$('#hotelList').addEventListener('click', e=>{ const b=e.target.closest('[data-hpick]'); if(!b) return; const [sid,hid]=b.dataset.hpick.split('|'); pickHotel(sid,hid); });
+$('#hotelList').addEventListener('click', e=>{
+  const m=e.target.closest('[data-hmore]'); if (m){ L.hopen=L.hopen||{}; L.hopen[m.dataset.hmore]=!L.hopen[m.dataset.hmore]; saveLocal(); renderHotels(); return; }
+  const b=e.target.closest('[data-hpick]'); if(!b) return; const [sid,hid]=b.dataset.hpick.split('|');
+  const was=((HB[L.me]||{}).p||{})[sid]; L.hopen=L.hopen||{}; L.hopen[sid]=false; pickHotel(sid,hid);
+  if (was!==hid && L.me){ const next=HX.stays.find(x=>!(((HB[L.me]||{}).p||{})[x.id]));   // picked: fold this stay and move on to the next empty one
+    const el=$('#stay-'+(next?next.id:sid)); if (el) setTimeout(()=>{ const y=el.getBoundingClientRect().top+scrollY-($('#nightBar').offsetHeight+8); window.scrollTo({top:y, behavior:'smooth'}); }, 80); } });
 // hotel blocks in the itinerary: {hotel} = the stay's current hotel
 // the 17 Nov move between the two Hangzhou stays disappears when both stays pick the same hotel
 const sameHz = (b) => ((b.stay==='hz1'&&b.role==='out')||(b.stay==='hz2'&&b.role==='in')) && hotelOf('hz1').id===hotelOf('hz2').id;
