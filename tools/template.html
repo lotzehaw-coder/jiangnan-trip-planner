@@ -354,7 +354,7 @@ function mapTargets(o){
   const enc=encodeURIComponent, near=o.lat&&o.lng;
   const q = near ? kw : (city && !kw.startsWith(city) ? city+' '+kw : kw);
   const box = near ? `&lat1=${(o.lat-0.04).toFixed(5)}&lon1=${(o.lng-0.04).toFixed(5)}&lat2=${(o.lat+0.04).toFixed(5)}&lon2=${(o.lng+0.04).toFixed(5)}` : '';
-  const en = String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast)\s*[—–-]\s*/i,'').replace(/\s+/g,' ').trim();
+  const en = String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast|Check in|Check out)\s*[—–:-]\s*/i,'').replace(/\s+/g,' ').trim();
   const t={name, kw};
   t.placeApp = isIOS ? `iosamap://poi?sourceApplication=jiangnan&name=${enc(q)}${box}&dev=0`
              : isAndroid ? `androidamap://poi?sourceApplication=jiangnan&keywords=${enc(q)}${near?`&lat=${o.lat}&lon=${o.lng}`:''}&dev=0` : '';
@@ -564,7 +564,7 @@ function blockStop(b){
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
     <div class="top"><span class="t">${esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
     <div class="name">${esc(b.title)}</div>${sub?`<div class="sub">${sub}</div>`:''}
-    <div class="row" style="margin-top:8px">${b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from)+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="row" style="margin-top:8px">${b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
     <div class="edit"><label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">
       <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
       ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
