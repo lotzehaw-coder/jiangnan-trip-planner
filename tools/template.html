@@ -369,7 +369,7 @@ function mapTargets(o){
   return t;
 }
 // Open maps in a new tab / the app so the planner page itself never navigates away.
-function openOut(url){ const w=window.open(url, '_blank', 'noopener'); if (!w){ const a=document.createElement('a'); a.href=url; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove(); } }
+function openOut(url){ const w=window.open(url, '_blank'); if (w){ try{ w.opener=null; }catch(e){} return; } const a=document.createElement('a'); a.href=url; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove(); }   // 'noopener' in window.open always returns null, which used to fire the fallback too (two tabs)
 function openMap(o){
   const t=mapTargets(o);
   const m=$('#mapMenu'); m.innerHTML=`<h3>${esc(t.name)}</h3><p>Opens in a new tab or the map app, so this page stays where it is.</p>
