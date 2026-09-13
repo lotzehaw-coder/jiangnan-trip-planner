@@ -1,1 +1,13 @@
-{"hotels": {}}
+{
+ "hotels": {
+  "Tze": {
+   "p": {
+    "hz1": "canopy",
+    "hz2": "conrad",
+    "nj": "ritznj",
+    "sz": "ritzsz"
+   },
+   "t": 1789305407778
+  }
+ }
+}
