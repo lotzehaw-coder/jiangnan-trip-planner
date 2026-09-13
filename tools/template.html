@@ -269,6 +269,43 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
 .stayrow .pr b{display:block;font-size:15px}
 .stayrow.todo .w b{color:var(--ci)}
 .stay .more{width:100%;justify-content:center;margin:-2px 0 10px}
+/* collapsed explanations (Tze, 13 Sep: "collapse all the explanations … less clutter") */
+details.explain{background:var(--card);border-radius:12px;padding:8px 12px;margin:8px 0;box-shadow:var(--shadow)}
+details.explain > summary,details.more > summary{cursor:pointer;font-size:14px;color:var(--ink-2);font-weight:600;list-style:none}
+details.explain > summary::-webkit-details-marker,details.more > summary::-webkit-details-marker{display:none}
+details.explain > summary::after,details.more > summary::after{content:" ▾";color:var(--ink-3)}
+details.explain[open] > summary::after,details.more[open] > summary::after{content:" ▴"}
+details.explain > *:not(summary){margin-top:8px}
+details.more{margin-top:6px}
+.stop:not(.open) .info{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.stop:not(.open) .sub + .sub{display:none}
+/* budget + trains */
+.bset{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;align-items:end}
+.bset label{font-size:12.5px;color:var(--ink-3);display:block;margin-bottom:3px}
+.bset input{min-height:38px;padding:6px 10px;width:100%;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.bset .seg button{padding:8px 10px}
+.bset .full{grid-column:1 / -1}
+.btotal{background:var(--ink);color:#fff;border-radius:var(--r);padding:14px 16px;margin:12px 0}
+.btotal b{font-size:26px;letter-spacing:-.4px;display:block}
+.btotal span{opacity:.8;font-size:13.5px}
+.bline{display:flex;gap:10px;align-items:baseline;padding:10px 2px;border-bottom:1px solid var(--paper-2)}
+.bline .l{flex:1;min-width:0}
+.bline .l b{display:block;font-size:14.5px}
+.bline .l span{font-size:12.5px;color:var(--ink-3)}
+.bline .r{text-align:right;white-space:nowrap;font-weight:650}
+.bline .r small{display:block;font-weight:400;color:var(--ink-3);font-size:12px}
+.leg{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:10px 12px;margin-bottom:10px}
+.leg h3{margin:0;font-size:15px}
+.leg .ls{font-size:12.5px;color:var(--ink-3);margin:2px 0 6px}
+.trow{display:grid;grid-template-columns:auto 1fr auto;gap:2px 10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer;border:2px solid transparent}
+.trow.on{border-color:var(--c-flight);background:#eaf5ee}
+.trow .c{font-weight:700;font-size:14px}
+.trow .tm{font-size:13.5px}
+.trow .tm small{color:var(--ink-3)}
+.trow .pr{text-align:right;font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+.trow .pr b{color:var(--ink);font-size:14px}
+.trow .nt{grid-column:1 / -1;font-size:12px;color:var(--ink-3)}
+.fx{display:inline-block;font-size:10.5px;font-weight:700;color:#fff;background:#c0392b;border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -286,6 +323,7 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
     <div class="brand">Jiangnan<small>15–22 Nov 2026</small></div>
     <button data-tab="itin"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Itinerary</button>
     <button data-tab="hotels"><svg viewBox="0 0 24 24"><path d="M3 18V7M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="2"/></svg>Hotels</button>
+    <button data-tab="budget"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 7.5 12 12l3.5-4.5M8 12.5h8M8 15.5h8M12 12v6"/></svg>Budget</button>
     <button data-tab="browse"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Browse</button>
     <button data-tab="wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Wishlist<span class="badge hidden" id="wishCount"></span></button>
     <button data-tab="settings"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12m0 0-4-4m4 4 4-4"/></svg>Share</button>
@@ -309,12 +347,24 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
       <!-- HOTELS -->
       <section class="view" id="v-hotels">
         <h2>Hotels</h2>
-        <p class="muted">Pick a hotel for each stay. Your nights fill in below; everyone's picks save online, and the itinerary follows the most-picked hotel.</p>
+        <details class="explain"><summary>How this works</summary><p class="muted">Pick a hotel for each stay. Your nights fill in below; everyone's picks save online, and the itinerary follows the most-picked hotel.</p></details>
         <div class="nightbar" id="nightBar"></div>
         <div class="stayrows" id="stayRows"></div>
         <div class="status" id="hotelSync">Loading everyone's picks…</div>
         <div id="hotelList" style="margin-top:12px"></div>
         <p class="muted" id="priceNote" style="font-size:12.5px"></p>
+      </section>
+
+      <!-- BUDGET -->
+      <section class="view" id="v-budget">
+        <h2>Budget</h2>
+        <details class="explain"><summary>How this works</summary><p class="muted">A rough trip cost from the hotel picks, the Fuxing trains and daily estimates. Change any number; it's saved on this phone only. Hotel and train prices are real quotes for our dates or weekdays; food, taxis and sights are estimates. Flights are already booked and not counted.</p></details>
+        <div class="card"><div class="bset" id="bset"></div></div>
+        <div class="btotal" id="btotal"></div>
+        <div id="blines"></div>
+        <h2 id="trainsH" style="margin-top:22px">Trains · Fuxing Hao 复兴号 only</h2>
+        <details class="explain"><summary>About these fares</summary><p class="muted" id="trainNote"></p></details>
+        <div id="trainList"></div>
       </section>
 
       <!-- BROWSE -->
@@ -602,7 +652,7 @@ function renderHotels(){
     const t=hTally(st.id), max=Math.max(0,...Object.values(t).map(v=>v.length)), pk=stayPick(st.id);
     return `<div class="stay" id="stay-${st.id}"><h2 style="margin-bottom:2px;color:${CITY_VAR[st.city]}">${esc(st.title)} ${CN[st.city]||''}</h2>
       <div class="nights">${esc(st.dates)} · ${st.nights} night${st.nights>1?'s':''} · the itinerary shows <b>${esc(HX.hotels[pk.id].name)}</b> (${esc(pk.how)})</div>
-      <div class="tip">💡 ${esc(st.tip)}</div>
+      <details class="explain"><summary>💡 Tip for this stay</summary><div style="font-size:14px;color:var(--ink-2)">${esc(st.tip)}</div></details>
       ${st.options.filter(o=>!mine[st.id] || (L.hopen&&L.hopen[st.id]) || mine[st.id]===o.id).map(o=>{ const h=HX.hotels[o.id], n=t[o.id].length, on=mine[st.id]===o.id;
         const near=(h.near||[]).map(pid=>PICS[pid]&&{src:PICS[pid].files[0], cap:'Nearby · '+PICS[pid].cap}).filter(Boolean);
         return `<div class="hotel ${on?'mine':''}">
@@ -610,8 +660,8 @@ function renderHotels(){
         <div class="hb">
           <div class="price"><b>¥${money(o.price)}</b><small>/ night · ≈ RM${money(o.myr)} · ${st.nights>1?`${st.nights} nights ≈ ¥${money(o.total)} (RM${money(Math.round(o.total*HX.myr))})`:'1 night'} · before tax</small></div>
           <div class="row"><span class="chip chain">${h.chain==='Hilton'?'Hilton Honors':'Marriott Bonvoy'} · ${esc(h.brand)}</span>${pk.id===o.id?`<span class="chip lead">in the itinerary</span>`:''}<span class="age">🏗 ${esc(h.opened)}</span></div>
-          <ul>${h.pros.map(x=>`<li class="pro">${esc(x)}</li>`).join('')}${h.cons.map(x=>`<li class="con">${esc(x)}</li>`).join('')}</ul>
-          <div class="addr">${esc(h.address)}</div>
+          <details class="more"><summary>Pros, cons & address</summary><ul>${h.pros.map(x=>`<li class="pro">${esc(x)}</li>`).join('')}${h.cons.map(x=>`<li class="con">${esc(x)}</li>`).join('')}</ul>
+          <div class="addr">${esc(h.address)}</div></details>
           <div class="tally"><div class="bar"><i style="width:${max?Math.round(n/max*100):0}%"></i></div><span>${n?`${n} · ${esc(t[o.id].join(', '))}`:'no picks yet'}</span></div>
           <div class="row" style="margin-top:10px"><button class="btn small pick ${on?'on':''}" data-hpick="${st.id}|${o.id}">${on?'✓ Your pick':'Pick this hotel'}</button>
             ${mapBtn({name:h.name, q:h.cn, en:h.name, city:st.city, address:h.address})}<a class="btn small ghost" href="${esc(h.url)}" target="_blank" rel="noopener">Hotel site ↗</a></div>
@@ -641,12 +691,62 @@ function blockNote(b){
   return [h.address, b.role==='in' ? `${h.how} · change it in Hotels` : '', b.note].filter(Boolean).join(' · ');
 }
 
+// ---------- BUDGET + TRAINS ----------
+const TR = (SEED.hotelsx && SEED.hotelsx.trains) || {legs:[]};
+const CLS = [['first','First class'],['biz','Business'],['second','Second class']];
+const bud = () => Object.assign({pax:2, rooms:1, cls:'first', food:450, local:200, sights:1200, other:0}, L.bud||{});
+const trainOf = (leg) => leg.trains.find(t=>t.code===((L.train||{})[leg.id]||leg.suggest)) || leg.trains[0];
+const legById = (id) => TR.legs.find(l=>l.id===id);
+const rm = (y) => 'RM' + money(Math.round(y*(HX.myr||0.6)));
+function renderBudget(){
+  const B=bud(); const days=7;
+  $('#bset').innerHTML = `
+    <div><label>Travellers</label><input type="number" min="1" max="20" data-b="pax" value="${B.pax}"></div>
+    <div><label>Hotel rooms</label><input type="number" min="1" max="10" data-b="rooms" value="${B.rooms}"></div>
+    <div class="full"><label>Train class</label><div class="seg">${CLS.map(([k,l])=>`<button type="button" data-bcls="${k}" aria-pressed="${B.cls===k}">${l}</button>`).join('')}</div></div>
+    <div><label>Food ¥/person/day</label><input type="number" min="0" step="50" data-b="food" value="${B.food}"></div>
+    <div><label>Taxis & metro ¥/day</label><input type="number" min="0" step="50" data-b="local" value="${B.local}"></div>
+    <div><label>Sights & shows ¥/person</label><input type="number" min="0" step="100" data-b="sights" value="${B.sights}"></div>
+    <div><label>Other ¥</label><input type="number" min="0" step="100" data-b="other" value="${B.other}"></div>`;
+  const mine=(HB[L.me]||{}).p||{}; const lines=[];
+  // hotels: your pick for each stay, else what the itinerary shows
+  let hot=0; const hdet=HX.stays.map(st=>{ const id=mine[st.id]||stayPick(st.id).id; const o=st.options.find(x=>x.id===id); const h=HX.hotels[id]; const c=(o?o.price:0)*st.nights*B.rooms; hot+=c;
+    return `${esc(h.short||h.name)} ${st.nights}n ¥${money(o?o.price:0)}${B.rooms>1?`×${B.rooms}`:''}${mine[st.id]?'':' (not picked)'}`; });
+  lines.push(['🏨 Hotels', `${hdet.join(' · ')}. Before tax.`, hot]);
+  lines.push(['🧾 Hotel tax & service', 'About 6% on top of the room rates', Math.round(hot*0.06)]);
+  let tr=0; const tdet=TR.legs.map(l=>{ const t=trainOf(l); const f=t[B.cls]||t.first; tr+=f*B.pax; return `${t.code} ¥${money(f)}`; });
+  lines.push([`🚄 Trains · ${CLS.find(c=>c[0]===B.cls)[1]}`, `${tdet.join(' · ')} × ${B.pax}`, tr]);
+  const link=TR.legs.reduce((a,l)=>a+((l.before||{}).each||0)+((l.after||{}).each||0),0)*B.pax;
+  if (link) lines.push(['🚆 Airport Link PVG ⇄ Hongqiao', `2 rides × ¥26 × ${B.pax}`, link]);
+  lines.push(['🍜 Food & drinks', `¥${money(B.food)} × ${B.pax} × ${days} days`, B.food*B.pax*days]);
+  lines.push(['🚕 Taxis & metro', `¥${money(B.local)} × ${days} days`, B.local*days]);
+  lines.push(['🎟 Sights & shows', `¥${money(B.sights)} × ${B.pax} (rough: gardens ¥40–80, boats ¥55–100, a banquet show ¥300–500)`, B.sights*B.pax]);
+  if (B.other) lines.push(['🛍 Other', 'Your estimate', B.other]);
+  const total=lines.reduce((a,x)=>a+x[2],0);
+  $('#btotal').innerHTML = `<span>Estimated trip cost (not counting flights)</span><b>¥${money(total)} · ${rm(total)}</b><span>≈ ¥${money(Math.round(total/B.pax))} (${rm(total/B.pax)}) per person · ${B.pax} traveller${B.pax>1?'s':''}, ${B.rooms} room${B.rooms>1?'s':''}</span>`;
+  $('#blines').innerHTML = lines.map(([l,d,v])=>`<div class="bline"><div class="l"><b>${l}</b><span>${d}</span></div><div class="r">¥${money(v)}<small>${rm(v)}</small></div></div>`).join('')
+    + `<div class="bline"><div class="l"><b>✈ Flights MH388 / MH389</b><span>Booked · Business · not counted</span></div><div class="r">—</div></div>`;
+  $('#trainNote').textContent = TR.note || '';
+  $('#trainList').innerHTML = TR.legs.map(l=>{ const sel=trainOf(l); const d=DAYS.find(x=>x.d===l.date);
+    return `<div class="leg" id="leg-${l.id}"><h3>${fmtDay(l.date)} · ${esc(l.from)} → ${esc(l.to)}</h3>
+      <div class="ls">🎫 Tickets open ${esc(l.sale)}${l.before?` · first: ${esc(l.before.note)}`:''}${l.after?` · then: ${esc(l.after.note)}`:''}</div>
+      ${l.trains.map(t=>`<div class="trow ${t===sel?'on':''}" data-train="${l.id}|${t.code}"><span class="c">${esc(t.code)}<span class="fx">复</span></span>
+        <span class="tm">${esc(t.dep)} → ${esc(t.arr)} <small>${esc(t.dur)}</small></span>
+        <span class="pr">1st <b>¥${t.first}</b> · Biz <b>¥${t.biz}</b><br>2nd ¥${t.second}</span>${t.note?`<span class="nt">${t===sel?'✓ ':''}${esc(t.note)}</span>`:(t===sel?'<span class="nt">✓ chosen</span>':'')}</div>`).join('')}</div>`; }).join('');
+}
+$('#v-budget').addEventListener('change', e=>{ const i=e.target.closest('[data-b]'); if(!i) return; const B=bud(); B[i.dataset.b]=Math.max(0, Number(i.value)||0); if (i.dataset.b==='pax'||i.dataset.b==='rooms') B[i.dataset.b]=Math.max(1,B[i.dataset.b]); L.bud=B; saveLocal(); renderBudget(); });
+$('#v-budget').addEventListener('click', e=>{
+  const c=e.target.closest('[data-bcls]'); if (c){ const B=bud(); B.cls=c.dataset.bcls; L.bud=B; saveLocal(); renderBudget(); return; }
+  const t=e.target.closest('[data-train]'); if (t){ const [leg,code]=t.dataset.train.split('|'); L.train=L.train||{}; L.train[leg]=code; saveLocal(); renderBudget(); toast(code+' chosen for '+fmtDay(legById(leg).date)); }
+});
+
 // ---------- tabs ----------
 function showTab(name){
   $$('section.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+name));
   $$('nav.tabs button').forEach(b=>{ if (b.dataset.tab===name) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   if (name==='itin') renderItin();
   if (name==='browse') renderBrowse();
+  if (name==='budget') renderBudget();
   if (name==='hotels'){ renderHotels(); loadHotelPicks(); }
   if (name==='wish') renderWish();
   if (name==='settings') renderSettings();
@@ -825,13 +925,14 @@ function dayExtras(d){
 }
 function blockStop(b){
   const sub=[b.number, (b.from||b.to)?`${esc(b.from||'?')} → ${esc(b.to||'?')}`:'', esc(blockNote(b))].filter(Boolean).join(' · ');
-  const hh=b.stay&&STAY[b.stay]&&!sameHz(b)?hotelOf(b.stay):null; const nomove=b.stay&&STAY[b.stay]&&sameHz(b);
+  const hh=b.stay&&STAY[b.stay]&&!sameHz(b)?hotelOf(b.stay):null;
+  const lg=b.train&&legById(b.train), tt=lg&&trainOf(lg), cls=bud().cls; const nomove=b.stay&&STAY[b.stay]&&sameHz(b);
   const city=(DAYS.find(d=>d.d===b.day)||{}).city;
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
     <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
-    <div class="name">${esc(blockTitle(b))}</div>${sub?`<div class="sub">${sub}</div>`:''}
+    <div class="name">${esc(blockTitle(b))}</div>${tt?`<div class="sub"><b>${esc(tt.code)}</b><span class="fx">复</span> ${esc(tt.dep)} → ${esc(tt.arr)} (${esc(tt.dur)}) · ${cls==='biz'?'Business':cls==='second'?'2nd':'1st'} ¥${tt[cls]||tt.first} each</div>`:''}${sub?`<div class="sub">${sub}</div>`:''}
     ${hh?car(hh.photos.slice(0,3),'big',hh.name):''}
-    <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:lg?`${mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng})}<button class="btn small" data-gotrain="${lg.id}">Train options & prices</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
     <div class="edit">${b.stay?'':`<label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">`}
       <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
       ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
@@ -866,6 +967,7 @@ $('#itin').addEventListener('click', e=>{
     const it=addItem({id:'b:'+b.id.slice(2), name:b.name, address:b.address, city:b.city, category:b.category, info:[b.notes,b.price].filter(Boolean).join(' · '), suggestedDay:b.suggestedDay, lat:b.lat, lng:b.lng, src:'browse'});
     schedule(it.id, xa.dataset.xd); renderItin(); toast('Added to '+fmtDay(xa.dataset.xd)+' (no time yet)'); return; }
   const dh=e.target.closest('.dh[data-day]'); if (dh){ L.closed[dh.dataset.day]=!L.closed[dh.dataset.day]; saveLocal(); dh.parentElement.classList.toggle('closed'); $('#toggleAll').textContent = DAYS.every(d=>L.closed[d.d]) ? 'Expand all' : 'Collapse all'; return; }
+  const gt=e.target.closest('[data-gotrain]'); if (gt){ showTab('budget'); setTimeout(()=>{ const el=$('#leg-'+gt.dataset.gotrain); if (el) el.scrollIntoView({block:'start'}); }, 60); return; }
   const gh=e.target.closest('[data-gohotels]'); if (gh){ showTab('hotels'); setTimeout(()=>{ const el=$('#stay-'+gh.dataset.gohotels); if (el) el.scrollIntoView({block:'start'}); }, 60); return; }
   const blk=e.target.closest('.stop.block'); if (blk && !e.target.closest('input,select,textarea,button,a,[data-car]') && !blk.classList.contains('editing')) blk.classList.toggle('open');
   const bb=e.target.closest('[data-bact]');

@@ -88,19 +88,19 @@ def B(id, day, type, title, **kw):
     b = {'id':id,'day':day,'type':type,'title':title,'time':'','number':'','from':'','to':'','tentative':False,'note':'','updatedAt':0}
     b.update(kw); blocks.append(b)
 B('seed:mh388','2026-11-15','flight','Fly to Shanghai Pudong',number='MH388',time='09:10',**{'from':'KUL T1','to':'PVG T2'},note='lands 14:30 · Business · A330-300 · confirmed (Trip.com)')
-B('seed:t1','2026-11-15','train','G-train to Hangzhou East 杭州东',time='17:00',**{'from':'Shanghai Hongqiao 虹桥','to':'Hangzhou East 杭州东'},tentative=True,note='~1h · not booked yet · sit on the right for river views')
+B('seed:t1','2026-11-15','train','Fuxing G-train to Hangzhou East 杭州东',time='17:13',**{'from':'Shanghai Hongqiao 虹桥','to':'Hangzhou East 杭州东'},tentative=True,train='t1',note='not booked yet (sale opens 1 Nov) · PVG → Hongqiao first by the Airport Link 市域机场线, ~40 min, ¥26')
 # hotel blocks follow the Hotels tab: {hotel} is whichever hotel is locked/most picked for that stay (tools/hotels.py)
 B('seed:h1in','2026-11-15','hotel','Check in — {hotel}',time='19:10',stay='hz1',role='in')
 B('seed:h1out','2026-11-17','hotel','Check out — {hotel}',time='08:15',stay='hz1',role='out',note="ask the concierge to keep the bags; collect them on the way to tonight's hotel")
 B('seed:h1bin','2026-11-17','hotel','Check in — {hotel}',time='22:00',stay='hz2',role='in',note='after the 宫宴 show; collect the bags from the first hotel on the way')
 B('seed:h1bout','2026-11-18','hotel','Check out — {hotel}',time='08:00',stay='hz2',role='out',note='store bags or take to the station')
-B('seed:t2','2026-11-18','train','G-train to Nanjing South 南京南',time='10:30',**{'from':'Hangzhou East 杭州东','to':'Nanjing South 南京南'},tentative=True,note='~1h30 · not booked yet')
+B('seed:t2','2026-11-18','train','Fuxing G-train to Nanjing South 南京南',time='10:25',**{'from':'Hangzhou East 杭州东','to':'Nanjing South 南京南'},tentative=True,train='t2',note='not booked yet (sale opens 4 Nov)')
 B('seed:h2in','2026-11-18','hotel','Check in — {hotel}',time='12:15',stay='nj',role='in')
 B('seed:h2out','2026-11-20','hotel','Check out — {hotel}',time='08:00',stay='nj',role='out')
-B('seed:t3','2026-11-20','train','G-train to Suzhou 苏州',time='10:30',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=True,note='~1h30 · not booked yet')
+B('seed:t3','2026-11-20','train','Fuxing G-train to Suzhou 苏州',time='09:59',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=True,train='t3',note='not booked yet (sale opens 6 Nov)')
 B('seed:h3in','2026-11-20','hotel','Check in — {hotel}',time='12:15',stay='sz',role='in')
 B('seed:h3out','2026-11-22','hotel','Check out — {hotel}',time='07:30',stay='sz',role='out',note='passport + train ticket handy')
-B('seed:t4','2026-11-22','train','G-train to Shanghai Pudong 上海浦东',time='09:30',**{'from':'Suzhou 苏州站','to':'Shanghai Pudong PVG'},tentative=True,note='~1h45 direct, or via Hongqiao + Metro L2 · book the night before')
+B('seed:t4','2026-11-22','train','Fuxing G-train to Shanghai Hongqiao, then Airport Link to PVG',time='09:19',**{'from':'Suzhou 苏州站','to':'Shanghai Hongqiao 虹桥'},tentative=True,train='t4',note='not booked yet (sale opens 8 Nov) · no trains run to Pudong: Hongqiao T2 → PVG by the Airport Link 市域机场线, ~40 min, ¥26')
 B('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',number='MH389',time='16:05',**{'from':'PVG T2','to':'KUL T1'},note='lands 21:50 · Business · A330-300 · confirmed (Trip.com)')
 
 browse = []; bn = 0

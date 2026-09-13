@@ -174,5 +174,7 @@ for s in STAYS:
     out['stays'].append(dict(s, options=opts))
 for hid, h in H.items():
     out['hotels'][hid] = dict(h, photos=[{'src': u, 'cap': c + (' · © Hilton' if h['chain'] == 'Hilton' else ' · © Marriott')} for u, c in h['photos']])
-json.dump(out, open(os.path.join(HERE, 'extras.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+xp = os.path.join(HERE, 'extras.json'); prev = json.load(open(xp, encoding='utf-8')) if os.path.exists(xp) else {}
+prev.update(out)   # keep the other sections (trains.py writes 'trains')
+json.dump(prev, open(xp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('hotels', len(H), '| stays', [(s['id'], len(s['options'])) for s in STAYS])

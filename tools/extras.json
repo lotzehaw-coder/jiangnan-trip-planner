@@ -846,5 +846,294 @@
   }
  },
  "priceNote": "Lowest public rate per room per night for 2 adults, before taxes (about 6%), checked on hilton.com / marriott.com on 13 Sep 2026. RM at 1 CNY = RM0.606.",
- "myr": 0.606
+ "myr": 0.606,
+ "trains": {
+  "legs": [
+   {
+    "id": "t1",
+    "block": "seed:t1",
+    "date": "2026-11-15",
+    "from": "Shanghai Hongqiao 上海虹桥",
+    "to": "Hangzhou East 杭州东",
+    "sale": "Sun 1 Nov",
+    "before": {
+     "what": "Airport Link 市域机场线 PVG T1/T2 → Hongqiao T2",
+     "each": 26,
+     "note": "~40 min, ¥26; lands 14:30, so aim for a train after ~16:30"
+    },
+    "suggest": "G231",
+    "trains": [
+     {
+      "code": "G253",
+      "dep": "16:00",
+      "arr": "16:45",
+      "dur": "45m",
+      "first": 140,
+      "biz": 275,
+      "second": 87,
+      "note": "tight after a 14:30 landing"
+     },
+     {
+      "code": "G1583",
+      "dep": "16:32",
+      "arr": "17:24",
+      "dur": "52m",
+      "first": 140,
+      "biz": 306,
+      "second": 87,
+      "note": ""
+     },
+     {
+      "code": "G1343",
+      "dep": "16:37",
+      "arr": "17:36",
+      "dur": "59m",
+      "first": 140,
+      "biz": 275,
+      "second": 87,
+      "note": ""
+     },
+     {
+      "code": "G231",
+      "dep": "17:13",
+      "arr": "17:58",
+      "dur": "45m",
+      "first": 140,
+      "biz": 306,
+      "second": 87,
+      "note": "non-stop feel, 45 min"
+     },
+     {
+      "code": "G261",
+      "dep": "17:17",
+      "arr": "18:02",
+      "dur": "45m",
+      "first": 140,
+      "biz": 306,
+      "second": 87,
+      "note": ""
+     },
+     {
+      "code": "G1349",
+      "dep": "17:38",
+      "arr": "18:37",
+      "dur": "59m",
+      "first": 140,
+      "biz": 275,
+      "second": 87,
+      "note": ""
+     },
+     {
+      "code": "G7367",
+      "dep": "17:47",
+      "arr": "18:52",
+      "dur": "1h05",
+      "first": 126,
+      "biz": 275,
+      "second": 78,
+      "note": ""
+     },
+     {
+      "code": "G7371",
+      "dep": "18:08",
+      "arr": "19:05",
+      "dur": "57m",
+      "first": 140,
+      "biz": 306,
+      "second": 87,
+      "note": ""
+     }
+    ]
+   },
+   {
+    "id": "t2",
+    "block": "seed:t2",
+    "date": "2026-11-18",
+    "from": "Hangzhou East 杭州东",
+    "to": "Nanjing South 南京南",
+    "sale": "Wed 4 Nov",
+    "suggest": "G7650",
+    "trains": [
+     {
+      "code": "G590",
+      "dep": "09:13",
+      "arr": "10:42",
+      "dur": "1h29",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": ""
+     },
+     {
+      "code": "G7674",
+      "dep": "10:15",
+      "arr": "11:36",
+      "dur": "1h21",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": ""
+     },
+     {
+      "code": "G7650",
+      "dep": "10:25",
+      "arr": "11:42",
+      "dur": "1h17",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": "closest to the 10:30 plan"
+     },
+     {
+      "code": "G7796",
+      "dep": "10:42",
+      "arr": "12:17",
+      "dur": "1h35",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": ""
+     },
+     {
+      "code": "G822",
+      "dep": "11:24",
+      "arr": "12:26",
+      "dur": "1h02",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": "fastest"
+     },
+     {
+      "code": "G824",
+      "dep": "11:39",
+      "arr": "13:13",
+      "dur": "1h34",
+      "first": 225,
+      "biz": 493,
+      "second": 141,
+      "note": ""
+     }
+    ]
+   },
+   {
+    "id": "t3",
+    "block": "seed:t3",
+    "date": "2026-11-20",
+    "from": "Nanjing South 南京南",
+    "to": "Suzhou 苏州",
+    "sale": "Fri 6 Nov",
+    "suggest": "G7221",
+    "trains": [
+     {
+      "code": "G7225",
+      "dep": "08:45",
+      "arr": "09:52",
+      "dur": "1h07",
+      "first": 200,
+      "biz": 437,
+      "second": 125,
+      "note": "fastest"
+     },
+     {
+      "code": "G7591",
+      "dep": "09:42",
+      "arr": "11:17",
+      "dur": "1h35",
+      "first": 180,
+      "biz": 393,
+      "second": 113,
+      "note": ""
+     },
+     {
+      "code": "G7221",
+      "dep": "09:59",
+      "arr": "11:40",
+      "dur": "1h41",
+      "first": 180,
+      "biz": 393,
+      "second": 113,
+      "note": "arrives in time for the 12:15 check-in"
+     },
+     {
+      "code": "G2365",
+      "dep": "10:47",
+      "arr": "12:23",
+      "dur": "1h36",
+      "first": 200,
+      "biz": 398,
+      "second": 125,
+      "note": "check-in slips to ~13:00"
+     }
+    ]
+   },
+   {
+    "id": "t4",
+    "block": "seed:t4",
+    "date": "2026-11-22",
+    "from": "Suzhou 苏州 / Suzhou North 苏州北",
+    "to": "Shanghai Hongqiao 上海虹桥",
+    "sale": "Sun 8 Nov",
+    "after": {
+     "what": "Airport Link 市域机场线 Hongqiao T2 → PVG T1/T2",
+     "each": 26,
+     "note": "~40 min, ¥26; MH389 leaves 16:05, be at PVG by ~13:00"
+    },
+    "suggest": "G7461",
+    "trains": [
+     {
+      "code": "G7461",
+      "dep": "09:19",
+      "arr": "09:51",
+      "dur": "32m",
+      "first": 74,
+      "biz": 162,
+      "second": 46,
+      "note": "苏州站, 10 min from the Ritz"
+     },
+     {
+      "code": "G7507",
+      "dep": "09:39",
+      "arr": "10:09",
+      "dur": "30m",
+      "first": 63,
+      "biz": 117,
+      "second": 37,
+      "note": "苏州北, ~25 min drive"
+     },
+     {
+      "code": "G7431",
+      "dep": "10:29",
+      "arr": "10:59",
+      "dur": "30m",
+      "first": 70,
+      "biz": 145,
+      "second": 42,
+      "note": "苏州北"
+     },
+     {
+      "code": "G2661",
+      "dep": "10:49",
+      "arr": "11:12",
+      "dur": "23m",
+      "first": 70,
+      "biz": 145,
+      "second": 42,
+      "note": "苏州北"
+     },
+     {
+      "code": "G7591",
+      "dep": "11:19",
+      "arr": "11:54",
+      "dur": "35m",
+      "first": 67,
+      "biz": 146,
+      "second": 41,
+      "note": "苏州站, latest sensible"
+     }
+    ]
+   }
+  ],
+  "note": "Fuxing Hao 复兴号 G-trains only. Fares from 12306 for the same weekday in late September (13 Sep check); high-speed fares float by train and time, so November can differ slightly. Tickets open 15 days ahead counting the travel day, at 12306 or Trip.com; passports needed."
+ }
 }
