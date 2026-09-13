@@ -217,6 +217,7 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
         <div class="pills" id="catPills"></div>
         <div class="row" style="margin:2px 0 10px">
           <button class="btn small" id="copySummary">Copy as text for WhatsApp</button>
+          <button class="btn small" data-refresh>↻ Refresh from workbook</button>
           <button class="btn small ghost" id="toggleAll">Collapse all</button>
         </div>
         <div id="itin"></div>
@@ -261,7 +262,12 @@ code{background:var(--paper-2);padding:1px 5px;border-radius:4px;font-size:13px}
 
       <!-- SHARE / SETTINGS -->
       <section class="view" id="v-settings">
-        <h2>Share the plan</h2>
+        <h2>Refresh the itinerary</h2>
+        <p class="muted">Edited the itinerary workbook? Tap refresh. The planner re-reads the latest workbook from iCloud and rebuilds itself, usually within 5 minutes. Your votes, notes and ticks are kept.</p>
+        <div class="row"><button class="btn primary" data-refresh>↻ Refresh from workbook</button></div>
+        <div id="refreshStatus"></div>
+
+        <h2 style="margin-top:26px">Share the plan</h2>
         <p class="muted">Export a file, send it on WhatsApp, and your companion imports it. Import <b>merges</b> — everyone's votes, notes, ticks and additions are kept, nothing is overwritten. Repeat in both directions until the plan is final.</p>
         <div class="row">
           <button class="btn primary" id="exportBtn">Export plan (.json)</button>
@@ -311,6 +317,7 @@ const CITY_VAR = {Hangzhou:'var(--city-hangzhou)', Nanjing:'var(--city-nanjing)'
 const CAT_VAR = {Sight:'var(--c-sight)', Food:'var(--c-food)', 'Café':'var(--c-cafe)', Shop:'var(--c-shop)', Trendy:'var(--c-trendy)', Foliage:'var(--c-foliage)', Night:'var(--c-night)', Travel:'var(--c-travel)', Other:'var(--c-other)', hotel:'var(--c-hotel)', flight:'var(--c-flight)', train:'var(--c-train)', Lunch:'var(--c-food)', Dinner:'var(--c-food)', Snack:'var(--c-food)'};
 const catVar = (c) => CAT_VAR[c] || (/caf|coffee/i.test(c||'')?'var(--c-cafe)': /food|snack|noodle|duck|dessert|sweets|bakery|dish|restaurant|hotel/i.test(c||'')?'var(--c-food)': /shop/i.test(c||'')?'var(--c-shop)': /trendy|modern/i.test(c||'')?'var(--c-trendy)': /foliage|seasonal/i.test(c||'')?'var(--c-foliage)': /culture|icon|trip|experience/i.test(c||'')?'var(--c-sight)':'var(--c-other)');
 const LS_PLAN = 'jiangnan.plan.v2', LS_LOCAL = 'jiangnan.local.v2';
+const REFRESH = 'https://ntfy.sh/jiangnan-refresh-5af214c54c2904f9';   // tools/refresh_listener.py watches this and rebuilds from the iCloud workbook
 const KIND_ICON = {flight:'✈', train:'🚄', hotel:'🏨'};
 const SECTIONS = [['dining','Dining & cafés'],['meals','Meal picks by day'],['explore','Shop · street food · explore'],['events','Events & foliage']];
 const FILTERS = [['all','Everything',''],['must','Must-see','var(--c-sight)'],['eat','Food & cafés','var(--c-food)'],['opt','Optional','var(--c-optional)'],['travel','Travel','var(--c-travel)']];
@@ -685,6 +692,36 @@ $('#importFile').addEventListener('change', e=>{
 $('#resetAll').addEventListener('click', ()=>{ if (confirm('Put the plan back to the workbook and clear your name on this device?')){ ['jiangnan.plan.v2','jiangnan.local.v2','jiangnan.plan.v1','jiangnan.local.v1'].forEach(k=>localStorage.removeItem(k)); location.reload(); } });
 
 // ---------- boot ----------
+// ---------- refresh from the workbook: post a request; the listener on Tze's PC rebuilds, pushes, then posts "done" ----------
+let refreshPoll = null;
+function refreshMsg(html, cls){ const el=$('#refreshStatus'); if (el) el.innerHTML = `<div class="status ${cls||''}">${html}</div>`; }
+async function requestRefresh(){
+  const req = Date.now();
+  try{
+    const r = await fetch(REFRESH, {method:'POST', body: JSON.stringify({req, by: L.me||''})});
+    if (!r.ok) throw new Error(r.status);
+  }catch(e){ toast("Couldn't send the refresh request. Check the internet and try again."); refreshMsg("Couldn't send the refresh request. Try again.", 'bad'); return; }
+  toast('Refresh requested ✓'); showTab('settings');
+  refreshMsg('Refresh requested ✓ Checking the workbook… (usually within 5 minutes; you can keep using the planner)');
+  clearInterval(refreshPoll); const t0 = Date.now();
+  refreshPoll = setInterval(async ()=>{
+    if (Date.now()-t0 > 15*60*1000){ clearInterval(refreshPoll); refreshMsg('No answer yet. The computer that rebuilds the planner may be off; try again later.', 'bad'); return; }
+    try{
+      const txt = await (await fetch(REFRESH + '/json?poll=1&since=' + Math.floor(req/1000 - 5), {cache:'no-store'})).text();
+      for (const line of txt.split('\n')){ if (!line.trim()) continue; let m; try{ m = JSON.parse(line); }catch(e){ continue; }
+        if (m.event !== 'message') continue; let d; try{ d = JSON.parse(m.message); }catch(e){ continue; }
+        if (d.done && d.req >= req - 2000){
+          clearInterval(refreshPoll);
+          if (d.error) refreshMsg('The rebuild failed: ' + esc(d.error), 'bad');
+          else if (d.changed) refreshMsg('Updated from the workbook ✓ <button class="btn small primary" onclick="location.reload()">Reload now</button>', 'ok');
+          else refreshMsg('Checked the workbook ✓ Nothing has changed since the last update.', 'ok');
+          return;
+        }
+      }
+    }catch(e){}
+  }, 15000);
+}
+document.addEventListener('click', e=>{ if (e.target.closest('[data-refresh]')){ e.preventDefault(); requestRefresh(); } });
 function boot(){
   $('#mCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
   if (!L.me){ try{ const old=JSON.parse(localStorage.getItem('jiangnan.local.v1')); if (old&&old.me){ L.me=old.me; saveLocal(); } }catch(e){} }

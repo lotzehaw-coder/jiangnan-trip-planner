@@ -4,3 +4,5 @@ Thumbs.db
 *.key
 .env*
 .claude/
+tools/.refresh_state.json
+tools/_app.js
