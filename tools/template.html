@@ -306,6 +306,19 @@ details.more{margin-top:6px}
 .trow .pr b{color:var(--ink);font-size:14px}
 .trow .nt{grid-column:1 / -1;font-size:12px;color:var(--ink-3)}
 .fx{display:inline-block;font-size:10.5px;font-weight:700;color:#fff;background:#c0392b;border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:1px}
+/* ⓘ info sheet: photos + what it is + reviews / videos (Tze, 13 Sep) */
+.info-b{border:0;background:var(--paper-2);color:var(--ink-2);border-radius:999px;width:26px;height:26px;font-size:14px;font-weight:700;cursor:pointer;flex:0 0 auto;line-height:26px;padding:0;font-family:Georgia,serif;font-style:italic}
+.stop .top .info-b{margin-left:auto}
+.isheet{padding:0 0 20px}
+.isheet .car{height:220px;border-radius:18px 18px 0 0}
+.isheet .ib{padding:12px 16px 0}
+.isheet h2{margin:0 0 4px;font-size:19px}
+.isheet .lede{color:var(--ink-2);font-size:14.5px;margin:8px 0;line-height:1.45}
+.isheet .meta2{font-size:13px;color:var(--ink-3);margin:4px 0}
+.isheet .links{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.isheet .links .lab{font-size:13px;color:var(--ink-3);align-self:center;width:100%}
+.isheet .nopic{background:var(--paper-2);border-radius:18px 18px 0 0;height:70px;display:grid;place-items:center;color:var(--ink-3);font-size:13px}
+.isheet .acts3{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -449,6 +462,7 @@ details.more{margin-top:6px}
     <div style="margin-top:14px"><button class="btn primary" type="submit" style="width:100%;justify-content:center">Open the plan</button></div>
   </form>
 </div>
+<div class="overlay hidden" id="infoOverlay"><div class="sheet isheet" id="infoSheet" role="dialog" aria-modal="true"></div></div>
 <div class="overlay hidden" id="mapOverlay"><div class="mapmenu" id="mapMenu"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -740,6 +754,48 @@ $('#v-budget').addEventListener('click', e=>{
   const t=e.target.closest('[data-train]'); if (t){ const [leg,code]=t.dataset.train.split('|'); L.train=L.train||{}; L.train[leg]=code; saveLocal(); renderBudget(); toast(code+' chosen for '+fmtDay(legById(leg).date)); }
 });
 
+// ---------- ⓘ INFO SHEET: photos, what it is, then reviews (restaurants) or videos & blogs (everything else) ----------
+const FOODISH = /^(Food|Café|Lunch|Dinner|Snack|Restaurant|In-hotel|Night|Street food|Bakery|Dessert)/i;
+const isFood = (o) => FOODISH.test(o.category||'') || /^(Lunch|Dinner|Coffee|Breakfast)\b/i.test(o.name||'') || o.section==='dining' || o.section==='meals';
+const APPS = {   // app search first on phones (their websites need a login), website as the fallback
+  xhs: {label:'小红书', ios:q=>`xhsdiscover://search/result?keyword=${q}`, android:q=>`intent://search/result?keyword=${q}#Intent;scheme=xhsdiscover;package=com.xingin.xhs;end`, web:q=>`https://www.xiaohongshu.com/search_result?keyword=${q}`},
+  dp: {label:'大众点评', ios:q=>`dianping://searchshoplist?keyword=${q}`, android:q=>`intent://searchshoplist?keyword=${q}#Intent;scheme=dianping;package=com.dianping.v1;end`, web:q=>`https://www.dianping.com/search/keyword/0/0_${q}`},
+};
+function openAppSearch(key, term){
+  const a=APPS[key], q=encodeURIComponent(term), web=a.web(q);
+  if (!(isIOS||isAndroid)) { openOut(web); return; }
+  openApp(isIOS?a.ios(q):a.android(q), ()=>{ const m=$('#mapMenu'); m.innerHTML=`<h3>${a.label} didn't open</h3><p>Is the app installed? Its website usually needs a login to show posts.</p><button class="btn map" data-web="${esc(web)}">Try the website ↗</button><button class="btn ghost" data-go="x">Close</button>`;
+    m.onclick=(ev)=>{ const w=ev.target.closest('[data-web]'); $('#mapOverlay').classList.add('hidden'); if (w) openOut(w.dataset.web); }; $('#mapOverlay').classList.remove('hidden'); });
+}
+function infoFor(kind, id){ return kind==='b' ? SEED.browse.find(x=>x.id===id) : P.items[id]; }
+function showInfo(kind, id){
+  const o=infoFor(kind, id); if (!o) return;
+  const city=o.city||'', local=cjk(o.name), term=[CN[city]||'', local||String(o.name).replace(/\(.*?\)/g,'').replace(/^(Lunch|Dinner|Coffee|Breakfast)\s*[—–-]\s*/i,'').trim()].filter(Boolean).join(' ');
+  const en=String(o.name||'').replace(/[㐀-鿿·（）()《》]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast|alt|Optional breakfast)\s*[:—–-]\s*/i,'').replace(/\s+/g,' ').trim();
+  const food=isFood(o), pics=picsFor(o).filter(x=>!food || /\/(louwailou|njduck|szfood)-/.test(x.src));   // a restaurant never borrows photos of its district
+  const gm=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((local||en)+(city?', '+city:'')+', China')}`;
+  const q=encodeURIComponent(term+(food?'':' 攻略'));
+  const links = food
+    ? `<span class="lab">⭐ Reviews & photos from diners</span><button class="btn small" data-appsearch="xhs|${esc(term)}">小红书</button><button class="btn small" data-appsearch="dp|${esc(term)}">大众点评</button><button class="btn small" data-out="${esc(gm)}">Google reviews</button>`
+    : `<span class="lab">▶ Videos, blogs & reviews</span><button class="btn small" data-appsearch="xhs|${esc(term)}">小红书</button><button class="btn small" data-out="https://search.bilibili.com/all?keyword=${q}">Bilibili</button><button class="btn small" data-out="https://www.youtube.com/results?search_query=${encodeURIComponent((en||term)+' '+(city||''))}">YouTube</button><button class="btn small" data-out="${esc(gm)}">Google reviews</button>`;
+  const when = o.day ? `${fmtDay(o.day)}${o.time?' · '+timeSpan(o):''}` : (o.suggestedDay?`suggested ${fmtDay(o.suggestedDay)}`:'');
+  $('#infoSheet').innerHTML = `${pics.length?car(pics,'',o.name):`<div class="nopic">No photos here yet: tap ${food?'小红书 or 大众点评':'小红书 or YouTube'} below to see it</div>`}
+    <div class="ib"><h2>${esc(o.name)}</h2>
+      <div class="meta2">${[esc(city), esc(o.category||''), when, o.rating?`${esc(o.rating)}${/^\d/.test(o.rating)?'★':''}`:'', o.price?esc(o.price):''].filter(Boolean).join(' · ')}</div>
+      ${(o.info||o.notes)?`<p class="lede">${esc(o.info||o.notes)}</p>`:''}
+      ${o.address?`<div class="meta2">📍 ${esc(o.address)}</div>`:''}
+      <div class="links">${links}</div>
+      <div class="acts3">${mapBtn(o)}<button class="btn ghost" data-infoclose>Close</button></div></div>`;
+  $('#infoOverlay').classList.remove('hidden'); $('#infoSheet').scrollTop=0;
+}
+document.addEventListener('click', e=>{
+  const i=e.target.closest('[data-info]'); if (i){ e.preventDefault(); e.stopPropagation(); const [k,id]=i.dataset.info.split('|'); showInfo(k,id.includes('|')?id:i.dataset.info.slice(2)); return; }
+  const a=e.target.closest('[data-appsearch]'); if (a){ e.preventDefault(); const [k,...t]=a.dataset.appsearch.split('|'); openAppSearch(k, t.join('|')); return; }
+  const o=e.target.closest('[data-out]'); if (o){ e.preventDefault(); openOut(o.dataset.out); return; }
+}, true);
+$('#infoOverlay').addEventListener('click', e=>{ if (e.target.id==='infoOverlay' || e.target.closest('[data-infoclose]')) $('#infoOverlay').classList.add('hidden'); });
+const infoBtn = (kind, id) => `<button type="button" class="info-b" data-info="${kind}|${esc(id)}" aria-label="More about this place">i</button>`;
+
 // ---------- tabs ----------
 function showTab(name){
   $$('section.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+name));
@@ -783,7 +839,7 @@ function itemCard(it){
   const notes = Object.entries(it.notes||{}).map(([who,t])=>`<div><b>${esc(who)}:</b> ${esc(t)}</div>`).join('');
   const who = it.src==='plan' ? (it.suggestedDay?`from the plan · suggested ${fmtDay(it.suggestedDay)}`:'from the plan') : `added by ${esc(it.addedBy||'?')}`;
   return `<div class="card item cat" style="--cc:${catVar(it.category)}" data-id="${esc(it.id)}">
-    <div class="name">${esc(it.name)}</div>
+    <div class="name" style="display:flex;gap:8px;align-items:flex-start"><span style="flex:1">${esc(it.name)}</span>${infoBtn('i',it.id)}</div>
     ${car(picsFor(it),'',it.name)}
     ${it.address?`<div class="addr">${esc(it.address)}</div>`:''}
     ${it.info?`<div class="info">${esc(it.info)}</div>`:''}
@@ -823,7 +879,7 @@ function browseCard(b){
   const id='b:'+b.id.slice(2); const ex=P.items[id];
   const state = ex ? (ex.status==='dropped' ? 'dropped' : ex.day ? 'On '+fmtDay(ex.day) : 'On wishlist') : '';
   return `<div class="card item cat" style="--cc:${catVar(b.category)}" data-bid="${esc(b.id)}">
-    <div class="name">${b.rank?`<span class="chip">${esc(b.rank)}</span>`:''}${esc(b.name)}</div>
+    <div class="name" style="display:flex;gap:8px;align-items:flex-start"><span style="flex:1">${b.rank?`<span class="chip">${esc(b.rank)}</span>`:''}${esc(b.name)}</span>${infoBtn('b',b.id)}</div>
     ${b.address?`<div class="addr">${esc(b.address)}</div>`:''}
     ${b.notes?`<div class="info">${esc(b.notes)}</div>`:''}
     <div class="meta"><span class="chip city" style="--ci:${CITY_VAR[b.city]||'var(--ink-3)'}">${esc(b.city||'—')}</span>${b.category?`<span class="chip cat" style="--cc:${catVar(b.category)}">${esc(b.category)}</span>`:''}${b.rating?`<span class="chip rate">${esc(b.rating)}${/^\d/.test(b.rating)?'★':''}</span>`:''}${b.price?`<span class="chip">${esc(b.price)}</span>`:''}</div>
@@ -919,7 +975,7 @@ function dayExtras(d){
   const groups={}; for (const b of list){ const g = b.section==='meals' ? b.group.replace(/^Day \d+\s*·\s*/,'') : SEC_LABEL[b.section]||b.section; (groups[g]=groups[g]||[]).push(b); }
   return `<details class="extras" data-xday="${d}" ${L.xopen&&L.xopen[d]?'open':''}><summary>🍜 Meal &amp; dining options for this day (${list.length})</summary>${Object.entries(groups).map(([g,xs])=>`<div class="group">${esc(g)}</div>`+xs.map(b=>{
     const ex=P.items['b:'+b.id.slice(2)]; const on=ex&&ex.status!=='dropped';
-    return `<div class="xopt"><div><b>${b.rank?esc(b.rank)+' ':''}${esc(b.name)}</b> ${b.rating?`<span class="chip rate">${esc(b.rating)}${/^\d/.test(b.rating)?'★':''}</span>`:''}${b.price?`<span class="chip">${esc(b.price)}</span>`:''}
+    return `<div class="xopt"><div>${infoBtn('b',b.id)} <b>${b.rank?esc(b.rank)+' ':''}${esc(b.name)}</b> ${b.rating?`<span class="chip rate">${esc(b.rating)}${/^\d/.test(b.rating)?'★':''}</span>`:''}${b.price?`<span class="chip">${esc(b.price)}</span>`:''}
       ${(b.notes||b.address)?`<div class="sub">${esc([b.notes,b.address].filter(Boolean).join(' · '))}</div>`:''}</div>
       <div class="row">${mapBtn(b)}${on?`<span class="chip">${ex.day?'on '+fmtShort(ex.day):'on wishlist'}</span>`:`<button class="btn small" data-xadd="${esc(b.id)}" data-xd="${d}">+ Add to day</button>`}</div></div>`; }).join('')).join('')}</details>`;
 }
@@ -945,7 +1001,7 @@ function itemStop(i, isNext){
   const mine=L.me&&(i.votes||[]).includes(L.me); const pics=picsFor(i);
   const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
   return `<div class="stop ${isOpt(i)?'opt':''} ${i.done?'done':''} ${isNext?'next':''}" data-id="${esc(i.id)}" style="--cc:${catVar(i.category)}"><div class="dot" data-act="done" title="Mark done"><svg><use href="#ico-check"/></svg></div><div class="card">
-    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}</div>
+    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
     ${pics.length?`<img class="thumb" src="${esc(pics[0].src)}" alt="" loading="lazy">`:''}<div class="name">${esc(i.name)}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
     ${car(pics,'big',i.name)}
     <div class="acts">
