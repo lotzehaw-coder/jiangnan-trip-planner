@@ -1,0 +1,838 @@
+{
+ "stays": [
+  {
+   "id": "hz1",
+   "city": "Hangzhou",
+   "title": "Hangzhou · first two nights",
+   "dates": "Sun 15 → Tue 17 Nov",
+   "nights": 2,
+   "default": "canopy",
+   "tip": "Tze's plan: Canopy by the lake for the West Lake days, then one night at the Conrad.",
+   "options": [
+    {
+     "id": "canopy",
+     "price": 841,
+     "myr": 510,
+     "total": 1682
+    },
+    {
+     "id": "jwhz",
+     "price": 749,
+     "myr": 454,
+     "total": 1498
+    },
+    {
+     "id": "mqj",
+     "price": 722,
+     "myr": 438,
+     "total": 1444
+    },
+    {
+     "id": "azure",
+     "price": 1187,
+     "myr": 719,
+     "total": 2374
+    },
+    {
+     "id": "conrad",
+     "price": 1641,
+     "myr": 994,
+     "total": 3282
+    }
+   ]
+  },
+  {
+   "id": "hz2",
+   "city": "Hangzhou",
+   "title": "Hangzhou · last night",
+   "dates": "Tue 17 → Wed 18 Nov",
+   "nights": 1,
+   "default": "conrad",
+   "tip": "Pick the same hotel as the first two nights to skip the hotel move on the 17th.",
+   "options": [
+    {
+     "id": "conrad",
+     "price": 1641,
+     "myr": 994,
+     "total": 1641
+    },
+    {
+     "id": "mqj",
+     "price": 827,
+     "myr": 501,
+     "total": 827
+    },
+    {
+     "id": "azure",
+     "price": 1235,
+     "myr": 748,
+     "total": 1235
+    },
+    {
+     "id": "jwhz",
+     "price": 802,
+     "myr": 486,
+     "total": 802
+    },
+    {
+     "id": "canopy",
+     "price": 841,
+     "myr": 510,
+     "total": 841
+    }
+   ]
+  },
+  {
+   "id": "nj",
+   "city": "Nanjing",
+   "title": "Nanjing",
+   "dates": "Wed 18 → Fri 20 Nov",
+   "nights": 2,
+   "default": "ritznj",
+   "tip": "Most of the Nanjing plan is Fuzimiao, Xinjiekou and Purple Mountain, so a central hotel saves the most taxi time.",
+   "options": [
+    {
+     "id": "ritznj",
+     "price": 2090,
+     "myr": 1267,
+     "total": 4180
+    },
+    {
+     "id": "westinnj",
+     "price": 699,
+     "myr": 424,
+     "total": 1398
+    },
+    {
+     "id": "hiltonnj",
+     "price": 625,
+     "myr": 379,
+     "total": 1250
+    },
+    {
+     "id": "jingli",
+     "price": 969,
+     "myr": 587,
+     "total": 1938
+    },
+    {
+     "id": "hiltonriver",
+     "price": 381,
+     "myr": 231,
+     "total": 762
+    }
+   ]
+  },
+  {
+   "id": "sz",
+   "city": "Suzhou",
+   "title": "Suzhou",
+   "dates": "Fri 20 → Sun 22 Nov",
+   "nights": 2,
+   "default": "ritzsz",
+   "tip": "The gardens and canal streets are in the old town (Gusu). Jinji Lake hotels are newer-city, 20–30 min away.",
+   "options": [
+    {
+     "id": "ritzsz",
+     "price": 1577,
+     "myr": 956,
+     "total": 3154
+    },
+    {
+     "id": "szmarriott",
+     "price": 812,
+     "myr": 492,
+     "total": 1624
+    },
+    {
+     "id": "wsz",
+     "price": 1052,
+     "myr": 638,
+     "total": 2104
+    },
+    {
+     "id": "hiltonsz",
+     "price": 652,
+     "myr": 395,
+     "total": 1304
+    }
+   ]
+  }
+ ],
+ "hotels": {
+  "canopy": {
+   "id": "canopy",
+   "name": "Canopy by Hilton Hangzhou West Lake",
+   "cn": "杭州西湖希尔顿嘉悦里酒店",
+   "chain": "Hilton",
+   "brand": "Canopy",
+   "area": "Hubin, 6 min walk to West Lake",
+   "address": "上城区国货路2号 · No. 2 Guohuo Road",
+   "opened": "Opened Dec 2020 · 160 rooms",
+   "pros": [
+    "6-minute walk to the lake and the Hubin shopping street",
+    "Metro Line 1 five minutes away (7 stops to Hangzhou East)",
+    "Walk to Hefang Street and the Wushan night market"
+   ],
+   "cons": [
+    "Boutique hotel: no executive lounge or big pool",
+    "Lake-view rooms cost more (from ¥1,153)"
+   ],
+   "url": "https://www.hilton.com/en/hotels/hghwlpy-canopy-hangzhou-west-lake/",
+   "photos": [
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097650/outside-building.jpg?impolicy=crop&cw=4143&ch=2762&gravity=NorthWest&xposition=0&yposition=119&rw=800&rh=533",
+     "cap": "The hotel · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097644/hotel-lobby.jpg?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=25&yposition=0&rw=800&rh=533",
+     "cap": "Lobby · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097572/hghwl-premium-room-1.jpg?impolicy=crop&cw=4210&ch=2806&gravity=NorthWest&xposition=0&yposition=96&rw=800&rh=533",
+     "cap": "Premium king room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097558/hghwl-lakeview-room.jpg?impolicy=crop&cw=4176&ch=2784&gravity=NorthWest&xposition=0&yposition=108&rw=800&rh=533",
+     "cap": "Lake-view room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097515/hghwl-canopy-loft-room.jpg?impolicy=crop&cw=4282&ch=2854&gravity=NorthWest&xposition=0&yposition=72&rw=800&rh=533",
+     "cap": "Canopy loft · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/HGHWLPY/15097608/hghwl-restaurant-bar-1.jpg?impolicy=crop&cw=4457&ch=2971&gravity=NorthWest&xposition=0&yposition=14&rw=800&rh=533",
+     "cap": "Restaurant & bar · © Hilton"
+    }
+   ],
+   "near": [
+    "broken",
+    "hefang"
+   ]
+  },
+  "conrad": {
+   "id": "conrad",
+   "name": "Conrad Hangzhou",
+   "cn": "杭州康莱德酒店",
+   "chain": "Hilton",
+   "brand": "Conrad",
+   "area": "Qianjiang New City, on the river",
+   "address": "上城区新业路228号 · Raffles City",
+   "opened": "Opened 2019 · 306 rooms",
+   "pros": [
+    "Top floors of Raffles City: mall, food court and metro downstairs",
+    "Qiantang River views and the light show at the door",
+    "Sky lobby, pool and executive lounge"
+   ],
+   "cons": [
+    "~25 min by car to West Lake",
+    "Most expensive in Hangzhou (river view from ¥1,768)"
+   ],
+   "url": "https://www.hilton.com/en/hotels/hghfrci-conrad-hangzhou/",
+   "photos": [
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Property%20Photography/Conrad/H/HGHFRCI/Conrad_HANGZHOU_Exterior_Horizontal_JPEG_2.jpg",
+     "cap": "Raffles City towers · © Hilton"
+    },
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Lifestyle%20Photography/Conrad/H/HGHFRCI/Conrad_HANGZHOU_Lobby_Horizontal_TIFF_1.jpg",
+     "cap": "Lobby · © Hilton"
+    },
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Lifestyle%20Photography/Conrad/H/HGHFRCI/Conrad_HANGZHOU_SkyLobby_Horizontal_TIFF_3.jpg",
+     "cap": "Sky lobby · © Hilton"
+    },
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Property%20Photography/Conrad/H/HGHFRCI/HGHFR-King%20Deluxe%20River%20View%20Room.jpg",
+     "cap": "King deluxe river-view room · © Hilton"
+    },
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Property%20Photography/Conrad/H/HGHFRCI/HGHFR-Conrad%20Suite-Living%20Room.jpg",
+     "cap": "Conrad suite · © Hilton"
+    },
+    {
+     "src": "https://assets.hiltonstatic.com/hilton-asset-cache/image/upload/c_fill,w_800,h_533,q_75,f_auto,g_auto/Imagery/Property%20Photography/Conrad/H/HGHFRCI/HGHFR-Swimming%20pool.jpg",
+     "cap": "Pool · © Hilton"
+    }
+   ],
+   "near": [
+    "qianjiang"
+   ]
+  },
+  "jwhz": {
+   "id": "jwhz",
+   "name": "JW Marriott Hotel Hangzhou",
+   "cn": "杭州JW万豪酒店",
+   "chain": "Marriott",
+   "brand": "JW Marriott",
+   "area": "Wulin, ~2 km north-east of West Lake",
+   "address": "拱墅区湖墅南路28号 · 28 Hushu South Road",
+   "opened": "Opened 2010 · 305 rooms",
+   "pros": [
+    "Cheapest of the big five-stars here",
+    "Executive lounge and indoor pool",
+    "600 m to Wulin Square metro and shopping"
+   ],
+   "cons": [
+    "Older rooms than Canopy or Conrad",
+    "Not walking distance to the lake shore sights"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/hghjw-jw-marriott-hotel-hangzhou/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-exterior-0026-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-frontdesk-0027-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Lobby · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-guestroom-4439-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Guest room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-suite-0013-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-lounge-0029-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive lounge · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHJW/hghjw-pool-0023-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Indoor pool · © Marriott"
+    }
+   ],
+   "near": [
+    "gongchen"
+   ]
+  },
+  "azure": {
+   "id": "azure",
+   "name": "The Azure Qiantang, a Luxury Collection Hotel",
+   "cn": "杭州钱塘江畔精选酒店",
+   "chain": "Marriott",
+   "brand": "Luxury Collection",
+   "area": "Qiantang riverfront, south of the city centre",
+   "address": "上城区钱江路 · Qiantang River bank",
+   "opened": "Opened 2014 · 205 rooms",
+   "pros": [
+    "Every room looks over the Qiantang River",
+    "Quiet, big rooms and a heated indoor pool",
+    "Between West Lake and the Six Harmonies Pagoda"
+   ],
+   "cons": [
+    "Taxi everywhere; no metro at the door",
+    "Pricier than JW or Marriott Qianjiang"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/hghlc-the-azure-qiantang-a-luxury-collection-hotel-hangzhou/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-exterior-9657-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-reception-9667-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Reception · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-queen-premierriverview-room-1135-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Premier river-view room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-suite-livingroom-1132-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Suite living room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-indoor-heated-9672-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Heated indoor pool · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHLC/hghlc-panorama-restaurant-9663-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Panorama restaurant · © Marriott"
+    }
+   ],
+   "near": []
+  },
+  "mqj": {
+   "id": "mqj",
+   "name": "Hangzhou Marriott Hotel Qianjiang",
+   "cn": "杭州钱江新城万豪酒店",
+   "chain": "Marriott",
+   "brand": "Marriott",
+   "area": "Qianjiang New City, on the river",
+   "address": "上城区钱江新城 · Qianjiang New City",
+   "opened": "Opened Aug 2016 · 348 rooms",
+   "pros": [
+    "284 of the rooms face the Qiantang River",
+    "Near the light show, much cheaper than the Conrad",
+    "Executive lounge, pool and spa"
+   ],
+   "cons": [
+    "~25 min by car to West Lake",
+    "A business hotel feel"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/hghqi-hangzhou-marriott-hotel-qianjiang/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-exterior-0018-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-desk-0047-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Lobby · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-premier-king-4445-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Premier king room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-suite-0035-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-lounge-0051-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive lounge · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/HGHQI/hghqi-pool-0043-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Pool · © Marriott"
+    }
+   ],
+   "near": [
+    "qianjiang"
+   ]
+  },
+  "ritznj": {
+   "id": "ritznj",
+   "name": "The Ritz-Carlton, Nanjing",
+   "cn": "南京丽思卡尔顿酒店",
+   "chain": "Marriott",
+   "brand": "Ritz-Carlton",
+   "area": "Xinjiekou, city centre",
+   "address": "玄武区中山路18号 · floors 38–62 of Deji Plaza",
+   "opened": "Opened Jun 2020 · 295 rooms",
+   "pros": [
+    "Right above Deji Plaza and the Xinjiekou metro (Lines 1 & 2)",
+    "Views over Xuanwu Lake and the city from every room",
+    "FLAIR rooftop bar on 62F, indoor pool"
+   ],
+   "cons": [
+    "The most expensive hotel on the trip",
+    "Marriott Platinum gets no lounge or breakfast at Ritz-Carlton"
+   ],
+   "url": "https://www.ritzcarlton.com/en/hotels/nkgrz-the-ritz-carlton-nanjing/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-aerial-view-4134-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "City view from the tower · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-arrival-lobby-3145-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Arrival lobby · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-deluxe-guest-9275-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Deluxe room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-xuanwu-lake-3147-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Xuanwu Lake view · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-executive-suite-5172-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGRZ/nkgrz-indoor-pool-5178-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Indoor pool · © Marriott"
+    }
+   ],
+   "near": [
+    "xinjiekou"
+   ]
+  },
+  "westinnj": {
+   "id": "westinnj",
+   "name": "The Westin Nanjing Xuanwu Lake",
+   "cn": "南京金茂威斯汀大酒店",
+   "chain": "Marriott",
+   "brand": "Westin",
+   "area": "Hunan Road, by Xuanwu Lake",
+   "address": "鼓楼区中央路201号 · 201 Zhongyang Road",
+   "opened": "Opened 2011 · 234 rooms",
+   "pros": [
+    "Walk to Xuanwu Lake, Jiming Temple and Shiziqiao food street",
+    "Club lounge and pool",
+    "A third of the Ritz price"
+   ],
+   "cons": [
+    "~3 km north of Xinjiekou and 6 km from Fuzimiao",
+    "Older building"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/nkgwi-the-westin-nanjing-xuanwu-lake/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-exterior-5004-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-lobby-1737-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Lobby · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-king-premier-guestroom-2605-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Premier king room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-executive-5012-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-club-lounge-5022-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Club lounge · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/NKGWI/nkgwi-pool-5018-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Pool · © Marriott"
+    }
+   ],
+   "near": [
+    "xuanwu"
+   ]
+  },
+  "hiltonnj": {
+   "id": "hiltonnj",
+   "name": "Hilton Nanjing",
+   "cn": "南京希尔顿酒店",
+   "chain": "Hilton",
+   "brand": "Hilton",
+   "area": "Hexi, next to Wanda Plaza",
+   "address": "建邺区江东中路100号 · 100 Jiangdong Middle Road",
+   "opened": "Opened Nov 2011 · 355 rooms",
+   "pros": [
+    "Executive rooms with lounge access from ¥856",
+    "Wanda Plaza mall next door",
+    "Short walk to the Nanjing Massacre Memorial Hall"
+   ],
+   "cons": [
+    "~6 km west of the old-town sights",
+    "Taxi or metro to everything on the plan"
+   ],
+   "url": "https://www.hilton.com/en/hotels/nkgjfhi-hilton-nanjing/",
+   "photos": [
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/20252579/dji-0389.jpg?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=2&yposition=0&rw=800&rh=533",
+     "cap": "The hotel · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/4830553/lobby-03v2.jpg?impolicy=crop&cw=2250&ch=1500&gravity=NorthWest&xposition=1&yposition=0&rw=800&rh=533",
+     "cap": "Lobby · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/4821671/nanjing-guestroom.jpg?impolicy=crop&cw=3542&ch=2361&gravity=NorthWest&xposition=0&yposition=238&rw=800&rh=533",
+     "cap": "Guest room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/4824758/deluxe-suite-living-room.jpg?impolicy=crop&cw=2243&ch=1495&gravity=NorthWest&xposition=0&yposition=2&rw=800&rh=533",
+     "cap": "Deluxe suite living room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/5293041/nkgjfhi-executivelounge.jpg?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=3&yposition=0&rw=800&rh=533",
+     "cap": "Executive lounge · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGJFHI/4821971/pool.jpg?impolicy=crop&cw=1500&ch=1000&gravity=NorthWest&xposition=0&yposition=640&rw=800&rh=533",
+     "cap": "Pool · © Hilton"
+    }
+   ],
+   "near": []
+  },
+  "hiltonriver": {
+   "id": "hiltonriver",
+   "name": "Hilton Nanjing Riverside",
+   "cn": "南京世茂滨江希尔顿酒店",
+   "chain": "Hilton",
+   "brand": "Hilton",
+   "area": "Yangtze riverside, north-west",
+   "address": "鼓楼区滨江 · Yangtze riverbank",
+   "opened": "Opened 2011",
+   "pros": [
+    "Cheapest five-star option (from ¥381)",
+    "River-view rooms from ¥406, suites from ¥832",
+    "Gardens and an indoor pool"
+   ],
+   "cons": [
+    "~7 km from Fuzimiao and Xinjiekou",
+    "Far from the evening food streets"
+   ],
+   "url": "https://www.hilton.com/en/hotels/nkgnrhi-hilton-nanjing-riverside/",
+   "photos": [
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/4822463/hotel-exterior.jpg?impolicy=crop&cw=3750&ch=2500&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "The hotel · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/4834261/hotel-exterior-night.jpg?impolicy=crop&cw=3750&ch=2500&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "At night · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/26819738/king-garden-view-room.png?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=176&yposition=0&rw=800&rh=533",
+     "cap": "Garden-view king room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/4830701/nkgnr-premiersuite.jpg?impolicy=crop&cw=2880&ch=1920&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "Premier suite · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/4824532/nkgnr-swimmingpool.jpg?impolicy=crop&cw=2880&ch=1920&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "Indoor pool · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNRHI/4834198/outdoor-garden.jpg?impolicy=crop&cw=3750&ch=2500&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "Garden · © Hilton"
+    }
+   ],
+   "near": []
+  },
+  "jingli": {
+   "id": "jingli",
+   "name": "The New Jingli Hotel (SLH)",
+   "cn": "南京新晶丽酒店",
+   "chain": "Hilton",
+   "brand": "SLH · book on hilton.com",
+   "area": "Yuhuatai, south of the old city",
+   "address": "雨花台区紫荆花路2号 · near Kazimen metro",
+   "opened": "Opened 2019",
+   "pros": [
+    "Nanjing's first Small Luxury Hotels of the World member",
+    "Neo-classical European style with an in-house art gallery",
+    "Same owners as Nanjing Impressions 南京大牌档"
+   ],
+   "cons": [
+    "Earns Hilton points, but Hilton elite perks do not apply at SLH hotels",
+    "~5 km to Fuzimiao"
+   ],
+   "url": "https://www.hilton.com/en/hotels/nkgnjlx-the-new-jingli-hotel/",
+   "photos": [
+    {
+     "src": "https://www.hilton.com/im/en/NKGNJLX/20631301/nkgnjlx-111626483-hotel-front-6631x4282.jpg?impolicy=crop&cw=4843&ch=3229&gravity=NorthWest&xposition=78&yposition=0&rw=800&rh=533",
+     "cap": "Hotel front · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNJLX/20827918/nkgnjlx-111628465-deluxe-room-6480x4320.jpg?impolicy=crop&cw=5000&ch=3333&gravity=NorthWest&xposition=0&yposition=-1&rw=800&rh=533",
+     "cap": "Deluxe room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNJLX/20827921/nkgnjlx-111628602-deluxe-suite-6480x4320.jpg?impolicy=crop&cw=5000&ch=3333&gravity=NorthWest&xposition=0&yposition=-1&rw=800&rh=533",
+     "cap": "Deluxe suite · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/NKGNJLX/20827913/nkgnjlx-119450723-the-new-jingli-suite-4032x3046.jpg?impolicy=crop&cw=4032&ch=2688&gravity=NorthWest&xposition=0&yposition=179&rw=800&rh=533",
+     "cap": "New Jingli suite · © Hilton"
+    }
+   ],
+   "near": []
+  },
+  "ritzsz": {
+   "id": "ritzsz",
+   "name": "The Ritz-Carlton, Suzhou",
+   "cn": "苏州丽思卡尔顿酒店",
+   "chain": "Marriott",
+   "brand": "Ritz-Carlton",
+   "area": "Gusu, west edge of the old town",
+   "address": "姑苏区广济南路369号 · China Central Place",
+   "opened": "Opened Mar 2025",
+   "pros": [
+    "Newest hotel on the list",
+    "Under 1 km to the Lingering Garden, near Shantang Street",
+    "Club lounge (club rooms), pool"
+   ],
+   "cons": [
+    "Marriott Platinum gets no lounge or breakfast at Ritz-Carlton",
+    "~15 min by car to Pingjiang Road"
+   ],
+   "url": "https://www.ritzcarlton.com/en/hotels/wuxsz-the-ritz-carlton-suzhou/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-hotel-exterior-34977:Wide-Hor?wid=800&fit=constrain",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-premier-guest-room-13750-32048:Wide-Hor?wid=800&fit=constrain",
+     "cap": "Premier room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-panorama-room-23619:Wide-Hor?wid=800&fit=constrain",
+     "cap": "Panorama room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-premier-suite-33264-38220:Wide-Hor?wid=800&fit=constrain",
+     "cap": "Premier suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-club-lounge-37192:Wide-Hor?wid=800&fit=constrain",
+     "cap": "Club lounge · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/is/image/marriotts7prod/rz-wuxsz-swimming-pool-28846:Wide-Hor?wid=800&fit=constrain",
+     "cap": "Pool · © Marriott"
+    }
+   ],
+   "near": [
+    "liuyuan",
+    "shantang"
+   ]
+  },
+  "wsz": {
+   "id": "wsz",
+   "name": "W Suzhou",
+   "cn": "苏州W酒店",
+   "chain": "Marriott",
+   "brand": "W",
+   "area": "Jinji Lake, Suzhou Industrial Park",
+   "address": "工业园区苏州中心7号楼 · Suzhou Center",
+   "opened": "Opened Sep 2017",
+   "pros": [
+    "Lake views over Jinji Lake and the Suzhou Center mall",
+    "WET pool, lively bar scene",
+    "Platinum breakfast applies (unlike Ritz-Carlton)"
+   ],
+   "cons": [
+    "~10 km east of the old-town gardens (20–30 min by car)",
+    "Modern business district, not the canal-town feel"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/szvwh-w-suzhou/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-exterior-8518-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-hotel-entrance-8517-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Entrance · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-wonderful-room-1268-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Wonderful room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-wow-suite-8792-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "WOW suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-wet-8784-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "WET pool · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVWH/szvwh-living-room-8519-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Living Room lounge · © Marriott"
+    }
+   ],
+   "near": [
+    "jinji"
+   ]
+  },
+  "hiltonsz": {
+   "id": "hiltonsz",
+   "name": "Hilton Suzhou",
+   "cn": "苏州希尔顿酒店",
+   "chain": "Hilton",
+   "brand": "Hilton",
+   "area": "Jinji Lake, Suzhou Industrial Park",
+   "address": "工业园区苏州大道东275号 · Nanshi Street metro",
+   "opened": "Opened May 2016",
+   "pros": [
+    "Executive rooms with lounge access from ¥892",
+    "Metro at the door (Line 1 to the old town)",
+    "Pool, suites with kitchens"
+   ],
+   "cons": [
+    "~10 km east of the old-town gardens",
+    "Business-district location"
+   ],
+   "url": "https://www.hilton.com/en/hotels/szvtvhi-hilton-suzhou/",
+   "photos": [
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/7110522/hotel-exterior.jpg?impolicy=crop&cw=5000&ch=3333&gravity=NorthWest&xposition=0&yposition=193&rw=800&rh=533",
+     "cap": "The hotel · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/2207279/yuxi-lobby.jpg?impolicy=crop&cw=4984&ch=3323&gravity=NorthWest&xposition=7&yposition=0&rw=800&rh=533",
+     "cap": "Yu Xi Chinese restaurant · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/6589473/szvtvdi-king-deluxe-room.jpg?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "King deluxe room · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/6589493/szvtvdi-king-deluxe-suite.jpg?impolicy=crop&cw=4500&ch=3000&gravity=NorthWest&xposition=176&yposition=0&rw=800&rh=533",
+     "cap": "King deluxe suite · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/2206369/executive-lounge.jpg?impolicy=crop&cw=5000&ch=3333&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "Executive lounge · © Hilton"
+    },
+    {
+     "src": "https://www.hilton.com/im/en/SZVTVHI/2203540/swimming-pool.jpg?impolicy=crop&cw=5000&ch=3333&gravity=NorthWest&xposition=0&yposition=0&rw=800&rh=533",
+     "cap": "Pool · © Hilton"
+    }
+   ],
+   "near": [
+    "jinji"
+   ]
+  },
+  "szmarriott": {
+   "id": "szmarriott",
+   "name": "Suzhou Marriott Hotel",
+   "cn": "苏州万豪酒店",
+   "chain": "Marriott",
+   "brand": "Marriott",
+   "area": "Ganjiang West Road, west of the old town",
+   "address": "姑苏区干将西路1296号 · 1296 Ganjiang Rd West",
+   "opened": "Opened 2009 · renovated 2020 · 293 rooms",
+   "pros": [
+    "Half the Ritz price, ~2 km further west",
+    "Executive lounge and indoor pool",
+    "Straight along Ganjiang Road into the old town"
+   ],
+   "cons": [
+    "~5 km to Pingjiang Road and the Humble Administrator's Garden",
+    "Older building"
+   ],
+   "url": "https://www.marriott.com/en-us/hotels/szvmc-suzhou-marriott-hotel/overview/",
+   "photos": [
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-exterior-7447-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "The hotel · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-lobby-7451-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Lobby · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-king-guestroom-7440-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "King room · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-executive-suite-7455-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive suite · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-lounge-7452-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Executive lounge · © Marriott"
+    },
+    {
+     "src": "https://cache.marriott.com/content/dam/marriott-renditions/SZVMC/szvmc-pool-0029-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=800px:*",
+     "cap": "Indoor pool · © Marriott"
+    }
+   ],
+   "near": [
+    "liuyuan"
+   ]
+  }
+ },
+ "priceNote": "Lowest public rate per room per night for 2 adults, before taxes (about 6%), checked on hilton.com / marriott.com on 13 Sep 2026. RM at 1 CNY = RM0.606.",
+ "myr": 0.606
+}

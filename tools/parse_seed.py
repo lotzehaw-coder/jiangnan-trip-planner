@@ -81,7 +81,7 @@ for r in rows('Itinerary'):
     info = ' · '.join(x for x in (det, log) if x and x != '—')
     items.append({'id':f'p:d{n}-{counters[n]:02d}','name':name,'address':'' if addr in ('','—') else addr,'city':day_city[n],'category':cat,
         'info':info,'tags':tags,'suggestedDay':day_date[n],'time':start,'end':end,'duration':dur(start,end) if end else '',
-        'day': day_date[n] if tm else '', 'status': 'scheduled' if tm else 'wishlist', 'order':counters[n]})
+        'day': day_date[n], 'status': 'scheduled', 'order':counters[n]})   # untimed rows (Opt/Alt) sit at the end of their day, like the workbook
 
 blocks = []
 def B(id, day, type, title, **kw):
@@ -89,14 +89,17 @@ def B(id, day, type, title, **kw):
     b.update(kw); blocks.append(b)
 B('seed:mh388','2026-11-15','flight','Fly to Shanghai Pudong',number='MH388',time='09:10',**{'from':'KUL T1','to':'PVG T2'},note='lands 14:30 · Business · A330-300 · confirmed (Trip.com)')
 B('seed:t1','2026-11-15','train','G-train to Hangzhou East 杭州东',time='17:00',**{'from':'Shanghai Hongqiao 虹桥','to':'Hangzhou East 杭州东'},tentative=True,note='~1h · not booked yet · sit on the right for river views')
-B('seed:h1in','2026-11-15','hotel','Check in — Conrad Hangzhou 康莱德',time='19:10',note='上城区新业路228号 · Qianjiang CBD, connected to Raffles City · ask for a river-view room')
-B('seed:h1out','2026-11-18','hotel','Check out — Conrad Hangzhou 康莱德',time='08:00',note='store bags or take to the station')
+# hotel blocks follow the Hotels tab: {hotel} is whichever hotel is locked/most picked for that stay (tools/hotels.py)
+B('seed:h1in','2026-11-15','hotel','Check in — {hotel}',time='19:10',stay='hz1',role='in')
+B('seed:h1out','2026-11-17','hotel','Check out — {hotel}',time='08:15',stay='hz1',role='out',note="ask the concierge to keep the bags; collect them on the way to tonight's hotel")
+B('seed:h1bin','2026-11-17','hotel','Check in — {hotel}',time='20:00',stay='hz2',role='in')
+B('seed:h1bout','2026-11-18','hotel','Check out — {hotel}',time='08:00',stay='hz2',role='out',note='store bags or take to the station')
 B('seed:t2','2026-11-18','train','G-train to Nanjing South 南京南',time='10:30',**{'from':'Hangzhou East 杭州东','to':'Nanjing South 南京南'},tentative=True,note='~1h30 · not booked yet')
-B('seed:h2in','2026-11-18','hotel','Check in — Ritz-Carlton Nanjing 丽思卡尔顿',time='12:15',note='玄武区中山路18号 · floors 38–62 of Deji Plaza 德基, Xinjiekou · FLAIR bar 62F')
-B('seed:h2out','2026-11-20','hotel','Check out — Ritz-Carlton Nanjing 丽思卡尔顿',time='08:00')
+B('seed:h2in','2026-11-18','hotel','Check in — {hotel}',time='12:15',stay='nj',role='in')
+B('seed:h2out','2026-11-20','hotel','Check out — {hotel}',time='08:00',stay='nj',role='out')
 B('seed:t3','2026-11-20','train','G-train to Suzhou 苏州',time='10:30',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=True,note='~1h30 · not booked yet')
-B('seed:h3in','2026-11-20','hotel','Check in — Ritz-Carlton Suzhou 丽思卡尔顿',time='12:15',note='姑苏区广济南路369号 · Gusu west · <1km Lingering Garden, near Shantang St')
-B('seed:h3out','2026-11-22','hotel','Check out — Ritz-Carlton Suzhou 丽思卡尔顿',time='07:30',note='passport + train ticket handy')
+B('seed:h3in','2026-11-20','hotel','Check in — {hotel}',time='12:15',stay='sz',role='in')
+B('seed:h3out','2026-11-22','hotel','Check out — {hotel}',time='07:30',stay='sz',role='out',note='passport + train ticket handy')
 B('seed:t4','2026-11-22','train','G-train to Shanghai Pudong 上海浦东',time='09:30',**{'from':'Suzhou 苏州站','to':'Shanghai Pudong PVG'},tentative=True,note='~1h45 direct, or via Hongqiao + Metro L2 · book the night before')
 B('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',number='MH389',time='16:05',**{'from':'PVG T2','to':'KUL T1'},note='lands 21:50 · Business · A330-300 · confirmed (Trip.com)')
 

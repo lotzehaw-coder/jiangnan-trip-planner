@@ -1,0 +1,965 @@
+{
+ "qianjiang": {
+  "q": [
+   "Qianjiang New City Hangzhou night",
+   "Hangzhou CBD skyline night Qiantang",
+   "Hangzhou Grand Theater Qianjiang"
+  ],
+  "kw": [
+   "钱江新城",
+   "Light Show",
+   "来福士"
+  ],
+  "cap": "Qianjiang New City"
+ },
+ "beishan": {
+  "q": [
+   "Beishan Street Hangzhou",
+   "Beishan Road West Lake Hangzhou",
+   "Baochu Pagoda West Lake"
+  ],
+  "kw": [
+   "北山街"
+  ],
+  "cap": "Beishan Street, West Lake",
+  "reject": [
+   "File:Hangzhou, Lago del Oeste 1978 05.jpg",
+   "File:Zheganjujiuzhi 20230716 112606.jpg"
+  ]
+ },
+ "broken": {
+  "q": [
+   "Broken Bridge West Lake Hangzhou",
+   "Bai Causeway West Lake",
+   "Duanqiao Hangzhou"
+  ],
+  "kw": [
+   "断桥",
+   "白堤"
+  ],
+  "cap": "Broken Bridge & Bai Causeway",
+  "reject": [
+   "File:Huanglong & Broken Bridge - Hangzhou City & Outer West Lake in Hubin.jpg",
+   "File:Huanglong & Broken Bridge - Hangzhou City & West Lake w Bai Causeway w North Inner West Lake.jpg"
+  ]
+ },
+ "gushan": {
+  "q": [
+   "Xiling Society Hangzhou",
+   "Gushan Hill West Lake Hangzhou",
+   "Xiling Yinshe Hangzhou"
+  ],
+  "kw": [
+   "孤山",
+   "西泠印社"
+  ],
+  "cap": "Gushan, West Lake",
+  "reject": [
+   "File:Hangzhou Xiling Yinshe 2018.06.02 16-24-38.jpg"
+  ]
+ },
+ "sudi": {
+  "q": [
+   "Su Causeway West Lake Hangzhou",
+   "Sudi West Lake",
+   "Su Causeway autumn Hangzhou"
+  ],
+  "kw": [
+   "苏堤"
+  ],
+  "cap": "Su Causeway",
+  "reject": [
+   "File:Hangzhou China West Lake 5.jpg"
+  ]
+ },
+ "santan": {
+  "q": [
+   "Three Pools Mirroring the Moon West Lake",
+   "Xiaoyingzhou West Lake",
+   "West Lake boat Hangzhou"
+  ],
+  "kw": [
+   "三潭印月",
+   "小瀛洲"
+  ],
+  "cap": "Three Pools Mirroring the Moon",
+  "reject": [
+   "File:'Three Pools Mirroring the Moon' (三潭印月), West Lake (西湖), Hangzhou (杭州).jpg",
+   "File:Xiaoyingzhou in West Lake.jpg"
+  ]
+ },
+ "louwailou": {
+  "q": [
+   "Louwailou restaurant Hangzhou",
+   "West Lake fish in vinegar sauce",
+   "Dongpo pork Hangzhou"
+  ],
+  "kw": [
+   "楼外楼"
+  ],
+  "cap": "Lou Wai Lou & Hangzhou dishes",
+  "reject": [
+   "File:Lou Wai Lou Restaurant, Hangzhou.jpg",
+   "File:Lou wai lou fish.JPG"
+  ]
+ },
+ "huagang": {
+  "q": [
+   "Huagang Guanyu Hangzhou",
+   "Viewing Fish at Flower Harbour West Lake",
+   "Huagang Park Hangzhou koi"
+  ],
+  "kw": [
+   "花港观鱼"
+  ],
+  "cap": "Huagang Guanyu",
+  "reject": [
+   "File:花港观鱼国保碑.JPG",
+   "File:Hangzhou - West Lake 1759.jpg",
+   "File:Larkoul and Slettery (JW Edy plate 62).jpg"
+  ]
+ },
+ "leifeng": {
+  "q": [
+   "Leifeng Pagoda Hangzhou",
+   "Leifeng Pagoda West Lake",
+   "Leifeng Tower Hangzhou"
+  ],
+  "kw": [
+   "雷峰塔"
+  ],
+  "cap": "Leifeng Pagoda",
+  "reject": [
+   "File:Gold Container (copy), Leifeng Pagoda, Hangzhou 2009 1560.jpg"
+  ]
+ },
+ "longjing": {
+  "q": [
+   "Longjing tea plantation Hangzhou",
+   "Longjing village Hangzhou",
+   "Longjing tea fields West Lake"
+  ],
+  "kw": [
+   "龙井"
+  ],
+  "cap": "Longjing tea village"
+ },
+ "hefang": {
+  "q": [
+   "Hefang Street Hangzhou",
+   "Qinghefang Hangzhou",
+   "Hefang Street night Hangzhou"
+  ],
+  "kw": [
+   "河坊街",
+   "清河坊",
+   "大井巷",
+   "外婆家"
+  ],
+  "cap": "Hefang Street"
+ },
+ "yuehu": {
+  "q": [
+   "Yue Lake Hangzhou",
+   "Quyuan Fenghe West Lake",
+   "West Lake night Hangzhou"
+  ],
+  "kw": [
+   "印象西湖",
+   "岳湖",
+   "最忆是杭州"
+  ],
+  "cap": "Yue Fei Temple, by Yue Lake",
+  "reject": [
+   "File:Yue Fei statue (West Lake) 2 2016 January.jpg"
+  ]
+ },
+ "wushannight": {
+  "q": [
+   "Wushan Square Hangzhou night",
+   "Hangzhou night market food stalls",
+   "Hubin Hangzhou night"
+  ],
+  "kw": [
+   "吴山夜市"
+  ],
+  "cap": "Hangzhou night market",
+  "n": 0
+ },
+ "lingyin": {
+  "q": [
+   "Lingyin Temple Hangzhou",
+   "Lingyin Temple hall Hangzhou",
+   "Lingyin Si Hangzhou"
+  ],
+  "kw": [
+   "灵隐寺",
+   "Lingyin Temple"
+  ],
+  "cap": "Lingyin Temple",
+  "reject": [
+   "File:20260423 Stone Pagodas and Dhvaja of Lingyin Temple.jpg"
+  ]
+ },
+ "feilai": {
+  "q": [
+   "Feilai Feng grottoes Hangzhou",
+   "Feilaifeng Buddha carving",
+   "Feilai Peak Hangzhou"
+  ],
+  "kw": [
+   "飞来峰"
+  ],
+  "cap": "Feilai Feng carvings",
+  "reject": [
+   "File:Feilaifeng zaoxiang 7577.jpg"
+  ]
+ },
+ "yongfu": {
+  "q": [
+   "Yongfu Temple Hangzhou",
+   "Yongfu Si Hangzhou"
+  ],
+  "kw": [
+   "永福寺"
+  ],
+  "cap": "Yongfu Temple"
+ },
+ "faxi": {
+  "q": [
+   "Faxi Temple Hangzhou",
+   "Upper Tianzhu Temple Hangzhou"
+  ],
+  "kw": [
+   "法喜寺",
+   "near Lingyin"
+  ],
+  "cap": "Faxi Temple",
+  "reject": [
+   "File:Faxi Temple in Hangzhou (Mahavira Hall).jpg",
+   "File:Faxi Temple in Hangzhou (Hall of the Four Heavenly Kings) - 1926.jpg",
+   "File:Upper Tianzhu Temple in Hangzhou.jpg",
+   "File:亜細亜大観 03 009 \"上天竺 （杭州）\".jpg"
+  ],
+  "n": 0
+ },
+ "chenghuang": {
+  "q": [
+   "Chenghuang Pavilion Hangzhou",
+   "City God Pavilion Wushan Hangzhou",
+   "Wushan Hangzhou pavilion"
+  ],
+  "kw": [
+   "城隍阁",
+   "吴山"
+  ],
+  "cap": "City God Pavilion, Wushan"
+ },
+ "huqingyu": {
+  "q": [
+   "Hu Qing Yu Tang Hangzhou",
+   "Huqingyu Tang pharmacy",
+   "Chinese Traditional Medicine Museum Hangzhou"
+  ],
+  "kw": [
+   "胡庆余堂"
+  ],
+  "cap": "Hu Qing Yu Tang",
+  "reject": [
+   "File:20260625 Hu Qing Yu Tang 02.jpg"
+  ]
+ },
+ "deshou": {
+  "q": [
+   "Deshou Palace Hangzhou",
+   "Deshou Palace ruins museum"
+  ],
+  "kw": [
+   "德寿宫"
+  ],
+  "cap": "Deshou Palace",
+  "reject": [
+   "File:20240109 Nan Song Deshou Gong Yizhi Bowuguan (104748).jpg"
+  ]
+ },
+ "gongchen": {
+  "q": [
+   "Gongchen Bridge Hangzhou",
+   "Grand Canal Hangzhou Gongchen",
+   "Grand Canal Hangzhou"
+  ],
+  "kw": [
+   "拱宸桥",
+   "京杭大运河",
+   "运河夜游"
+  ],
+  "cap": "Gongchen Bridge, Grand Canal",
+  "reject": [
+   "File:20231122 Gongchen Bridge 02.jpg",
+   "File:20231122 Gongchen Bridge 04.jpg"
+  ]
+ },
+ "xiaohe": {
+  "q": [
+   "Xiaohe Street Hangzhou",
+   "Xiaohe Zhijie Hangzhou canal",
+   "Qiaoxi historic block Hangzhou"
+  ],
+  "kw": [
+   "小河直街"
+  ],
+  "cap": "Xiaohe Street"
+ },
+ "tianmuli": {
+  "q": [
+   "Tianmuli Hangzhou",
+   "OōEli Hangzhou Renzo Piano"
+  ],
+  "kw": [
+   "天目里"
+  ],
+  "cap": "Tianmuli"
+ },
+ "xixi": {
+  "q": [
+   "Xixi Wetland Hangzhou",
+   "Xixi National Wetland Park",
+   "Xixi wetland boat"
+  ],
+  "kw": [
+   "西溪湿地"
+  ],
+  "cap": "Xixi Wetland"
+ },
+ "njduck": {
+  "q": [
+   "Nanjing salted duck",
+   "Nanjing duck blood vermicelli soup",
+   "Nanjing roast duck"
+  ],
+  "kw": [
+   "Nanjing duck",
+   "南京大牌档"
+  ],
+  "cap": "Nanjing duck",
+  "reject": [
+   "File:YanShuiYa product(Nanjing Salted Duck).jpg"
+  ]
+ },
+ "fuzimiao": {
+  "q": [
+   "Fuzimiao Nanjing",
+   "Confucius Temple Nanjing Qinhuai",
+   "Nanjing Fuzimiao night"
+  ],
+  "kw": [
+   "夫子庙"
+  ],
+  "cap": "Confucius Temple, Nanjing"
+ },
+ "gongyuan": {
+  "q": [
+   "Jiangnan Examination Hall Nanjing",
+   "Imperial Examination Museum Nanjing",
+   "Jiangnan Gongyuan"
+  ],
+  "kw": [
+   "江南贡院"
+  ],
+  "cap": "Jiangnan Examination Hall",
+  "reject": [
+   "File:\"Longmen\" (Dragon Gate) Paifang in front of Jiangnan Examination Hall 2.jpg"
+  ]
+ },
+ "zhonghua": {
+  "q": [
+   "Zhonghua Gate Nanjing",
+   "Nanjing city wall Zhonghuamen",
+   "Zhonghua Gate barbican"
+  ],
+  "kw": [
+   "中华门"
+  ],
+  "cap": "Zhonghua Gate",
+  "reject": [
+   "File:2024Apr - Nanjing - East Zhonghua Gate 中华东门 - img 02.jpg"
+  ]
+ },
+ "baoen": {
+  "q": [
+   "Porcelain Tower of Nanjing new",
+   "Da Bao'en Temple Nanjing",
+   "Bao'en Temple ruins park Nanjing"
+  ],
+  "kw": [
+   "大报恩寺"
+  ],
+  "cap": "Great Bao'en Temple",
+  "reject": [
+   "File:Xpaulinshi.jpg"
+  ]
+ },
+ "qinhuai": {
+  "q": [
+   "Qinhuai River night Nanjing",
+   "Qinhuai River boat",
+   "Qinhuai River Nanjing"
+  ],
+  "kw": [
+   "秦淮河",
+   "Qinhuai River"
+  ],
+  "cap": "Qinhuai River",
+  "reject": [
+   "File:20240118 Night view of Qinhuai River 02.jpg"
+  ]
+ },
+ "laomendong": {
+  "q": [
+   "Laomendong Nanjing",
+   "Laomendong historic district",
+   "Nanjing old street Laomendong"
+  ],
+  "kw": [
+   "老门东",
+   "小西湖",
+   "Laomendong"
+  ],
+  "cap": "Laomendong",
+  "reject": [
+   "File:南京城墙俯瞰老门东13.jpg"
+  ]
+ },
+ "zhongshanling": {
+  "q": [
+   "Sun Yat-sen Mausoleum Nanjing",
+   "Sun Yat-sen Mausoleum steps",
+   "Zhongshan Mausoleum"
+  ],
+  "kw": [
+   "中山陵"
+  ],
+  "cap": "Sun Yat-sen Mausoleum",
+  "reject": [
+   "File:China-Nanjing (2024) Mausoleum of Sun Yat Sen 中山陵 - img 01.jpg",
+   "File:Wang Jingwei leaving the Sun Yat-sen Mausoleum 汪精衛離開中山陵 (wc510dn0122).jpg"
+  ],
+  "n": 4
+ },
+ "meiling": {
+  "q": [
+   "Meiling Palace Nanjing",
+   "Meiling Palace"
+  ],
+  "kw": [
+   "美龄宫"
+  ],
+  "cap": "Meiling Palace",
+  "reject": [
+   "File:Meiling Gong 8.jpg"
+  ]
+ },
+ "yinyuetai": {
+  "q": [
+   "Music Stage Sun Yat-sen Mausoleum",
+   "Music Platform Nanjing Zhongshan",
+   "Nanjing music stage pigeons"
+  ],
+  "kw": [
+   "音乐台"
+  ],
+  "cap": "Music Platform"
+ },
+ "shixiang": {
+  "q": [
+   "Ming Xiaoling Sacred Way elephants",
+   "Stone Elephant Road Nanjing",
+   "Sacred Way Ming Xiaoling autumn"
+  ],
+  "kw": [
+   "石象路",
+   "Sacred Way"
+  ],
+  "cap": "Ming Xiaoling Sacred Way",
+  "reject": [
+   "File:Ming Xiaoling Mausoleum (54438090344).jpg"
+  ]
+ },
+ "xiaoling": {
+  "q": [
+   "Ming Xiaoling Mausoleum",
+   "Ming Xiaoling Nanjing",
+   "Xiaoling Mausoleum of Ming"
+  ],
+  "kw": [
+   "明孝陵"
+  ],
+  "cap": "Ming Xiaoling",
+  "reject": [
+   "File:China-Nanjing (2024) Ming Xiaoling - Bao Ding Mound 宝顶 - img 02.jpg"
+  ]
+ },
+ "njmuseum": {
+  "q": [
+   "Nanjing Museum",
+   "Nanjing Museum main hall",
+   "Nanjing Museum Republic of China hall"
+  ],
+  "kw": [
+   "南京博物院"
+  ],
+  "cap": "Nanjing Museum"
+ },
+ "jiming": {
+  "q": [
+   "Jiming Temple Nanjing",
+   "Jiming Temple pagoda",
+   "Taicheng Nanjing city wall"
+  ],
+  "kw": [
+   "鸡鸣寺",
+   "台城"
+  ],
+  "cap": "Jiming Temple"
+ },
+ "xuanwu": {
+  "q": [
+   "Xuanwu Lake Nanjing",
+   "Xuanwu Lake Park Nanjing",
+   "Xuanwu Lake city wall"
+  ],
+  "kw": [
+   "玄武湖"
+  ],
+  "cap": "Xuanwu Lake",
+  "reject": [
+   "File:Xuanwu Lake at dusk, seen from Bank of Beijing (Nanjing Branch).png",
+   "File:Xuanwu Lake at night, seen from Bank of Beijing (Nanjing Branch).png"
+  ]
+ },
+ "xinjiekou": {
+  "q": [
+   "Xinjiekou Nanjing",
+   "Deji Plaza Nanjing",
+   "Xinjiekou night Nanjing"
+  ],
+  "kw": [
+   "新街口",
+   "德基"
+  ],
+  "cap": "Xinjiekou"
+ },
+ "zifeng": {
+  "q": [
+   "Zifeng Tower Nanjing",
+   "Nanjing skyline night Zifeng"
+  ],
+  "kw": [
+   "紫峰",
+   "FLAIR"
+  ],
+  "cap": "Nanjing skyline"
+ },
+ "niushou": {
+  "q": [
+   "Usnisa Palace Niushou Mountain",
+   "Niushou Mountain Nanjing",
+   "Niushoushan Foding Palace"
+  ],
+  "kw": [
+   "牛首山"
+  ],
+  "cap": "Niushou Mountain"
+ },
+ "hongshan": {
+  "q": [
+   "Hongshan Forest Zoo",
+   "Nanjing Hongshan zoo"
+  ],
+  "kw": [
+   "红山森林动物园"
+  ],
+  "cap": "Hongshan Forest Zoo",
+  "reject": [
+   "File:Xuanwu Lake Zoo Nowadays.jpg"
+  ]
+ },
+ "yihe": {
+  "q": [
+   "Yihe Road Nanjing",
+   "Yihe Road mansions Nanjing"
+  ],
+  "kw": [
+   "颐和路"
+  ],
+  "cap": "Yihe Road"
+ },
+ "avantgarde": {
+  "q": [
+   "Librairie Avant-Garde Nanjing",
+   "Avant-Garde bookstore Nanjing"
+  ],
+  "kw": [
+   "先锋书店"
+  ],
+  "cap": "Librairie Avant-Garde",
+  "reject": [
+   "File:Librairie avant-garde in Wuxi Huishan.JPG"
+  ]
+ },
+ "zhuozheng": {
+  "q": [
+   "Humble Administrator's Garden Suzhou",
+   "Humble Administrator's Garden pavilion",
+   "Zhuozheng Garden"
+  ],
+  "kw": [
+   "拙政园"
+  ],
+  "cap": "Humble Administrator's Garden"
+ },
+ "szmuseum": {
+  "q": [
+   "Suzhou Museum I. M. Pei",
+   "Suzhou Museum",
+   "Suzhou Museum courtyard"
+  ],
+  "kw": [
+   "苏州博物馆"
+  ],
+  "cap": "Suzhou Museum",
+  "reject": [
+   "File:Design model of Suzhou Museum by I. M. Pei-20241203.jpg",
+   "File:Guiding room of Suzhou Museum-20241203.jpg"
+  ]
+ },
+ "shizilin": {
+  "q": [
+   "Lion Grove Garden Suzhou",
+   "Shizilin Suzhou rockery",
+   "Lion Grove Garden"
+  ],
+  "kw": [
+   "狮子林"
+  ],
+  "cap": "Lion Grove Garden"
+ },
+ "pingjiang": {
+  "q": [
+   "Pingjiang Road Suzhou",
+   "Pingjiang Road canal Suzhou",
+   "Pingjiang historic street Suzhou"
+  ],
+  "kw": [
+   "平江路"
+  ],
+  "cap": "Pingjiang Road"
+ },
+ "shuangta": {
+  "q": [
+   "Twin Pagodas Suzhou",
+   "Luohan Temple Twin Pagodas Suzhou",
+   "Shuangta Suzhou"
+  ],
+  "kw": [
+   "双塔"
+  ],
+  "cap": "Twin Pagodas area",
+  "reject": [
+   "File:October 1921 Twin Pagodas Soochow (Suzhou).jpg",
+   "File:China - Suzhou (2024) Luohanyuan Twin Pagoda 罗汉院双塔 - img 09.jpg"
+  ]
+ },
+ "shantang": {
+  "q": [
+   "Shantang Street Suzhou",
+   "Shantang Street night Suzhou",
+   "Shantang canal Suzhou"
+  ],
+  "kw": [
+   "山塘街"
+  ],
+  "cap": "Shantang Street",
+  "reject": [
+   "File:Shantang Street, Suzhou (December 2015) - 10.JPG",
+   "File:Shantang Street, Suzhou (December 2015) - 14.JPG"
+  ]
+ },
+ "xiangmen": {
+  "q": [
+   "Xiangmen Gate Suzhou",
+   "Suzhou city wall Xiangmen"
+  ],
+  "kw": [
+   "仓街",
+   "相门"
+  ],
+  "cap": "Xiangmen city wall",
+  "reject": [
+   "File:Xiangmen Gate Suzhou November 2017 003.jpg"
+  ]
+ },
+ "jinji": {
+  "q": [
+   "Jinji Lake Suzhou",
+   "Gate to the East Suzhou",
+   "Jinji Lake skyline"
+  ],
+  "kw": [
+   "金鸡湖",
+   "诚品"
+  ],
+  "cap": "Jinji Lake"
+ },
+ "liuyuan": {
+  "q": [
+   "Lingering Garden Suzhou",
+   "Liuyuan Suzhou",
+   "Lingering Garden window"
+  ],
+  "kw": [
+   "留园"
+  ],
+  "cap": "Lingering Garden"
+ },
+ "huqiu": {
+  "q": [
+   "Tiger Hill Pagoda Suzhou",
+   "Huqiu Tower Suzhou",
+   "Tiger Hill Suzhou"
+  ],
+  "kw": [
+   "虎丘"
+  ],
+  "cap": "Tiger Hill",
+  "reject": [
+   "File:Yunyan Pagoda 20160514 (5).jpg",
+   "File:Yunyan Pagoda 20160514 (6).jpg"
+  ]
+ },
+ "hanshan": {
+  "q": [
+   "Hanshan Temple Suzhou",
+   "Hanshan Temple pagoda",
+   "Fengqiao Suzhou Maple Bridge"
+  ],
+  "kw": [
+   "寒山寺",
+   "枫桥"
+  ],
+  "cap": "Hanshan Temple"
+ },
+ "guanqian": {
+  "q": [
+   "Guanqian Street Suzhou",
+   "Xuanmiao Temple Suzhou",
+   "Guanqian Street"
+  ],
+  "kw": [
+   "观前街",
+   "松鹤楼",
+   "奥灶面",
+   "丝绸博物馆"
+  ],
+  "cap": "Guanqian Street"
+ },
+ "wangshi": {
+  "q": [
+   "Master of the Nets Garden Suzhou",
+   "Wangshi Garden Suzhou",
+   "Master of the Nets Garden pavilion"
+  ],
+  "kw": [
+   "网师园"
+  ],
+  "cap": "Master of the Nets Garden",
+  "reject": [
+   "File:2004 0927-Suzhou MasterOfNetGarden PaintedMap.jpg"
+  ]
+ },
+ "shiquan": {
+  "q": [
+   "Shiquan Street Suzhou",
+   "Suzhou old town canal street",
+   "Suzhou canal houses"
+  ],
+  "kw": [
+   "十全街"
+  ],
+  "cap": "Suzhou old town streets",
+  "reject": [
+   "File:Coco Tea Shiquan Street, Suzhou.jpg",
+   "File:Tongli Canal Boats (38958363040).jpg",
+   "File:A picture from China every day 061.jpg"
+  ],
+  "n": 0
+ },
+ "kunqu": {
+  "q": [
+   "Kunqu opera performance",
+   "Kunqu Suzhou",
+   "Kun opera costume stage"
+  ],
+  "kw": [
+   "昆曲",
+   "网师园夜昆曲"
+  ],
+  "cap": "Kunqu opera (a similar performance)",
+  "reject": [
+   "File:2019-05-14 - Mudanting in Moscow - Photo 11.jpg",
+   "File:2019-05-14 - Mudanting in Moscow - Photo 08.jpg",
+   "File:2019-05-14 - Mudanting in Moscow - Photo 01.jpg"
+  ]
+ },
+ "tongli": {
+  "q": [
+   "Tongli water town",
+   "Zhouzhuang water town",
+   "Tongli Jiangsu canal"
+  ],
+  "kw": [
+   "同里",
+   "周庄"
+  ],
+  "cap": "Tongli & Zhouzhuang",
+  "reject": [
+   "File:Tongli Water Town (3915216193).jpg"
+  ]
+ },
+ "tianping": {
+  "q": [
+   "Tianping Mountain Suzhou",
+   "Tianping Mountain maple Suzhou",
+   "Tianpingshan autumn"
+  ],
+  "kw": [
+   "天平山"
+  ],
+  "cap": "Tianping Mountain"
+ },
+ "szfood": {
+  "q": [
+   "Squirrel-shaped mandarin fish",
+   "Suzhou noodles",
+   "Songshu guiyu"
+  ],
+  "kw": [
+   "Suzhou sweet cuisine",
+   "Farewell dinner"
+  ],
+  "cap": "Suzhou dishes"
+ },
+ "hubin": {
+  "q": [
+   "Hubin Road Hangzhou",
+   "Hubin pedestrian street Hangzhou",
+   "West Lake Hubin Hangzhou"
+  ],
+  "kw": [
+   "湖滨步行街",
+   "湖滨银泰",
+   "Arabica lakeside"
+  ],
+  "cap": "Hubin, West Lake shore",
+  "reject": [
+   "File:202308 Jiefang Road from Zhongshan Road Pedestrian Bridge.jpg",
+   "File:201608 Jiefang Road HGH.jpg"
+  ]
+ },
+ "jiuxi": {
+  "q": [
+   "Jiuxi Hangzhou",
+   "Nine Creeks Eighteen Gullies Hangzhou",
+   "Manjuelong Hangzhou"
+  ],
+  "kw": [
+   "九溪",
+   "满觉陇"
+  ],
+  "cap": "Jiuxi & Manjuelong",
+  "reject": [
+   "File:20250705 Jiuxi Gongjiaozhan.jpg"
+  ]
+ },
+ "gongyan": {
+  "q": [
+   "Song dynasty costume performance Hangzhou",
+   "Hanfu banquet performance",
+   "Song dynasty dance performance"
+  ],
+  "kw": [
+   "宫宴"
+  ],
+  "cap": "Song-style banquet show (similar show, not the venue)",
+  "n": 0
+ },
+ "yujie": {
+  "q": [
+   "Southern Song Imperial Street Hangzhou",
+   "Nansong Yujie Hangzhou",
+   "Zhongshan Road Hangzhou old street"
+  ],
+  "kw": [
+   "南宋御街"
+  ],
+  "cap": "Southern Song Imperial Street"
+ },
+ "xinanli": {
+  "q": [
+   "Xinanli Nanjing",
+   "Ganxi House Nanjing",
+   "Nanjing Ganxi residence"
+  ],
+  "kw": [
+   "熙南里",
+   "评事街"
+  ],
+  "cap": "Xinanli & Ganxi House",
+  "n": 0
+ },
+ "nanjingeye": {
+  "q": [
+   "Nanjing Eye bridge",
+   "Nanjing Eye pedestrian bridge Yangtze",
+   "Yuzui Wetland Park Nanjing"
+  ],
+  "kw": [
+   "南京眼",
+   "鱼嘴"
+  ],
+  "cap": "Nanjing Eye",
+  "reject": [
+   "File:南京长江大桥正下方仰望.jpg"
+  ]
+ },
+ "beisita": {
+  "q": [
+   "North Temple Pagoda Suzhou",
+   "Bao'en Temple Pagoda Suzhou",
+   "Taohuawu Suzhou"
+  ],
+  "kw": [
+   "北寺塔",
+   "桃花坞"
+  ],
+  "cap": "North Temple Pagoda",
+  "reject": [
+   "File:The North Pagoda 66528-Suzhou (49172652143).jpg"
+  ]
+ },
+ "szbooks": {
+  "q": [
+   "Pingjiang Road Suzhou night",
+   "Suzhou canal night lanterns",
+   "Pingjiang Road bridge Suzhou"
+  ],
+  "kw": [
+   "猫的天空之城",
+   "慢书房"
+  ],
+  "cap": "Pingjiang Road",
+  "reject": [
+   "File:A gallery bridge in Pingjiang Road, Gusu, Suzhou, Jiangsu, China, 215000.jpg"
+  ]
+ }
+}
