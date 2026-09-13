@@ -357,18 +357,27 @@ function mapTargets(o){
   const en = String(o.name||'').replace(/[㐀-鿿·（）()]+/g,' ').replace(/^(Lunch|Dinner|Coffee|Breakfast|Check in|Check out)\s*[—–:-]\s*/i,'').replace(/\s+/g,' ').trim();
   const t={name, kw};
   t.placeApp = isIOS ? `iosamap://poi?sourceApplication=jiangnan&name=${enc(q)}${box}&dev=0`
-             : isAndroid ? `androidamap://poi?sourceApplication=jiangnan&keywords=${enc(q)}${near?`&lat=${o.lat}&lon=${o.lng}`:''}&dev=0` : '';
+             : isAndroid ? `intent://poi?sourceApplication=jiangnan&keywords=${enc(q)}${near?`&lat=${o.lat}&lon=${o.lng}`:''}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end` : '';
   t.placeWeb = `https://uri.amap.com/search?keyword=${enc(kw)}${city?`&city=${enc(city)}`:''}${near?`&center=${o.lng},${o.lat}`:''}&view=map&src=jiangnan&callnative=1`;
   t.google = `https://www.google.com/maps/search/?api=1&query=${enc((en||kw)+(o.city?', '+o.city:'')+', China')}`;
   t.apple = `https://maps.apple.com/?q=${enc(q)}${near?`&sll=${o.lat},${o.lng}`:''}`;
   if (near){
     t.routeApp = isIOS ? `iosamap://path?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${enc(name)}&dev=0&t=1`
-               : isAndroid ? `androidamap://route?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${enc(name)}&dev=0&t=1` : '';
+               : isAndroid ? `intent://route?sourceApplication=jiangnan&dlat=${o.lat}&dlon=${o.lng}&dname=${enc(name)}&dev=0&t=1#Intent;scheme=androidamap;package=com.autonavi.minimap;end` : '';
     t.routeWeb = `https://uri.amap.com/navigation?to=${o.lng},${o.lat},${enc(name)}&mode=bus&src=jiangnan&callnative=1`;
   }
   return t;
 }
 // Open maps in a new tab / the app so the planner page itself never navigates away.
+// Hand a URL-scheme link (iosamap:// androidamap://) to the OS. A scheme the OS handles opens the app and never unloads
+// this page; nothing here navigates the page on failure, we just tell the menu whether the app seems to have opened.
+function openApp(url, onFail){
+  let left=false; const hide=()=>{ left=true; };
+  document.addEventListener('visibilitychange', hide, {once:true}); window.addEventListener('pagehide', hide, {once:true});   // not 'blur': a browser's own "open app?" dialog blurs the page without the app opening
+  try{ location.href = url; }catch(e){}
+  setTimeout(()=>{ document.removeEventListener('visibilitychange', hide); window.removeEventListener('pagehide', hide);
+    if (!left && document.visibilityState==='visible') onFail(); }, 1800);
+}
 function openOut(url){ const w=window.open(url, '_blank'); if (w){ try{ w.opener=null; }catch(e){} return; } const a=document.createElement('a'); a.href=url; a.target='_blank'; a.rel='noopener'; document.body.appendChild(a); a.click(); a.remove(); }   // 'noopener' in window.open always returns null, which used to fire the fallback too (two tabs)
 function openMap(o){
   const t=mapTargets(o);
@@ -379,8 +388,11 @@ function openMap(o){
     ${t.routeWeb?'<button class="btn ghost" data-go="route">Transit directions (once you\'re there)</button>':''}
     <button class="btn ghost" data-go="x">Cancel</button>`;
   $('#mapOverlay').classList.remove('hidden');
-  m.onclick=(e)=>{ const b=e.target.closest('[data-go]'); if(!b) return; $('#mapOverlay').classList.add('hidden'); const g=b.dataset.go;
-    if (g==='amap') openOut(t.placeWeb); else if (g==='google') openOut(t.google); else if (g==='apple') openOut(t.apple); else if (g==='route') openOut(t.routeWeb); };
+  m.onclick=(e)=>{ const w=e.target.closest('[data-web]'); if (w){ $('#mapOverlay').classList.add('hidden'); openOut(w.dataset.web); return; } const b=e.target.closest('[data-go]'); if(!b) return; $('#mapOverlay').classList.add('hidden'); const g=b.dataset.go;
+    const fail=(web)=>()=>{ m.innerHTML=`<h3>${esc(t.name)}</h3><p>Amap didn't open. Is the 高德地图 app installed? You can open it on the web instead.</p><button class="btn map" data-web="${esc(web)}">Open Amap on the web ↗</button><button class="btn ghost" data-go="x">Close</button>`; $('#mapOverlay').classList.remove('hidden'); };
+    if (g==='amap'){ t.placeApp ? openApp(t.placeApp, fail(t.placeWeb)) : openOut(t.placeWeb); }
+    else if (g==='route'){ t.routeApp ? openApp(t.routeApp, fail(t.routeWeb)) : openOut(t.routeWeb); }
+    else if (g==='google') openOut(t.google); else if (g==='apple') openOut(t.apple); };
 }
 $('#mapOverlay').addEventListener('click', e=>{ if (e.target.id==='mapOverlay') e.target.classList.add('hidden'); });
 document.addEventListener('click', e=>{ const b=e.target.closest('[data-map]'); if(!b) return; e.preventDefault(); try{ openMap(JSON.parse(b.dataset.map)); }catch(err){ toast('Could not open the map'); } });
