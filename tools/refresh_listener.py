@@ -1,4 +1,4 @@
-"""Watch the planner's refresh button and rebuild from the iCloud workbook.
+r"""Watch the planner's refresh button and rebuild from the iCloud workbook.
 
 Runs every 2 minutes from Windows Task Scheduler ("Jiangnan planner - refresh listener").
 When someone taps "Refresh from workbook", the page posts {req} to the ntfy topic below. This script:
@@ -35,14 +35,14 @@ if not new: sys.exit(0)
 req = max(d['req'] for d in new); by = next((d.get('by') for d in new if d['req'] == req), '') or 'someone'
 log(f'refresh requested by {by}')
 state['last_req'] = req; json.dump(state, open(STATE, 'w'))
-run = lambda *a: subprocess.run(list(a), cwd=HERE, capture_output=True, text=True)
+run = lambda *a: subprocess.run(list(a), cwd=HERE, capture_output=True, text=True, encoding='utf-8', errors='replace', env=dict(os.environ, PYTHONIOENCODING='utf-8'))
 try:
     r = run(sys.executable, 'parse_seed.py')
     if r.returncode: raise RuntimeError('workbook read failed: ' + (r.stderr or r.stdout)[-200:])
     if 'iCloud pull failed' in r.stdout: raise RuntimeError('could not download the workbook from iCloud')
     r = run(sys.executable, 'build.py')
     if r.returncode: raise RuntimeError('build failed: ' + (r.stderr or r.stdout)[-200:])
-    git = lambda *a: subprocess.run(['git', '-C', ROOT, *a], capture_output=True, text=True)
+    git = lambda *a: subprocess.run(['git', '-C', ROOT, *a], capture_output=True, text=True, encoding='utf-8', errors='replace')
     changed = bool(git('status', '--porcelain', 'index.html').stdout.strip())
     if changed:
         git('add', 'index.html')
