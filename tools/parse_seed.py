@@ -61,12 +61,17 @@ def dur(t, e):
     return f'{m//60}h' if m % 60 == 0 else (f'{m}m' if m < 60 else f'{m//60}h{m%60:02d}')
 
 SKIP = re.compile(r'^(Land at|G-train|🏨 Check-in|Breakfast & checkout|Breakfast at|Depart PVG|Arrive Kuala Lumpur|Return to|Rest$|Pack for)', re.I)
-items = []; counters = {}
+items = []; counters = {}; train_res = {}
 for r in rows('Itinerary'):
     m = re.match(r'Day (\d)\n', r[0])   # data rows are "Day N\n<date>"; the day-header rows are "Day N — …" and must not match
     if not m: continue
-    n = int(m.group(1)); t, act, det, log, addr = r[1], r[2], r[3], r[4], r[5]
-    if SKIP.match(act): continue
+    # Jit added a "Reservation or Ticketing" column at E (13 Nov layout), so columns shifted:
+    # B time · C activity · D details · E reservation · F logistics · G address
+    n = int(m.group(1)); t, act, det, res, log, addr = r[1], r[2], r[3], r[4], r[5], (r[6] if len(r) > 6 else '')
+    res = '' if res in ('', '—') else res
+    if SKIP.match(act):
+        if res and act.lower().startswith('g-train'): train_res[day_date[n]] = res   # a booked train's block (below) shows the bell
+        continue
     counters[n] = counters.get(n, 0) + 1
     optional = t in ('Alt','Opt') or act.lower().startswith('optional') or 'optional' in t.lower()
     tm = re.match(r'^(\d{2}:\d{2})(?:\s*[–-]\s*(\d{2}:\d{2}))?$', t)
@@ -80,12 +85,12 @@ for r in rows('Itinerary'):
     if 'must-see' in al: tags.append('must-see')
     info = ' · '.join(x for x in (det, log) if x and x != '—')
     items.append({'id':f'p:d{n}-{counters[n]:02d}','name':name,'address':'' if addr in ('','—') else addr,'city':day_city[n],'category':cat,
-        'info':info,'tags':tags,'suggestedDay':day_date[n],'time':start,'end':end,'duration':dur(start,end) if end else '',
+        'info':info,'reservation':res,'tags':tags,'suggestedDay':day_date[n],'time':start,'end':end,'duration':dur(start,end) if end else '',
         'day': day_date[n], 'status': 'scheduled', 'order':counters[n]})   # untimed rows (Opt/Alt) sit at the end of their day, like the workbook
 
 blocks = []
 def B(id, day, type, title, **kw):
-    b = {'id':id,'day':day,'type':type,'title':title,'time':'','number':'','from':'','to':'','tentative':False,'note':'','updatedAt':0}
+    b = {'id':id,'day':day,'type':type,'title':title,'time':'','number':'','from':'','to':'','tentative':False,'note':'','reservation':'','updatedAt':0}
     b.update(kw); blocks.append(b)
 B('seed:mh388','2026-11-15','flight','Fly to Shanghai Pudong',number='MH388',time='09:10',**{'from':'KUL T1','to':'PVG T2'},note='lands 14:30 · Business · A330-300 · confirmed (Trip.com)')
 B('seed:t1','2026-11-15','train','Fuxing G-train to Hangzhou East 杭州东',time='17:13',**{'from':'Shanghai Hongqiao 虹桥','to':'Hangzhou East 杭州东'},tentative=True,train='t1',note='not booked yet (sale opens 1 Nov) · PVG → Hongqiao first by the Airport Link 市域机场线, ~40 min, ¥26')
@@ -102,6 +107,13 @@ B('seed:h3in','2026-11-20','hotel','Check in — {hotel}',time='12:15',stay='sz'
 B('seed:h3out','2026-11-22','hotel','Check out — {hotel}',time='07:30',stay='sz',role='out',note='passport + train ticket handy')
 B('seed:t4','2026-11-22','train','Fuxing G-train to Shanghai Hongqiao, then Airport Link to PVG',time='09:19',**{'from':'Suzhou 苏州站','to':'Shanghai Hongqiao 虹桥'},tentative=True,train='t4',note='not booked yet (sale opens 8 Nov) · no trains run to Pudong: Hongqiao T2 → PVG by the Airport Link 市域机场线, ~40 min, ¥26')
 B('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',number='MH389',time='16:05',**{'from':'PVG T2','to':'KUL T1'},note='lands 21:50 · Business · A330-300 · confirmed (Trip.com)')
+
+# a train row with a Column E reservation is booked: show its bell and drop the "not booked yet" tentative note
+for b in blocks:
+    if b['type'] == 'train' and train_res.get(b['day']):
+        b['reservation'] = train_res[b['day']]
+        b['tentative'] = False
+        b['note'] = re.sub(r'not booked yet[^·]*', 'booked ✓ ', b['note'])
 
 browse = []; bn = 0
 def add(section, city, group, name, address, notes, price='', rating='', rank='', cat='', sd=''):

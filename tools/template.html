@@ -309,6 +309,12 @@ details.more{margin-top:6px}
 /* ⓘ info sheet: photos + what it is + reviews / videos (Tze, 13 Sep) */
 .info-b{border:0;background:var(--paper-2);color:var(--ink-2);border-radius:999px;width:26px;height:26px;font-size:14px;font-weight:700;cursor:pointer;flex:0 0 auto;line-height:26px;padding:0;font-family:Georgia,serif;font-style:italic}
 .stop .top .info-b{margin-left:auto}
+/* 🔔 reservation bell: a confirmed booking (workbook Column E, Jit 13 Nov) */
+.res-b{border:0;background:#fef3c7;color:#92400e;border-radius:999px;height:26px;padding:0 10px;font-size:13px;font-weight:700;cursor:pointer;flex:0 0 auto;line-height:26px;display:inline-flex;align-items:center;gap:3px}
+.stop .top .res-b + .info-b{margin-left:6px}
+.stop .top .res-b{margin-left:auto}
+.res-body{background:var(--paper-2);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:15px;line-height:1.5;word-break:break-word;white-space:pre-wrap}
+.res-name{font-size:14px;color:var(--ink-2);margin-top:2px}
 .isheet{padding:0 0 20px}
 .isheet .car{height:220px;border-radius:18px 18px 0 0}
 .isheet .ib{padding:12px 16px 0}
@@ -463,6 +469,7 @@ details.more{margin-top:6px}
   </form>
 </div>
 <div class="overlay hidden" id="infoOverlay"><div class="sheet isheet" id="infoSheet" role="dialog" aria-modal="true"></div></div>
+<div class="overlay hidden" id="resOverlay"><div class="sheet" id="resSheet" role="dialog" aria-modal="true"></div></div>
 <div class="overlay hidden" id="mapOverlay"><div class="mapmenu" id="mapMenu"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -493,8 +500,8 @@ const defPlan  = () => ({v:2, items:seedItems(), blocks:seedBlocks(), updatedAt:
 const defLocal = () => ({me:'', city:'', sec:'dining', filter:'all', closed:{}});
 function read(k, def){ try{ const j = JSON.parse(localStorage.getItem(k)); if (j && typeof j==='object') return Object.assign(def(), j); }catch(e){} return def(); }
 let P = read(LS_PLAN, defPlan), L = read(LS_LOCAL, defLocal);
-for (const s of Object.values(seedItems())){ const cur=P.items[s.id]; if (!cur) P.items[s.id]=s; else if (!cur.updatedAt){ const keep={notes:cur.notes,votes:cur.votes,done:cur.done}; Object.assign(cur, s, keep); } else { for (const f of ['lat','lng','info','address']) if (s[f]!=null && (cur[f]==null||cur[f]==='')) cur[f]=s[f]; } }
-for (const sb of seedBlocks()){ const cur=P.blocks.find(b=>b.id===sb.id); if (!cur) P.blocks.push(sb); else if (!cur.updatedAt) Object.assign(cur, sb); else { for (const f of ['lat','lng']) if (sb[f]!=null && cur[f]==null) cur[f]=sb[f]; } }
+for (const s of Object.values(seedItems())){ const cur=P.items[s.id]; if (!cur) P.items[s.id]=s; else if (!cur.updatedAt){ const keep={notes:cur.notes,votes:cur.votes,done:cur.done}; Object.assign(cur, s, keep); } else { for (const f of ['lat','lng','info','address','reservation']) if (s[f]!=null && (cur[f]==null||cur[f]==='')) cur[f]=s[f]; } }
+for (const sb of seedBlocks()){ const cur=P.blocks.find(b=>b.id===sb.id); if (!cur) P.blocks.push(sb); else if (!cur.updatedAt) Object.assign(cur, sb); else { for (const f of ['lat','lng','reservation']) if (sb[f]!=null && cur[f]==null) cur[f]=sb[f]; } }
 function savePlan(){ P.updatedAt = now(); try{ localStorage.setItem(LS_PLAN, JSON.stringify(P)); }catch(e){ toast('Could not save — storage blocked?'); } }
 function saveLocal(){ try{ localStorage.setItem(LS_LOCAL, JSON.stringify(L)); }catch(e){} }
 
@@ -789,12 +796,26 @@ function showInfo(kind, id){
   $('#infoOverlay').classList.remove('hidden'); $('#infoSheet').scrollTop=0;
 }
 document.addEventListener('click', e=>{
+  const rb=e.target.closest('[data-res]'); if (rb){ e.preventDefault(); e.stopPropagation(); showRes(rb.dataset.res); return; }
   const i=e.target.closest('[data-info]'); if (i){ e.preventDefault(); e.stopPropagation(); const [k,id]=i.dataset.info.split('|'); showInfo(k,id.includes('|')?id:i.dataset.info.slice(2)); return; }
   const a=e.target.closest('[data-appsearch]'); if (a){ e.preventDefault(); const [k,...t]=a.dataset.appsearch.split('|'); openAppSearch(k, t.join('|')); return; }
   const o=e.target.closest('[data-out]'); if (o){ e.preventDefault(); openOut(o.dataset.out); return; }
 }, true);
 $('#infoOverlay').addEventListener('click', e=>{ if (e.target.id==='infoOverlay' || e.target.closest('[data-infoclose]')) $('#infoOverlay').classList.add('hidden'); });
 const infoBtn = (kind, id) => `<button type="button" class="info-b" data-info="${kind}|${esc(id)}" aria-label="More about this place">i</button>`;
+
+// ---------- 🔔 reservation bell: confirmed bookings from the workbook (Jit, 13 Nov) ----------
+const resBell = (o) => o && o.reservation ? `<button type="button" class="res-b" data-res="${esc(o.id)}" aria-label="Reservation confirmed — tap for details" title="Reservation confirmed">🔔 Booked</button>` : '';
+function showRes(id){
+  const o = P.items[id] || P.blocks.find(b=>b.id===id); if (!o || !o.reservation) return;
+  const title = o.name || (o.title ? blockTitle(o) : '');
+  $('#resSheet').innerHTML = `<h2 style="margin-bottom:2px">🔔 Reservation confirmed</h2>
+    ${title?`<div class="res-name">${esc(title)}</div>`:''}
+    <div class="res-body">${esc(o.reservation)}</div>
+    <div class="acts3"><button class="btn ghost" data-resclose>Close</button></div>`;
+  $('#resOverlay').classList.remove('hidden'); $('#resSheet').scrollTop=0;
+}
+$('#resOverlay').addEventListener('click', e=>{ if (e.target.id==='resOverlay' || e.target.closest('[data-resclose]')) $('#resOverlay').classList.add('hidden'); });
 
 // ---------- tabs ----------
 function showTab(name){
@@ -985,7 +1006,7 @@ function blockStop(b){
   const lg=b.train&&legById(b.train), tt=lg&&trainOf(lg), cls=bud().cls; const nomove=b.stay&&STAY[b.stay]&&sameHz(b);
   const city=(DAYS.find(d=>d.d===b.day)||{}).city;
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
-    <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}</div>
+    <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}${resBell(b)}</div>
     <div class="name">${esc(blockTitle(b))}</div>${tt?`<div class="sub"><b>${esc(tt.code)}</b><span class="fx">复</span> ${esc(tt.dep)} → ${esc(tt.arr)} (${esc(tt.dur)}) · ${cls==='biz'?'Business':cls==='second'?'2nd':'1st'} ¥${tt[cls]||tt.first} each</div>`:''}${sub?`<div class="sub">${sub}</div>`:''}
     ${hh?car(hh.photos.slice(0,3),'big',hh.name):''}
     <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:lg?`${mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng})}<button class="btn small" data-gotrain="${lg.id}">Train options & prices</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
@@ -1001,7 +1022,7 @@ function itemStop(i, isNext){
   const mine=L.me&&(i.votes||[]).includes(L.me); const pics=picsFor(i);
   const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
   return `<div class="stop ${isOpt(i)?'opt':''} ${i.done?'done':''} ${isNext?'next':''}" data-id="${esc(i.id)}" style="--cc:${catVar(i.category)}"><div class="dot" data-act="done" title="Mark done"><svg><use href="#ico-check"/></svg></div><div class="card">
-    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
+    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${resBell(i)}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
     ${pics.length?`<img class="thumb" src="${esc(pics[0].src)}" alt="" loading="lazy">`:''}<div class="name">${esc(i.name)}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
     ${car(pics,'big',i.name)}
     <div class="acts">
