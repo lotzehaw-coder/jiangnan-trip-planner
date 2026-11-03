@@ -156,6 +156,9 @@ label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
 .stop .t{font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;color:var(--cc,var(--ink-2));background:color-mix(in srgb,var(--cc,var(--ink-3)) 12%,transparent);border-radius:6px;padding:1px 7px}
 .stop .kind{font-size:11.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
 .stop .name{font-weight:650;margin-top:3px}
+.name-map{color:inherit;text-decoration:none;cursor:pointer}
+.name-map:hover,.name-map:focus-visible{text-decoration:underline}
+.nm-ico{width:12px;height:12px;stroke:var(--c-sight);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-1px;margin-left:5px;opacity:.7}
 .stop .sub{color:var(--ink-3);font-size:13px}
 .stop .info{color:var(--ink-2);font-size:13.5px;margin-top:3px}
 .stop .acts{margin-top:10px;display:none;gap:6px;flex-wrap:wrap;align-items:center}
@@ -576,7 +579,10 @@ function openMap(o){
 }
 $('#mapOverlay').addEventListener('click', e=>{ if (e.target.id==='mapOverlay') e.target.classList.add('hidden'); });
 document.addEventListener('click', e=>{ const b=e.target.closest('[data-map]'); if(!b) return; e.preventDefault(); try{ openMap(JSON.parse(b.dataset.map)); }catch(err){ toast('Could not open the map'); } });
-const mapBtn = (o) => `<button class="btn small map" data-map="${esc(JSON.stringify({name:o.name||o.title, q:o.q||'', en:o.en||'', city:o.city, address:o.address||o.note||'', lat:o.lat||null, lng:o.lng||null}))}"><svg><use href="#ico-map"/></svg>Map</button>`;
+const mapData = (o) => esc(JSON.stringify({name:o.name||o.title, q:o.q||'', en:o.en||'', city:o.city, address:o.address||o.note||'', lat:o.lat||null, lng:o.lng||null}));
+const mapBtn = (o) => `<button class="btn small map" data-map="${mapData(o)}"><svg><use href="#ico-map"/></svg>Map</button>`;
+// a location title that opens the same map target as the listing's Map button (Jit, 3 Nov)
+const nameMap = (o, inner) => `<a href="#" class="name-map" role="button" aria-label="Open map" data-map="${mapData(o)}">${inner}<svg class="nm-ico"><use href="#ico-map"/></svg></a>`;
 
 // ---------- photos: carousels (swipe on phones, arrows on desktop) ----------
 const PICS = SEED.pics || {};
@@ -1023,11 +1029,16 @@ function blockStop(b){
   const hh=b.stay&&STAY[b.stay]&&!sameHz(b)?hotelOf(b.stay):null;
   const lg=b.train&&legById(b.train), tt=lg&&trainOf(lg), cls=bud().cls; const nomove=b.stay&&STAY[b.stay]&&sameHz(b);
   const city=(DAYS.find(d=>d.d===b.day)||{}).city;
+  const mt = hh ? {name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address}
+    : lg ? {name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}
+    : b.type==='hotel' ? {name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}
+    : b.type==='train' ? {name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}
+    : null;
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
     <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}${resBell(b)}</div>
-    <div class="name">${esc(blockTitle(b))}</div>${tt?`<div class="sub"><b>${esc(tt.code)}</b><span class="fx">复</span> ${esc(tt.dep)} → ${esc(tt.arr)} (${esc(tt.dur)}) · ${cls==='biz'?'Business':cls==='second'?'2nd':'1st'} ¥${tt[cls]||tt.first} each</div>`:''}${sub?`<div class="sub">${sub}</div>`:''}
+    <div class="name">${mt?nameMap(mt, esc(blockTitle(b))):esc(blockTitle(b))}</div>${tt?`<div class="sub"><b>${esc(tt.code)}</b><span class="fx">复</span> ${esc(tt.dep)} → ${esc(tt.arr)} (${esc(tt.dur)}) · ${cls==='biz'?'Business':cls==='second'?'2nd':'1st'} ¥${tt[cls]||tt.first} each</div>`:''}${sub?`<div class="sub">${sub}</div>`:''}
     ${hh?car(hh.photos.slice(0,3),'big',hh.name):''}
-    <div class="row" style="margin-top:8px">${hh?`${mapBtn({name:hh.name,q:hh.cn,en:hh.name,city,address:hh.address})}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:lg?`${mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng})}<button class="btn small" data-gotrain="${lg.id}">Train options & prices</button>`:b.type==='hotel'?mapBtn({name:b.title,city,address:b.note,lat:b.lat,lng:b.lng}):(b.type==='train'?mapBtn({name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}):'')}<button class="btn small ghost" data-bact="edit">Edit</button></div>
+    <div class="row" style="margin-top:8px">${hh?`${mapBtn(mt)}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:lg?`${mapBtn(mt)}<button class="btn small" data-gotrain="${lg.id}">Train options & prices</button>`:mt?mapBtn(mt):''}<button class="btn small ghost" data-bact="edit">Edit</button></div>
     <div class="edit">${b.stay?'':`<label class="f">Title</label><input type="text" data-f="title" value="${esc(b.title)}">`}
       <div class="row"><div class="grow"><label class="f">${b.type==='hotel'?'Booking / ref':'Number'}</label><input type="text" data-f="number" value="${esc(b.number)}"></div><div class="grow"><label class="f">Time</label><input type="time" data-f="time" value="${esc(b.time)}"></div></div>
       ${b.type!=='hotel'?`<div class="row"><div class="grow"><label class="f">From</label><input type="text" data-f="from" value="${esc(b.from)}"></div><div class="grow"><label class="f">To</label><input type="text" data-f="to" value="${esc(b.to)}"></div></div>`:''}
@@ -1041,7 +1052,7 @@ function itemStop(i, isNext){
   const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
   return `<div class="stop ${isOpt(i)?'opt':''} ${i.done?'done':''} ${isNext?'next':''}" data-id="${esc(i.id)}" style="--cc:${catVar(i.category)}"><div class="dot" data-act="done" title="Mark done"><svg><use href="#ico-check"/></svg></div><div class="card">
     <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${resBell(i)}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
-    ${pics.length?`<img class="thumb" src="${esc(pics[0].src)}" alt="" loading="lazy">`:''}<div class="name">${esc(i.name)}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
+    ${pics.length?`<img class="thumb" src="${esc(pics[0].src)}" alt="" loading="lazy">`:''}<div class="name">${nameMap(i, esc(i.name))}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
     ${car(pics,'big',i.name)}
     <div class="acts">
       ${mapBtn(i)}
