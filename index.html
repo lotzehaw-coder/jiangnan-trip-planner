@@ -159,6 +159,8 @@ label.f{display:block;font-size:13px;color:var(--ink-2);margin:10px 0 4px}
 .name-map{color:inherit;text-decoration:none;cursor:pointer}
 .name-map:hover,.name-map:focus-visible{text-decoration:underline}
 .nm-ico{width:12px;height:12px;stroke:var(--c-sight);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-1px;margin-left:5px;opacity:.7}
+.chip.dist{color:var(--c-sight);background:color-mix(in srgb,var(--c-sight) 14%,transparent);font-variant-numeric:tabular-nums;white-space:nowrap}
+#distBtn.on{background:var(--c-sight);color:#fff;border-color:var(--c-sight)}
 .stop .sub{color:var(--ink-3);font-size:13px}
 .stop .info{color:var(--ink-2);font-size:13.5px;margin-top:3px}
 .stop .acts{margin-top:10px;display:none;gap:6px;flex-wrap:wrap;align-items:center}
@@ -364,6 +366,7 @@ details.more{margin-top:6px}
         <div class="row" style="margin:2px 0 10px">
           <button class="btn small" id="copySummary">Copy as text for WhatsApp</button>
           <button class="btn small" data-refresh>↻ Refresh from workbook</button>
+          <button class="btn small" id="distBtn">📍 Distance from me</button>
           <button class="btn small ghost" id="toggleAll">Collapse all</button>
         </div>
         <div id="itin"></div>
@@ -583,6 +586,24 @@ const mapData = (o) => esc(JSON.stringify({name:o.name||o.title, q:o.q||'', en:o
 const mapBtn = (o) => `<button class="btn small map" data-map="${mapData(o)}"><svg><use href="#ico-map"/></svg>Map</button>`;
 // a location title that opens the same map target as the listing's Map button (Jit, 3 Nov)
 const nameMap = (o, inner) => `<a href="#" class="name-map" role="button" aria-label="Open map" data-map="${mapData(o)}">${inner}<svg class="nm-ico"><use href="#ico-map"/></svg></a>`;
+
+// distance-from-me (Jit, 3 Nov): read the phone's GPS once, show straight-line distance to each stop that has coordinates
+let MYPOS = null;                 // {lat,lng} of the phone, or null until located
+function haversineKm(a1,o1,a2,o2){ const R=6371, r=Math.PI/180, dA=(a2-a1)*r, dO=(o2-o1)*r, x=Math.sin(dA/2)**2+Math.cos(a1*r)*Math.cos(a2*r)*Math.sin(dO/2)**2; return 2*R*Math.asin(Math.min(1,Math.sqrt(x))); }
+function fmtDist(km){ return km<1 ? Math.round(km*1000)+' m' : km<10 ? km.toFixed(1)+' km' : Math.round(km)+' km'; }
+// a chip showing how far the stop is from the phone, as the crow flies; nothing unless located and the stop has coords
+function distChip(o){ if (!MYPOS || o==null || o.lat==null || o.lng==null) return ''; const km=haversineKm(MYPOS.lat,MYPOS.lng,+o.lat,+o.lng); return `<span class="chip dist" title="Straight-line distance from your location">📍 ${fmtDist(km)}</span>`; }
+const distBtn = () => $('#distBtn');
+function locateMe(){
+  const b=distBtn();
+  if (MYPOS){ MYPOS=null; b.classList.remove('on'); b.textContent='📍 Distance from me'; renderItin(); toast('Distances off'); return; }
+  if (!navigator.geolocation){ toast('This device can’t share its location'); return; }
+  b.textContent='📍 Locating…';
+  navigator.geolocation.getCurrentPosition(
+    pos=>{ MYPOS={lat:pos.coords.latitude, lng:pos.coords.longitude}; b.classList.add('on'); b.textContent='📍 Distances on'; renderItin(); toast('Located — distances shown (as the crow flies)'); },
+    err=>{ b.textContent='📍 Distance from me'; toast(err.code===1?'Location blocked — allow it in your browser':'Couldn’t get your location'); },
+    {enableHighAccuracy:true, timeout:10000, maximumAge:60000});
+}
 
 // ---------- photos: carousels (swipe on phones, arrows on desktop) ----------
 const PICS = SEED.pics || {};
@@ -1010,6 +1031,7 @@ function renderItin(){
 $('#daySeg').addEventListener('click', e=>{ const b=e.target.closest('[data-jump]'); if(!b) return; L.closed[b.dataset.jump]=false; saveLocal(); renderItin(); const el=$('#day-'+b.dataset.jump); if (el) el.scrollIntoView({behavior:'smooth',block:'start'}); });
 $('#catPills').addEventListener('click', e=>{ const b=e.target.closest('[data-filter]'); if(!b) return; L.filter=b.dataset.filter; saveLocal(); renderItin(); });
 $('#toggleAll').addEventListener('click', ()=>{ const all=DAYS.every(d=>L.closed[d.d]); DAYS.forEach(d=>L.closed[d.d]=!all); saveLocal(); renderItin(); });
+$('#distBtn').addEventListener('click', locateMe);
 // the workbook's Meal Options / Dining / Explore rows for this day, untimed, at the end of the day
 const SEC_LABEL = {dining:'Dining & cafés', explore:'Shop · street food · explore', events:'Events & foliage'};
 function dayExtras(d){
@@ -1035,7 +1057,7 @@ function blockStop(b){
     : b.type==='train' ? {name:cjk(b.from).replace(/站$/,'')+'站',city:'',lat:b.lat,lng:b.lng}
     : null;
   return `<div class="stop block" data-bid="${esc(b.id)}" style="--cc:${catVar(b.type)}"><div class="dot"></div><div class="card">
-    <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}${resBell(b)}</div>
+    <div class="top"><span class="t">${nomove?'—':esc(b.time||'—')}</span><span class="kind">${KIND_ICON[b.type]} ${b.type}</span> ${b.tentative?'<span class="chip tent">tentative</span>':''}${resBell(b)}${distChip(b.lat!=null?b:mt)}</div>
     <div class="name">${mt?nameMap(mt, esc(blockTitle(b))):esc(blockTitle(b))}</div>${tt?`<div class="sub"><b>${esc(tt.code)}</b><span class="fx">复</span> ${esc(tt.dep)} → ${esc(tt.arr)} (${esc(tt.dur)}) · ${cls==='biz'?'Business':cls==='second'?'2nd':'1st'} ¥${tt[cls]||tt.first} each</div>`:''}${sub?`<div class="sub">${sub}</div>`:''}
     ${hh?car(hh.photos.slice(0,3),'big',hh.name):''}
     <div class="row" style="margin-top:8px">${hh?`${mapBtn(mt)}<button class="btn small" data-gohotels="${b.stay}">Hotel options</button>`:lg?`${mapBtn(mt)}<button class="btn small" data-gotrain="${lg.id}">Train options & prices</button>`:mt?mapBtn(mt):''}<button class="btn small ghost" data-bact="edit">Edit</button></div>
@@ -1051,7 +1073,7 @@ function itemStop(i, isNext){
   const mine=L.me&&(i.votes||[]).includes(L.me); const pics=picsFor(i);
   const notes=Object.entries(i.notes||{}).map(([w,t])=>`<b>${esc(w)}:</b> ${esc(t)}`).join(' · ');
   return `<div class="stop ${isOpt(i)?'opt':''} ${i.done?'done':''} ${isNext?'next':''}" data-id="${esc(i.id)}" style="--cc:${catVar(i.category)}"><div class="dot" data-act="done" title="Mark done"><svg><use href="#ico-check"/></svg></div><div class="card">
-    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${resBell(i)}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
+    <div class="top"><span class="t">${esc(timeSpan(i)||'—')}</span>${i.duration?`<span class="kind">${esc(i.duration)}</span>`:''}${chips(i)}${isNext?'<span class="chip next">up next</span>':''}${(i.votes||[]).length?`<span class="chip" style="color:var(--c-foliage)">♥ ${(i.votes||[]).length}</span>`:''}${resBell(i)}${distChip(i)}${i.category!=='Travel'?infoBtn('i',i.id):''}</div>
     ${pics.length?`<img class="thumb" src="${esc(pics[0].src)}" alt="" loading="lazy">`:''}<div class="name">${nameMap(i, esc(i.name))}</div>${i.info?`<div class="info">${esc(i.info)}</div>`:''}${i.address?`<div class="sub">${esc(i.address)}</div>`:''}${notes?`<div class="sub" style="margin-top:3px">${notes}</div>`:''}
     ${car(pics,'big',i.name)}
     <div class="acts">
