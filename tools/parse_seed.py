@@ -102,7 +102,7 @@ B('seed:h1bout','2026-11-18','hotel','Check out — {hotel}',time='08:00',stay='
 B('seed:t2','2026-11-18','train','Fuxing G-train to Nanjing South 南京南',time='10:25',**{'from':'Hangzhou East 杭州东','to':'Nanjing South 南京南'},tentative=False,train='t2',reservation='G7650 10:25→11:42. Gate 检票口 5A. First class 一等座 car 01, seats 06F (window) & 06D (aisle). Order E980460567',note='booked ✓')
 B('seed:h2in','2026-11-18','hotel','Check in — {hotel}',time='12:15',stay='nj',role='in')
 B('seed:h2out','2026-11-20','hotel','Check out — {hotel}',time='08:00',stay='nj',role='out')
-B('seed:t3','2026-11-20','train','Fuxing G-train to Suzhou 苏州',time='09:59',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=True,train='t3',note='not booked yet (sale opens 6 Nov)')
+B('seed:t3','2026-11-20','train','Fuxing G-train to Suzhou 苏州',time='09:59',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=False,train='t3',reservation='G7221 09:59→11:40. Gate 检票口 B21. First class 一等座 car 01, seats 09F (window) & 09D (aisle). Order E903043860',note='booked ✓')
 B('seed:h3in','2026-11-20','hotel','Check in — {hotel}',time='12:15',stay='sz',role='in')
 B('seed:h3out','2026-11-22','hotel','Check out — {hotel}',time='07:30',stay='sz',role='out',note='passport + train ticket handy')
 B('seed:t4','2026-11-22','train','Fuxing G-train to Shanghai Hongqiao, then Airport Link to PVG',time='09:19',**{'from':'Suzhou 苏州站','to':'Shanghai Hongqiao 虹桥'},tentative=True,train='t4',note='not booked yet (sale opens 8 Nov) · no trains run to Pudong: Hongqiao T2 → PVG by the Airport Link 市域机场线, ~40 min, ¥26')
