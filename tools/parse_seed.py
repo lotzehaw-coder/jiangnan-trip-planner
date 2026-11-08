@@ -105,7 +105,7 @@ B('seed:h2out','2026-11-20','hotel','Check out — {hotel}',time='08:00',stay='n
 B('seed:t3','2026-11-20','train','Fuxing G-train to Suzhou 苏州',time='09:59',**{'from':'Nanjing South 南京南','to':'Suzhou 苏州'},tentative=False,train='t3',reservation='G7221 09:59→11:40. Gate 检票口 B21. First class 一等座 car 01, seats 09F (window) & 09D (aisle). Order E903043860',note='booked ✓')
 B('seed:h3in','2026-11-20','hotel','Check in — {hotel}',time='12:15',stay='sz',role='in')
 B('seed:h3out','2026-11-22','hotel','Check out — {hotel}',time='07:30',stay='sz',role='out',note='passport + train ticket handy')
-B('seed:t4','2026-11-22','train','Fuxing G-train to Shanghai Hongqiao, then Airport Link to PVG',time='09:19',**{'from':'Suzhou 苏州站','to':'Shanghai Hongqiao 虹桥'},tentative=True,train='t4',note='not booked yet (sale opens 8 Nov) · no trains run to Pudong: Hongqiao T2 → PVG by the Airport Link 市域机场线, ~40 min, ¥26')
+B('seed:t4','2026-11-22','train','Fuxing G-train to Shanghai Hongqiao, then Airport Link to PVG',time='11:19',**{'from':'Suzhou 苏州站','to':'Shanghai Hongqiao 虹桥'},tentative=False,train='t4',reservation='G7591 11:19→11:54. Business class 商务座 car 16, seats 02A (window) & 02C (aisle). Order E949007324',note='booked ✓ · no trains run to Pudong: Hongqiao T2 → PVG by the Airport Link 市域机场线, ~40 min, ¥26')
 B('seed:mh389','2026-11-22','flight','Fly home to Kuala Lumpur',number='MH389',time='16:05',**{'from':'PVG T2','to':'KUL T1'},note='lands 21:50 · Business · A330-300 · confirmed (Trip.com)')
 
 # a train row with a Column E reservation is booked: show its bell and drop the "not booked yet" tentative note
