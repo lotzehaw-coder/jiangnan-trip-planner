@@ -88,6 +88,18 @@ for r in rows('Itinerary'):
         'info':info,'reservation':res,'tags':tags,'suggestedDay':day_date[n],'time':start,'end':end,'duration':dur(start,end) if end else '',
         'day': day_date[n], 'status': 'scheduled', 'order':counters[n]})   # untimed rows (Opt/Alt) sit at the end of their day, like the workbook
 
+# Confirmed bookings WhatsApp'd into the planner group that aren't (yet) in the workbook's Column E.
+# Keyed by day + a name substring; only fills the bell when the workbook left Reservation blank, so a
+# later Column E entry still wins. Jit asked us to add these directly (WA 13 Nov) rather than edit Excel.
+RES_OVERRIDES = [
+    {'day':'2026-11-20', 'match':'苏州博物馆',
+     'text':'预约成功 ✓ 2026-11-20 14:00–15:00 入馆 · 2 人 · 苏州博物馆本馆 (东北街204号). Real-name ticket — bring the passport used to book.'},
+]
+for it in items:
+    for o in RES_OVERRIDES:
+        if it['day']==o['day'] and o['match'] in it['name'] and not it['reservation']:
+            it['reservation'] = o['text']
+
 blocks = []
 def B(id, day, type, title, **kw):
     b = {'id':id,'day':day,'type':type,'title':title,'time':'','number':'','from':'','to':'','tentative':False,'note':'','reservation':'','updatedAt':0}
