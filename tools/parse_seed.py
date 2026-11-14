@@ -94,6 +94,8 @@ for r in rows('Itinerary'):
 RES_OVERRIDES = [
     {'day':'2026-11-20', 'match':'苏州博物馆',
      'text':'预约成功 ✓ 2026-11-20 14:00–15:00 入馆 · 2 人 · 苏州博物馆本馆 (东北街204号). Real-name ticket — bring the passport used to book.'},
+    {'day':'2026-11-20', 'match':'拙政园',
+     'text':'预订成功 ✓ 2026-11-20 15:30–16:30 入园 · 2 人 · 非中国大陆籍成人票 (订单号 1128150768293657). Real-name ticket — bring the passport used to book.'},
 ]
 for it in items:
     for o in RES_OVERRIDES:
